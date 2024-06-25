@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dog_liver": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "meatmaster:dog_liver"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "meatmaster:cooked_dog_liver_from_campfire_cooking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dog_liver",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "meatmaster:cooked_dog_liver_from_campfire_cooking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

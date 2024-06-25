@@ -1,0 +1,14 @@
+{
+  "type": "meatmaster:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/blaze"
+    },
+    {
+      "chance": 0.5,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "meatmaster:cooked_blaze_meat"
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gunpowder_clumps": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "meatmaster:gunpowder_clumps"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "meatmaster:gunpowder_clumps"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_gunpowder_clumps",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "meatmaster:gunpowder_clumps"
+    ]
+  },
+  "sends_telemetry_event": false
+}

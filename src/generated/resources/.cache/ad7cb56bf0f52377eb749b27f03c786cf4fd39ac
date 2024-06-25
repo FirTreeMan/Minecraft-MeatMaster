@@ -1,0 +1,4 @@
+// 1.20.1	2024-05-07T23:32:14.1876863	Tags for minecraft:block mod id meatmaster
+64d4344fca60c6c75e8c7717249a6d1c4afca87f data/meatmaster/tags/blocks/cooked_meat_blocks.json
+8327a69d39c39f85505362ad40439ccf5eec848f data/meatmaster/tags/blocks/meat_blocks.json
+46bead623430f501a7197ab8802fd5351b9a4e9d data/meatmaster/tags/blocks/uncooked_meat_blocks.json

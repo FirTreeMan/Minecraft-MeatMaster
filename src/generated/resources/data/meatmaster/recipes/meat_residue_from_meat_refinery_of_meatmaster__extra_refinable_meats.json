@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:meat_refinery",
+  "ingredients": [
+    {
+      "tag": "meatmaster:extra_refinable_meats"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:meat_residue"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:meat_refinery",
+  "ingredients": [
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:bitter_crumbs"
+  }
+}

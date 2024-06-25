@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:end_rod"
+    },
+    {
+      "tag": "meatmaster:valid_kebab_ingredients"
+    },
+    {
+      "tag": "meatmaster:valid_kebab_ingredients"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:kebab"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "item.meatmaster.creeper_meat": "Creeper Meat",
+  "item.meatmaster.cooked_creeper_meat": "Cooked Creeper Meat",
+  "item.meatmaster.dog_liver": "Dog Liver",
+  "item.meatmaster.cooked_dog_liver": "Cooked Dog Liver",
+  "item.meatmaster.endermeat": "Endermeat",
+  "item.meatmaster.horse_meat": "Horse Meat",
+  "item.meatmaster.cooked_horse_meat": "Cooked Horse Meat",
+  "item.meatmaster.cooked_blaze_meat": "Cooked Blaze Meat",
+  "item.meatmaster.cat_meat": "Cat Meat",
+  "item.meatmaster.cooked_cat_meat": "Cooked Cat Meat",
+  "item.meatmaster.squid_meat": "Squid Meat",
+  "item.meatmaster.cooked_squid_meat": "Cooked Squid Meat",
+
+  "item.meatmaster.sausage": "Sausage",
+  "item.meatmaster.cooked_sausage": "Cooked Sausage",
+
+  "item.meatmaster.table_salt": "Table Salt",
+  "item.meatmaster.gunpowder_clumps": "Gunpowder Clumps",
+  "item.meatmaster.liver_bits": "Liver Bits",
+  "item.meatmaster.blaze_pepper": "Blaze Pepper",
+  "item.meatmaster.bitter_crumbs": "Bitter Crumbs",
+  "item.meatmaster.meat_residue": "Meat Flakes",
+
+  "block.meatmaster.creeper_meat_block": "Block of Creeper Meat",
+  "block.meatmaster.cooked_creeper_meat_block": "Block of Cooked Creeper Meat",
+
+  "block.meatmaster.meat_refinery_station": "Meat Refinery",
+  "block.meatmaster.meat_compactor_station": "Meat Compactor",
+  "block.meatmaster.latherer_station": "Latherer",
+  "block.meatmaster.industrial_oven_station": "Industrial Oven",
+  "block.meatmaster.meat_masher_station": "Meat Masher",
+  "block.meatmaster.food_trough_station": "Food Trough",
+
+  "creativetab.meat_master_tab": "Meat Master"
+}

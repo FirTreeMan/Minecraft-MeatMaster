@@ -1,0 +1,33 @@
+{
+  "values": [
+    "minecraft:beef",
+    "minecraft:cooked_beef",
+    "minecraft:porkchop",
+    "minecraft:cooked_porkchop",
+    "minecraft:chicken",
+    "minecraft:cooked_chicken",
+    "minecraft:cod",
+    "minecraft:cooked_cod",
+    "minecraft:salmon",
+    "minecraft:cooked_salmon",
+    "minecraft:mutton",
+    "minecraft:rabbit",
+    "minecraft:cooked_mutton",
+    "minecraft:cooked_rabbit",
+    "minecraft:rotten_flesh",
+    "minecraft:tropical_fish",
+    "minecraft:pufferfish",
+    "meatmaster:creeper_meat",
+    "meatmaster:cooked_creeper_meat",
+    "meatmaster:dog_liver",
+    "meatmaster:cooked_dog_liver",
+    "meatmaster:endermeat",
+    "meatmaster:horse_meat",
+    "meatmaster:cooked_horse_meat",
+    "meatmaster:cooked_blaze_meat",
+    "meatmaster:squid_meat",
+    "meatmaster:cooked_squid_meat",
+    "meatmaster:sausage",
+    "meatmaster:cooked_sausage"
+  ]
+}

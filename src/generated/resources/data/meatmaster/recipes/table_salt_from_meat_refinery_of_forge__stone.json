@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:meat_refinery",
+  "ingredients": [
+    {
+      "tag": "forge:stone"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:table_salt"
+  }
+}

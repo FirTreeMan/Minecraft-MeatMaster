@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:meat_refinery",
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_blaze_meat"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:blaze_pepper"
+  }
+}

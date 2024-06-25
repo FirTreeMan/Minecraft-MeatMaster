@@ -1,0 +1,16 @@
+{
+  "type": "meatmaster:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/wolf"
+    },
+    {
+      "chance": 1.0,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "meatmaster:dog_liver",
+  "maxItems": 2,
+  "minItems": 0
+}

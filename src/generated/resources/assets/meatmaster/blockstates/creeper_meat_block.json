@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "meatmaster:block/creeper_meat_block"
+    }
+  }
+}

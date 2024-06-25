@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "meatmaster:meat_compactor_station"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "meatmaster:blocks/meat_compactor_station"
+}

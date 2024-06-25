@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:meat_refinery",
+  "ingredients": [
+    {
+      "item": "meatmaster:creeper_meat"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:gunpowder_clumps"
+  }
+}

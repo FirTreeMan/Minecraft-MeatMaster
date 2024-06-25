@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    },
+    {
+      "item": "meatmaster:creeper_meat"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:creeper_meat_block"
+  }
+}

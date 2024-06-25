@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    },
+    {
+      "item": "meatmaster:meat_residue"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:sausage"
+  }
+}
