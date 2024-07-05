@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_dog_liver_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "meatmaster:cooked_dog_liver"
+  }
+}

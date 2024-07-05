@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "meatmaster:horse_meat_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "meatmaster:horse_meat"
+  }
+}

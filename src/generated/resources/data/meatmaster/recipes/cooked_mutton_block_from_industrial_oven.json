@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:mutton_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_mutton_block"
+  }
+}

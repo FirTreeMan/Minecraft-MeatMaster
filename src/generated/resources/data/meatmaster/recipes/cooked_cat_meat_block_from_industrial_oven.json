@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:cat_meat_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_cat_meat_block"
+  }
+}

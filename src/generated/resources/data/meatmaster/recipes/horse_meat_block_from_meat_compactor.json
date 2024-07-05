@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    },
+    {
+      "item": "meatmaster:horse_meat"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:horse_meat_block"
+  }
+}

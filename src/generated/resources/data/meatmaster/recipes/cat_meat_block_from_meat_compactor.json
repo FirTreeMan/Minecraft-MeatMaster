@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    },
+    {
+      "item": "meatmaster:cat_meat"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cat_meat_block"
+  }
+}

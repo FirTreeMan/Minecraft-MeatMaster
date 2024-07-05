@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:dog_liver_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_dog_liver_block"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    },
+    {
+      "item": "meatmaster:squid_meat"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:squid_meat_block"
+  }
+}

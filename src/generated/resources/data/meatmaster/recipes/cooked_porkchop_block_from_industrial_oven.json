@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:porkchop_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_porkchop_block"
+  }
+}

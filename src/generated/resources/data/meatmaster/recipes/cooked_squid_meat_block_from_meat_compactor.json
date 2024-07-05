@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    },
+    {
+      "item": "meatmaster:cooked_squid_meat"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_squid_meat_block"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:squid_meat_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_squid_meat_block"
+  }
+}

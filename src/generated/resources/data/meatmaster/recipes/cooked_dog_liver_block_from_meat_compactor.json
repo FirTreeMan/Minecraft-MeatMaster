@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    },
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_dog_liver_block"
+  }
+}
