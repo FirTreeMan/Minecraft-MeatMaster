@@ -1,20 +1,32 @@
 {
   "values": [
     "meatmaster:creeper_meat_block",
+    "meatmaster:cooked_creeper_meat_block",
     "meatmaster:dog_liver_block",
+    "meatmaster:cooked_dog_liver_block",
     "meatmaster:endermeat_block",
     "meatmaster:horse_meat_block",
+    "meatmaster:cooked_horse_meat_block",
     "meatmaster:cat_meat_block",
+    "meatmaster:cooked_cat_meat_block",
     "meatmaster:squid_meat_block",
+    "meatmaster:cooked_squid_meat_block",
     "meatmaster:beef_block",
+    "meatmaster:cooked_beef_block",
     "meatmaster:chicken_block",
+    "meatmaster:cooked_chicken_block",
     "meatmaster:cod_block",
+    "meatmaster:cooked_cod_block",
     "meatmaster:mutton_block",
+    "meatmaster:cooked_mutton_block",
     "meatmaster:porkchop_block",
+    "meatmaster:cooked_porkchop_block",
     "meatmaster:pufferfish_block",
     "meatmaster:rabbit_block",
+    "meatmaster:cooked_rabbit_block",
     "meatmaster:rotten_flesh_block",
     "meatmaster:salmon_block",
+    "meatmaster:cooked_salmon_block",
     "meatmaster:tropical_fish_block"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "meatmaster:item/syringe_dart"
+    "layer0": "meatmaster:item/syringe_dart",
+    "layer1": "meatmaster:item/syringe_dart_overlay"
   }
 }

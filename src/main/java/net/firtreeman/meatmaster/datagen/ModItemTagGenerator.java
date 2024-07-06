@@ -56,7 +56,34 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
         tag(ModTags.Items.MEAT_BLOCKS).add(
                 ModBlocks.CREEPER_MEAT_BLOCK.get().asItem(),
-                ModBlocks.COOKED_CREEPER_MEAT_BLOCK.get().asItem()
+                ModBlocks.COOKED_CREEPER_MEAT_BLOCK.get().asItem(),
+                ModBlocks.DOG_LIVER_BLOCK.get().asItem(),
+                ModBlocks.COOKED_DOG_LIVER_BLOCK.get().asItem(),
+                ModBlocks.ENDERMEAT_BLOCK.get().asItem(),
+                ModBlocks.HORSE_MEAT_BLOCK.get().asItem(),
+                ModBlocks.COOKED_HORSE_MEAT_BLOCK.get().asItem(),
+                ModBlocks.CAT_MEAT_BLOCK.get().asItem(),
+                ModBlocks.COOKED_CAT_MEAT_BLOCK.get().asItem(),
+                ModBlocks.SQUID_MEAT_BLOCK.get().asItem(),
+                ModBlocks.COOKED_SQUID_MEAT_BLOCK.get().asItem(),
+
+                ModBlocks.BEEF_BLOCK.get().asItem(),
+                ModBlocks.COOKED_BEEF_BLOCK.get().asItem(),
+                ModBlocks.CHICKEN_BLOCK.get().asItem(),
+                ModBlocks.COOKED_CHICKEN_BLOCK.get().asItem(),
+                ModBlocks.COD_BLOCK.get().asItem(),
+                ModBlocks.COOKED_COD_BLOCK.get().asItem(),
+                ModBlocks.MUTTON_BLOCK.get().asItem(),
+                ModBlocks.COOKED_MUTTON_BLOCK.get().asItem(),
+                ModBlocks.PORKCHOP_BLOCK.get().asItem(),
+                ModBlocks.COOKED_PORKCHOP_BLOCK.get().asItem(),
+                ModBlocks.PUFFERFISH_BLOCK.get().asItem(),
+                ModBlocks.RABBIT_BLOCK.get().asItem(),
+                ModBlocks.COOKED_RABBIT_BLOCK.get().asItem(),
+                ModBlocks.ROTTEN_FLESH_BLOCK.get().asItem(),
+                ModBlocks.SALMON_BLOCK.get().asItem(),
+                ModBlocks.COOKED_SALMON_BLOCK.get().asItem(),
+                ModBlocks.TROPICAL_FISH_BLOCK.get().asItem()
         );
 
         tag(ModTags.Items.MEATS).addTag(ModTags.Items.MEAT_BLOCKS);
@@ -77,5 +104,18 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         );
 
         tag(ModTags.Items.VALID_KEBAB_INGREDIENTS).addTag(ModTags.Items.MEATS);
+
+//        tag(ModTags.Items.HORMONE_ARROWS).add(
+//                ModItems.SYRINGE_DART.get(),
+//                ModItems.GROWTH_SYRINGE_DART.get(),
+//                ModItems.BREEDING_SYRINGE_DART.get(),
+//                ModItems.YIELD_SYRINGE_DART.get()
+//        );
+//        tag(ModTags.Items.HORMONE_BASES).add(
+//                ModItems.HORMONE_BASE.get(),
+//                ModItems.GROWTH_HORMONE_BASE.get(),
+//                ModItems.BREEDING_HORMONE_BASE.get(),
+//                ModItems.YIELD_HORMONE_BASE.get()
+//        );
     }
 }

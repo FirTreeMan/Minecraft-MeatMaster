@@ -1,5 +1,16 @@
 {
   "values": [
-    "meatmaster:cooked_creeper_meat_block"
+    "meatmaster:cooked_creeper_meat_block",
+    "meatmaster:cooked_dog_liver_block",
+    "meatmaster:cooked_horse_meat_block",
+    "meatmaster:cooked_cat_meat_block",
+    "meatmaster:cooked_squid_meat_block",
+    "meatmaster:cooked_beef_block",
+    "meatmaster:cooked_chicken_block",
+    "meatmaster:cooked_cod_block",
+    "meatmaster:cooked_mutton_block",
+    "meatmaster:cooked_porkchop_block",
+    "meatmaster:cooked_rabbit_block",
+    "meatmaster:cooked_salmon_block"
   ]
 }

@@ -6,6 +6,7 @@ import net.firtreeman.meatmaster.item.custom.HormoneArrowItem;
 import net.firtreeman.meatmaster.item.custom.HormoneBaseItem;
 import net.firtreeman.meatmaster.screen.HormoneResearchStationMenu;
 import net.firtreeman.meatmaster.util.HORMONE_TYPES;
+import net.firtreeman.meatmaster.util.HormoneUtils;
 import net.firtreeman.meatmaster.util.ModTags;
 import net.firtreeman.meatmaster.util.SubItemStackHandler;
 import net.minecraft.core.BlockPos;
@@ -33,8 +34,10 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class HormoneResearchStationBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_COUNT = 5;
@@ -49,6 +52,18 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
             Map.entry(Items.EMERALD, HORMONE_TYPES.BREEDING),
             Map.entry(Items.IRON_INGOT, HORMONE_TYPES.YIELD)
     );
+
+    public static final Map<HORMONE_TYPES, ItemStack> HORMONE_BASES =
+            Arrays.stream(HORMONE_TYPES.values()).collect(Collectors.toMap(
+                    Function.identity(),
+                    s -> HormoneUtils.itemStackOf(ModItems.HORMONE_BASE.get(), s)
+            ));
+
+    public static final Map<HORMONE_TYPES, ItemStack> HORMONE_ARROWS =
+            Arrays.stream(HORMONE_TYPES.values()).collect(Collectors.toMap(
+                    Function.identity(),
+                    s -> HormoneUtils.itemStackOf(ModItems.SYRINGE_DART.get(), s)
+            ));
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(SLOT_COUNT) {
         @Override
@@ -97,22 +112,28 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
     private final ItemStackHandler hormoneBaseItemHandler = new SubItemStackHandler(itemHandler, HORMONE_BASE_SLOT) {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return stack.is(ModItems.HORMONE_BASE.get());
+            return stack.getItem() instanceof HormoneBaseItem;
         }
     };
     private final ItemStackHandler syringeInputItemHandler = new SubItemStackHandler(itemHandler, SYRINGE_INPUT_SLOT) {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return stack.is(ModItems.SYRINGE_DART.get());
+            return stack.is(ModItems.SYRINGE_DART.get()) && HormoneUtils.getHormone(stack) == HORMONE_TYPES.NONE;
         }
     };
-    private final ItemStackHandler hormoneOutputItemHandler = new SubItemStackHandler(itemHandler, HORMONE_OUTPUT_SLOT);
+    private final ItemStackHandler hormoneOutputItemHandler = new SubItemStackHandler(itemHandler, HORMONE_OUTPUT_SLOT) {
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return false;
+        }
+    };
 
     protected final ContainerData data;
     private int research_progress = 0;
     private int max_research_progress = 6912;
     private int fill_progress = 0;
-    private int max_fill_progress = 20;
+    private int max_fill_progress = 60;
+    private HORMONE_TYPES hormone = HORMONE_TYPES.NONE;
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IItemHandler> meatInputLazyItemHandler = LazyOptional.empty();
@@ -131,6 +152,7 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
                     case 1 -> HormoneResearchStationBlockEntity.this.max_research_progress;
                     case 2 -> HormoneResearchStationBlockEntity.this.fill_progress;
                     case 3 -> HormoneResearchStationBlockEntity.this.max_fill_progress;
+                    case 4 -> HormoneResearchStationBlockEntity.this.hormone.ordinal();
                     default -> 0;
                 };
             }
@@ -142,6 +164,7 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
                     case 1 -> HormoneResearchStationBlockEntity.this.max_research_progress = pValue;
                     case 2 -> HormoneResearchStationBlockEntity.this.fill_progress = pValue;
                     case 3 -> HormoneResearchStationBlockEntity.this.max_fill_progress = pValue;
+                    case 4 -> HormoneResearchStationBlockEntity.this.hormone = HORMONE_TYPES.values()[pValue];
                 };
             }
 
@@ -150,6 +173,10 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
                 return SLOT_COUNT;
             }
         };
+    }
+
+    public boolean hasBase() {
+        return this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT).getItem() instanceof HormoneBaseItem;
     }
 
     @Override
@@ -217,6 +244,7 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
         pTag.putInt("hormone_research_station.max_research_progress", max_research_progress);
         pTag.putInt("hormone_research_station.fill_progress", fill_progress);
         pTag.putInt("hormone_research_station.max_fill_progress", max_fill_progress);
+        pTag.putInt("hormone_research_station.hormone", hormone.ordinal());
 
         super.saveAdditional(pTag);
     }
@@ -229,9 +257,11 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
         max_research_progress = pTag.getInt("hormone_research_station.max_research_progress");
         fill_progress = pTag.getInt("hormone_research_station.fill_progress");
         max_fill_progress = pTag.getInt("hormone_research_station.max_fill_progress");
+        hormone = HORMONE_TYPES.values()[pTag.getInt("hormone_research_station.hormone")];
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
+        checkHormone();
         if (hasResearchRecipe()) {
             increaseResearchProgress();
             setChanged(pLevel, pPos, pState);
@@ -240,8 +270,6 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
                 makeResearchItem();
                 resetResearchProgress();
             }
-        } else {
-            resetResearchProgress();
         }
         if (hasFillRecipe()) {
             increaseFillProgress();
@@ -260,32 +288,43 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
         return this.itemHandler.getStackInSlot(MEAT_INPUT_SLOT).is(ModTags.Items.MEAT_BLOCKS);
     }
 
+    private boolean hasSyringes() {
+        return this.itemHandler.getStackInSlot(SYRINGE_INPUT_SLOT).is(ModItems.SYRINGE_DART.get());
+    }
+
+    private void checkHormone() {
+        HORMONE_TYPES baseHormone = HormoneUtils.getHormone(this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT));
+        if (baseHormone != HORMONE_TYPES.NONE)
+            this.hormone = baseHormone;
+        else this.hormone = DETERMINERS.getOrDefault(this.itemHandler.getStackInSlot(DETERMINER_INPUT_SLOT).getItem(), HORMONE_TYPES.NONE);
+    }
+
     private boolean hasResearchRecipe() {
-        HORMONE_TYPES hormoneType = DETERMINERS.getOrDefault(this.itemHandler.getStackInSlot(DETERMINER_INPUT_SLOT).getItem(), HORMONE_TYPES.NONE);
-        if (hormoneType == HORMONE_TYPES.NONE) return false;
+        if (this.hormone == HORMONE_TYPES.NONE) return false;
+        if (!hasBase() || HormoneUtils.getHormone(this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT)) != HORMONE_TYPES.NONE) return false;
 
-        HormoneBaseItem hormoneBase = new HormoneBaseItem(new Item.Properties(), hormoneType);
+        ItemStack hormoneBase = HORMONE_BASES.get(this.hormone).copy();
 
-        return hasMeat() && canAddStackToOutput(new ItemStack(hormoneBase), true);
+        return hasMeat();
     }
 
     private boolean hasFillRecipe() {
-        if (this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT).getItem() instanceof HormoneBaseItem hormoneBase) {
-            HormoneArrowItem hormoneArrowItem = new HormoneArrowItem(new Item.Properties(), hormoneBase.getHormoneType());
+        if (HormoneUtils.getHormone(this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT)) != HORMONE_TYPES.NONE) {
+            ItemStack hormoneArrow = HORMONE_ARROWS.get(this.hormone).copy();
 
-            return hasMeat() && canAddStackToOutput(new ItemStack(hormoneArrowItem), false);
+            return hasSyringes() && canAddStackToFillOutput(hormoneArrow);
         }
 
         return false;
     }
 
-    private boolean canAddStackToOutput(ItemStack result, boolean research) {
-        int output_slot = research ? HORMONE_BASE_SLOT : HORMONE_OUTPUT_SLOT;
+    private boolean canAddStackToFillOutput(ItemStack result) {
 
-        // can add item?
-        return (this.itemHandler.getStackInSlot(output_slot).isEmpty() || this.itemHandler.getStackInSlot(output_slot).is(result.getItem()))
+        ItemStack output = this.itemHandler.getStackInSlot(HORMONE_OUTPUT_SLOT);
+
+        return (output.isEmpty() || (output.is(result.getItem()) && HormoneUtils.getHormone(output) == HormoneUtils.getHormone(result)))
             // can add amount?
-            && this.itemHandler.getStackInSlot(output_slot).getCount() + result.getCount() <= this.itemHandler.getStackInSlot(output_slot).getMaxStackSize();
+            && output.getCount() + result.getCount() <= output.getMaxStackSize();
     }
 
     private void increaseResearchProgress() {
@@ -308,18 +347,17 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
     private void makeResearchItem() {
         HORMONE_TYPES hormoneType = DETERMINERS.getOrDefault(this.itemHandler.getStackInSlot(DETERMINER_INPUT_SLOT).getItem(), HORMONE_TYPES.NONE);
 
-        ItemStack result = new ItemStack(new HormoneBaseItem(new Item.Properties(), hormoneType));
+        ItemStack result = HORMONE_BASES.get(hormoneType).copy();
 
-        this.itemHandler.setStackInSlot(HORMONE_BASE_SLOT, new ItemStack(result.getItem(), result.getCount() + this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT).getCount()));
+        this.itemHandler.setStackInSlot(HORMONE_BASE_SLOT, result);
     }
 
     private void makeFillItem() {
-        HORMONE_TYPES hormoneType = ((HormoneBaseItem) (this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT).getItem())).getHormoneType();
-
-        ItemStack result = new ItemStack(new HormoneArrowItem(new Item.Properties(), hormoneType));
+        ItemStack result = HORMONE_ARROWS.get(this.hormone).copy();
+        System.out.println(HormoneUtils.getHormone(result));
 
         this.itemHandler.extractItem(SYRINGE_INPUT_SLOT, 1, false);
-        this.itemHandler.setStackInSlot(HORMONE_OUTPUT_SLOT, new ItemStack(result.getItem(), result.getCount() + this.itemHandler.getStackInSlot(HORMONE_OUTPUT_SLOT).getCount()));
+        this.itemHandler.setStackInSlot(HORMONE_OUTPUT_SLOT, HormoneUtils.itemStackOf(result.getItem(), result.getCount() + this.itemHandler.getStackInSlot(HORMONE_OUTPUT_SLOT).getCount(), HormoneUtils.getHormone(result)));
     }
 
     private void resetResearchProgress() {

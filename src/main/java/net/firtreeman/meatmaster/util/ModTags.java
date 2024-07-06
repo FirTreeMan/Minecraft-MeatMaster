@@ -17,6 +17,8 @@ public class ModTags {
         public static final TagKey<Item> MEAT_BLOCKS = tag("meat_blocks");
         public static final TagKey<Item> SPICES = tag("spices");
         public static final TagKey<Item> VALID_KEBAB_INGREDIENTS = tag("valid_kebab_ingredients");
+//        public static final TagKey<Item> HORMONE_ARROWS = tag("hormone_arrows");
+//        public static final TagKey<Item> HORMONE_BASES = tag("hormone_bases");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(MeatMaster.MOD_ID, name));

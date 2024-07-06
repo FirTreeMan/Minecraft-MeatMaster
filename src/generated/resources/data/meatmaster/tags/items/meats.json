@@ -28,6 +28,7 @@
     "meatmaster:squid_meat",
     "meatmaster:cooked_squid_meat",
     "meatmaster:sausage",
-    "meatmaster:cooked_sausage"
+    "meatmaster:cooked_sausage",
+    "#meatmaster:meat_blocks"
   ]
 }

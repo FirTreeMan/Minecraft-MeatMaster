@@ -33,7 +33,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             Map.entry(ModItems.SQUID_MEAT.get(), ModItems.COOKED_SQUID_MEAT.get())
     );
     public static final Map<Block, Block> COOKED_BLOCK_VARIANTS = Map.ofEntries(
-            Map.entry(ModBlocks.CREEPER_MEAT_BLOCK.get(), ModBlocks.COOKED_CREEPER_MEAT_BLOCK.get())
+            Map.entry(ModBlocks.CREEPER_MEAT_BLOCK.get(), ModBlocks.COOKED_CREEPER_MEAT_BLOCK.get()),
+            Map.entry(ModBlocks.DOG_LIVER_BLOCK.get(), ModBlocks.COOKED_DOG_LIVER_BLOCK.get()),
+            Map.entry(ModBlocks.HORSE_MEAT_BLOCK.get(), ModBlocks.COOKED_HORSE_MEAT_BLOCK.get()),
+            Map.entry(ModBlocks.CAT_MEAT_BLOCK.get(), ModBlocks.COOKED_CAT_MEAT_BLOCK.get()),
+            Map.entry(ModBlocks.SQUID_MEAT_BLOCK.get(), ModBlocks.COOKED_SQUID_MEAT_BLOCK.get()),
+            Map.entry(ModBlocks.BEEF_BLOCK.get(), ModBlocks.COOKED_BEEF_BLOCK.get()),
+            Map.entry(ModBlocks.CHICKEN_BLOCK.get(), ModBlocks.COOKED_CHICKEN_BLOCK.get()),
+            Map.entry(ModBlocks.COD_BLOCK.get(), ModBlocks.COOKED_COD_BLOCK.get()),
+            Map.entry(ModBlocks.MUTTON_BLOCK.get(), ModBlocks.COOKED_MUTTON_BLOCK.get()),
+            Map.entry(ModBlocks.PORKCHOP_BLOCK.get(), ModBlocks.COOKED_PORKCHOP_BLOCK.get()),
+            Map.entry(ModBlocks.RABBIT_BLOCK.get(), ModBlocks.COOKED_RABBIT_BLOCK.get()),
+            Map.entry(ModBlocks.SALMON_BLOCK.get(), ModBlocks.COOKED_SALMON_BLOCK.get())
     );
 
     public static final Map<Item, Item> REFINABLES = Map.ofEntries(
@@ -47,8 +58,32 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     public static final Map<Item, Item> COMPACTABLES = Map.ofEntries(
             Map.entry(ModItems.CREEPER_MEAT.get(), ModBlocks.CREEPER_MEAT_BLOCK.get().asItem()),
             Map.entry(ModItems.COOKED_CREEPER_MEAT.get(), ModBlocks.COOKED_CREEPER_MEAT_BLOCK.get().asItem()),
-
-            Map.entry(ModItems.MEAT_RESIDUE.get(), ModItems.SAUSAGE.get())
+            Map.entry(ModItems.DOG_LIVER.get(), ModBlocks.DOG_LIVER_BLOCK.get().asItem()),
+            Map.entry(ModItems.COOKED_DOG_LIVER.get(), ModBlocks.COOKED_DOG_LIVER_BLOCK.get().asItem()),
+            Map.entry(ModItems.ENDERMEAT.get(), ModBlocks.ENDERMEAT_BLOCK.get().asItem()),
+            Map.entry(ModItems.HORSE_MEAT.get(), ModBlocks.HORSE_MEAT_BLOCK.get().asItem()),
+            Map.entry(ModItems.COOKED_HORSE_MEAT.get(), ModBlocks.COOKED_HORSE_MEAT_BLOCK.get().asItem()),
+            Map.entry(ModItems.CAT_MEAT.get(), ModBlocks.CAT_MEAT_BLOCK.get().asItem()),
+            Map.entry(ModItems.COOKED_CAT_MEAT.get(), ModBlocks.COOKED_CAT_MEAT_BLOCK.get().asItem()),
+            Map.entry(ModItems.SQUID_MEAT.get(), ModBlocks.SQUID_MEAT_BLOCK.get().asItem()),
+            Map.entry(ModItems.COOKED_SQUID_MEAT.get(), ModBlocks.COOKED_SQUID_MEAT_BLOCK.get().asItem()),
+            Map.entry(Items.BEEF, ModBlocks.BEEF_BLOCK.get().asItem()),
+            Map.entry(Items.COOKED_BEEF, ModBlocks.COOKED_BEEF_BLOCK.get().asItem()),
+            Map.entry(Items.CHICKEN, ModBlocks.CHICKEN_BLOCK.get().asItem()),
+            Map.entry(Items.COOKED_CHICKEN, ModBlocks.COOKED_CHICKEN_BLOCK.get().asItem()),
+            Map.entry(Items.COD, ModBlocks.COD_BLOCK.get().asItem()),
+            Map.entry(Items.COOKED_COD, ModBlocks.COOKED_COD_BLOCK.get().asItem()),
+            Map.entry(Items.MUTTON, ModBlocks.MUTTON_BLOCK.get().asItem()),
+            Map.entry(Items.COOKED_MUTTON, ModBlocks.COOKED_MUTTON_BLOCK.get().asItem()),
+            Map.entry(Items.PORKCHOP, ModBlocks.PORKCHOP_BLOCK.get().asItem()),
+            Map.entry(Items.COOKED_PORKCHOP, ModBlocks.COOKED_PORKCHOP_BLOCK.get().asItem()),
+            Map.entry(Items.PUFFERFISH, ModBlocks.PUFFERFISH_BLOCK.get().asItem()),
+            Map.entry(Items.RABBIT, ModBlocks.RABBIT_BLOCK.get().asItem()),
+            Map.entry(Items.COOKED_RABBIT, ModBlocks.COOKED_RABBIT_BLOCK.get().asItem()),
+            Map.entry(Items.ROTTEN_FLESH, ModBlocks.ROTTEN_FLESH_BLOCK.get().asItem()),
+            Map.entry(Items.SALMON, ModBlocks.SALMON_BLOCK.get().asItem()),
+            Map.entry(Items.COOKED_SALMON, ModBlocks.COOKED_SALMON_BLOCK.get().asItem()),
+            Map.entry(Items.TROPICAL_FISH, ModBlocks.TROPICAL_FISH_BLOCK.get().asItem())
     );
 
     public ModRecipeProvider(PackOutput pOutput) {
@@ -77,7 +112,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                     .save(pWriter);
         });
         COMPACTABLES.forEach((item, block) -> {
-            new MeatCompactorRecipeBuilder(item, block, 1)
+            new MeatCompactorRecipeBuilder(item, block)
                     .unlockedBy(getHasName(block), has(block))
                     .save(pWriter);
             ShapedRecipeBuilder.shaped(RecipeCategory.MISC, block)

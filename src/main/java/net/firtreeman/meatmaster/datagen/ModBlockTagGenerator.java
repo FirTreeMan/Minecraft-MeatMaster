@@ -19,10 +19,37 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(ModTags.Blocks.UNCOOKED_MEAT_BLOCKS).add(
-                ModBlocks.CREEPER_MEAT_BLOCK.get()
+                ModBlocks.CREEPER_MEAT_BLOCK.get(),
+                ModBlocks.DOG_LIVER_BLOCK.get(),
+                ModBlocks.ENDERMEAT_BLOCK.get(),
+                ModBlocks.HORSE_MEAT_BLOCK.get(),
+                ModBlocks.CAT_MEAT_BLOCK.get(),
+                ModBlocks.SQUID_MEAT_BLOCK.get(),
+                ModBlocks.BEEF_BLOCK.get(),
+                ModBlocks.CHICKEN_BLOCK.get(),
+                ModBlocks.COD_BLOCK.get(),
+                ModBlocks.MUTTON_BLOCK.get(),
+                ModBlocks.PORKCHOP_BLOCK.get(),
+                ModBlocks.PUFFERFISH_BLOCK.get(),
+                ModBlocks.RABBIT_BLOCK.get(),
+                ModBlocks.ROTTEN_FLESH_BLOCK.get(),
+                ModBlocks.SALMON_BLOCK.get(),
+                ModBlocks.TROPICAL_FISH_BLOCK.get()
+
         );
         tag(ModTags.Blocks.COOKED_MEAT_BLOCKS).add(
-                ModBlocks.COOKED_CREEPER_MEAT_BLOCK.get()
+                ModBlocks.COOKED_CREEPER_MEAT_BLOCK.get(),
+                ModBlocks.COOKED_DOG_LIVER_BLOCK.get(),
+                ModBlocks.COOKED_HORSE_MEAT_BLOCK.get(),
+                ModBlocks.COOKED_CAT_MEAT_BLOCK.get(),
+                ModBlocks.COOKED_SQUID_MEAT_BLOCK.get(),
+                ModBlocks.COOKED_BEEF_BLOCK.get(),
+                ModBlocks.COOKED_CHICKEN_BLOCK.get(),
+                ModBlocks.COOKED_COD_BLOCK.get(),
+                ModBlocks.COOKED_MUTTON_BLOCK.get(),
+                ModBlocks.COOKED_PORKCHOP_BLOCK.get(),
+                ModBlocks.COOKED_RABBIT_BLOCK.get(),
+                ModBlocks.COOKED_SALMON_BLOCK.get()
         );
 
         tag(ModTags.Blocks.MEAT_BLOCKS).addTag(

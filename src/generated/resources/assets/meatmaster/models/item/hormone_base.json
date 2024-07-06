@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "meatmaster:item/hormone_base",
+    "layer1": "meatmaster:item/hormone_base_overlay"
+  }
+}

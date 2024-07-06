@@ -2,6 +2,7 @@ package net.firtreeman.meatmaster.screen;
 
 import net.firtreeman.meatmaster.block.ModBlocks;
 import net.firtreeman.meatmaster.block.entity.HormoneResearchStationBlockEntity;
+import net.firtreeman.meatmaster.util.HORMONE_TYPES;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,11 +12,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
+import org.openjdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 public class HormoneResearchStationMenu extends AbstractContainerMenu {
     public final HormoneResearchStationBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+
+    private int determinerOffset = 0;
 
     public HormoneResearchStationMenu(int pContainerId, Inventory inventory, FriendlyByteBuf extraData) {
         this(pContainerId, inventory, inventory.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(HormoneResearchStationBlockEntity.SLOT_COUNT));
@@ -32,23 +36,86 @@ public class HormoneResearchStationMenu extends AbstractContainerMenu {
         addPlayerHotbar(inventory);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 48, 35));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 116, 35));
+            this.addSlot(new SlotItemHandler(iItemHandler, 0, 28, 24));
+            this.addSlot(new SlotItemHandler(iItemHandler, 1, 130, 24));
+            this.addSlot(new SlotItemHandler(iItemHandler, 2, 79, 24));
+            this.addSlot(new SlotItemHandler(iItemHandler, 3, 28, 54));
+            this.addSlot(new SlotItemHandler(iItemHandler, 4, 130, 54));
         });
 
         addDataSlots(data);
     }
 
-    public boolean isProcessing() {
+    public boolean isProcessingResearch() {
         return data.get(0) > 0;
     }
 
-    public int getScaledProgress() {
+    public boolean isProcessingFill() {
+        return data.get(2) > 0;
+    }
+
+    public boolean hasBase() {
+        return blockEntity.hasBase();
+    }
+
+    public boolean hasDeterminer() {
+        return HORMONE_TYPES.values()[this.data.get(4)] != HORMONE_TYPES.NONE;
+    }
+
+    public void checkDeterminer() {
+        if (hasDeterminer())
+            this.determinerOffset++;
+        else this.determinerOffset = 0;
+    }
+
+    public int getDeterminerOffset() {
+        int determinerWidth = 75;
+        int determinerSpace = 25;
+        byte slowdown = 2;
+
+        this.determinerOffset %= slowdown * (determinerWidth - determinerSpace);
+
+        return this.determinerOffset / slowdown;
+    }
+
+    public int getScaledResearchProgress() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);
-        int progressArrowSize = 31;
+        int progressArrowSize = 29;
 
         return (maxProgress != 0 && progress != 0) ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getScaledFillProgressLeft() {
+        int progress = this.data.get(2);
+        int maxProgress = this.data.get(3);
+        int progressArrowSize = 78;
+        int progressLeftArrowSize = 39;
+
+        return (maxProgress != 0 && progress != 0) ? Math.min(progress * progressArrowSize / maxProgress, progressLeftArrowSize) : 0;
+    }
+
+    public int getScaledFillProgressRight() {
+        int progress = this.data.get(2);
+        int maxProgress = this.data.get(3);
+        int progressArrowSize = 78;
+        int progressRightArrowSize = 35;
+        int progressArrowDifference = progressArrowSize - progressRightArrowSize;
+
+        return (maxProgress != 0 && progress != 0) ? Math.max(progress * progressArrowSize / maxProgress - progressArrowDifference, 0) : 0;
+    }
+
+    public int getFillProgressRightHeight() {
+        int progressRightArrowOffset = 38;
+        int progressRightArrowHeight = 4;
+
+        return progressRightArrowOffset + progressRightArrowHeight *
+            switch (HORMONE_TYPES.values()[this.data.get(4)]) {
+                case GROWTH -> 0;
+                case BREEDING -> 1;
+                case YIELD -> 2;
+                default -> throw new ValueException("getFIllProgressRightHeight() should only be called when the determiner is valid");
+            };
     }
 
     // quickMoveStack() credit: diesieben07 | https://github.com/diesieben07/SevenCommons

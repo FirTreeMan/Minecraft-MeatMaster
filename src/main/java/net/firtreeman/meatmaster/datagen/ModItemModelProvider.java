@@ -40,8 +40,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 //        makeItem(ModItems.MEAT_RESIDUE);
 
         for (RegistryObject<Item> item: ModItems.ITEMS.getEntries()) {
-            if (!ModBlocks.BLOCKS.getEntries().contains(item))
-                makeItem(item);
+            if (!ModBlocks.BLOCKS.getEntries().contains(item)) {
+                if (item.equals(ModItems.SYRINGE_DART) || item.equals(ModItems.HORMONE_BASE))
+                    makeHormoneItem(item);
+                else makeItem(item);
+            }
         }
     }
 
@@ -50,5 +53,14 @@ public class ModItemModelProvider extends ItemModelProvider {
                 new ResourceLocation("item/generated"))
                     .texture("layer0",
                             new ResourceLocation(MeatMaster.MOD_ID, "item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder makeHormoneItem(RegistryObject<Item> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated"))
+                    .texture("layer0",
+                            new ResourceLocation(MeatMaster.MOD_ID, "item/" + item.getId().getPath()))
+                    .texture("layer1",
+                            new ResourceLocation(MeatMaster.MOD_ID, "item/" + item.getId().getPath() + "_overlay"));
     }
 }

@@ -26,6 +26,10 @@ public class MeatCompactorRecipeBuilder implements RecipeBuilder {
     private final int count;
     private final Advancement.Builder advancement = Advancement.Builder.recipeAdvancement();
 
+    public MeatCompactorRecipeBuilder(ItemLike ingredient, Item result) {
+        this(ingredient, result, 1);
+    }
+
     public MeatCompactorRecipeBuilder(ItemLike ingredient, Item result, int count) {
         this.ingredient = Ingredient.of(ingredient);
         this.result = result.asItem();

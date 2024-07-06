@@ -14,7 +14,10 @@ import net.firtreeman.meatmaster.loot.ModLootModifiers;
 import net.firtreeman.meatmaster.recipe.ModRecipes;
 import net.firtreeman.meatmaster.screen.*;
 import net.firtreeman.meatmaster.util.HORMONE_TYPES;
+import net.firtreeman.meatmaster.util.HormoneUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -27,19 +30,23 @@ import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -52,6 +59,7 @@ import org.slf4j.Logger;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -82,15 +90,17 @@ public class MeatMaster {
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new SpiceListener());
-        MinecraftForge.EVENT_BUS.register(new FoodTroughListener());
-        MinecraftForge.EVENT_BUS.register(new HormoneListener());
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        DispenserBlock.registerBehavior(ModItems.SYRINGE_DART.get(), new AbstractProjectileDispenseBehavior() {
+            protected Projectile getProjectile(Level level, Position pos, ItemStack stack) {
+                return HormoneArrow.dispenser(level, pos, stack);
+            }
+        });
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -121,8 +131,30 @@ public class MeatMaster {
             MenuScreens.register(ModMenuTypes.FOOD_TROUGH_MENU.get(), FoodTroughStationScreen::new);
             MenuScreens.register(ModMenuTypes.HORMONE_RESEARCH_MENU.get(), HormoneResearchStationScreen::new);
         }
+
+        @SubscribeEvent
+        public static void registerItemColorHandlers(RegisterColorHandlersEvent.Item event) {
+            event.register((stack, layer) -> {
+                if (layer != 1) return 0xFFFFFF;
+
+                CompoundTag tag = stack.getTag();
+                if (tag != null && tag.contains("HormoneType")) {
+                    return switch (HORMONE_TYPES.values()[tag.getInt("HormoneType")]) {
+                        case NONE -> 0xf6feff;
+                        case GROWTH -> 0x01f1ff;
+                        case BREEDING -> 0x00ff26;
+                        case YIELD -> 0xcbcdcd;
+                    };
+                }
+                return 0xf6feff;
+            },
+                    ModItems.HORMONE_BASE.get(),
+                    ModItems.SYRINGE_DART.get()
+            );
+        }
     }
 
+    @Mod.EventBusSubscriber(modid = MOD_ID)
     public static class SpiceListener {
 //        @SubscribeEvent
 //        public void onewtwtewt(PlayerEvent.ItemPickupEvent event) {
@@ -130,7 +162,7 @@ public class MeatMaster {
 //        }
 
         @SubscribeEvent
-        public void onUsedItem(LivingEntityUseItemEvent.Finish event) {
+        public static void onUsedItem(LivingEntityUseItemEvent.Finish event) {
             ItemStack itemStack = event.getItem();
             if (itemStack.isEdible() && itemStack.getTag() != null) {
                 if (event.getEntity() instanceof Player player) {
@@ -166,7 +198,7 @@ public class MeatMaster {
         }
 
         @SubscribeEvent
-        public void onCraftedItem(PlayerEvent.ItemCraftedEvent event) {
+        public static void onCraftedItem(PlayerEvent.ItemCraftedEvent event) {
             ItemStack output = event.getCrafting();
             Container inputs = event.getInventory();
 
@@ -207,9 +239,10 @@ public class MeatMaster {
         }
     }
 
+    @Mod.EventBusSubscriber(modid = MOD_ID)
     public static class FoodTroughListener {
         @SubscribeEvent
-        public void onEntityJoinLevel(EntityJoinLevelEvent event) {
+        public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
             TemptGoal temptGoal = null;
             int temptGoalPriority = 0;
             if (event.getEntity() instanceof Animal animal) {
@@ -227,17 +260,18 @@ public class MeatMaster {
         }
     }
 
+    @Mod.EventBusSubscriber(modid = MOD_ID)
     public static class HormoneListener {
-        private final int BREEDING_HORMONE_DELAY = 2;
-        private HashMap<AgeableMob, Integer> breedingHormoneHandler = new HashMap<>();
+        private static final int BREEDING_HORMONE_DELAY = 10;
+        private static final HashMap<AgeableMob, Integer> breedingHormoneHandler = new HashMap<>();
 
         @SubscribeEvent
-        public void onEntityShot(ProjectileImpactEvent event) {
-            if (event.getProjectile() instanceof HormoneArrow arrow) {
+        public static void onEntityShot(LivingHurtEvent event) {
+            if (event.getSource().getDirectEntity() instanceof HormoneArrow arrow) {
                 Entity entity = event.getEntity();
                 CompoundTag tag = entity.serializeNBT();
 
-                if (tag.contains("TakenHormone" + arrow.getHormoneType())) return;
+                if (tag.getCompound("ForgeData").contains("TakenHormone")) return;
 
                 boolean hormoneApplied = false;
                 switch (arrow.getHormoneType()) {
@@ -248,8 +282,9 @@ public class MeatMaster {
                         }
                     }
                     case BREEDING -> {
-                        if (entity instanceof Animal animal && animal.canFallInLove()) {
+                        if (entity instanceof Animal animal && !animal.isBaby()) {
                             hormoneApplied = true;
+                            System.out.println("HHHHHHHHJ");
                         }
                     }
                     case YIELD -> {
@@ -259,41 +294,53 @@ public class MeatMaster {
                     }
                 }
 
-                if (hormoneApplied)
-                    tag.putBoolean("TakenHormone" + arrow.getHormoneType(), true);
+                if (hormoneApplied) {
+                    CompoundTag forgeTag = tag.getCompound("ForgeData");
+                    forgeTag.putInt("TakenHormone", arrow.getHormoneType().ordinal());
+                    tag.put("ForgeData", forgeTag);
+                    entity.deserializeNBT(tag);
+                }
             }
         }
 
         @SubscribeEvent
-        public void onEntityBreeding(BabyEntitySpawnEvent event) {
+        public static void onEntityBreeding(BabyEntitySpawnEvent event) {
             Mob[] parents = new Mob[]{event.getParentA(), event.getParentB()};
 
-            for (Mob mob: parents)
-                if (mob instanceof AgeableMob ageableMob && ageableMob.serializeNBT().contains("TakenHormone" + HORMONE_TYPES.BREEDING))
+            for (Mob mob: parents) {
+                CompoundTag forgeTag = mob.serializeNBT().getCompound("ForgeData");
+                if (mob instanceof AgeableMob ageableMob && HORMONE_TYPES.values()[forgeTag.getInt("TakenHormone")] == HORMONE_TYPES.BREEDING)
                     breedingHormoneHandler.put(ageableMob, BREEDING_HORMONE_DELAY);
-        }
-
-        @SubscribeEvent
-        public void onLivingDrops(LivingDropsEvent event) {
-            if (event.getEntity() instanceof Mob mob && mob.serializeNBT().contains("TakenHormone" + HORMONE_TYPES.YIELD)) {
-                List<ItemEntity> drops = (List<ItemEntity>) event.getDrops();
-                int chosen = mob.level().getRandom().nextIntBetweenInclusive(0, drops.size());
-                drops.add(drops.get(chosen).copy());
             }
         }
 
         @SubscribeEvent
-        public void onTick(TickEvent.ServerTickEvent event) {
-            for (AgeableMob ageableMob: breedingHormoneHandler.keySet()) {
-                int age = breedingHormoneHandler.get(ageableMob) - 1;
-                if (age <= 0) {
+        public static void onLivingDrops(LivingDropsEvent event) {
+            if (event.getEntity() instanceof Mob mob) {
+                if (HORMONE_TYPES.values()[mob.serializeNBT().getCompound("ForgeData").getInt("TakenHormone")] == HORMONE_TYPES.YIELD) {
+                    List<ItemEntity> drops = event.getDrops().stream().filter(s -> s.getItem().getRarity() == Rarity.COMMON).toList();
+                    int chosen = mob.level().getRandom().nextIntBetweenInclusive(0, drops.size() - 1);
+                    event.getDrops().add(drops.get(chosen).copy());
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onTick(TickEvent.ServerTickEvent event) {
+            if (breedingHormoneHandler.isEmpty()) return;
+
+            for (Iterator<AgeableMob> i = breedingHormoneHandler.keySet().iterator(); i.hasNext();) {
+                AgeableMob ageableMob = i.next();
+                System.out.println(ageableMob.getAge());
+
+                int timeLeft = breedingHormoneHandler.get(ageableMob);
+                if (timeLeft <= 0) {
                     // sets age to what it would be on this tick if age was halved without any delay
                     ageableMob.setAge(Math.max(ageableMob.getAge() / 2 - BREEDING_HORMONE_DELAY / 2, 0));
-                    breedingHormoneHandler.remove(ageableMob);
-                    continue;
+                    i.remove();
                 }
-
-                breedingHormoneHandler.put(ageableMob, age);
+                else breedingHormoneHandler.put(ageableMob, breedingHormoneHandler.get(ageableMob) - 1);
+                System.out.println(ageableMob.getAge());
             }
         }
     }

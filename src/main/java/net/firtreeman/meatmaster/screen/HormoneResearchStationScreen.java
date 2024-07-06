@@ -31,17 +31,35 @@ public class HormoneResearchStationScreen extends AbstractContainerScreen<Hormon
 
         pGuiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
 
-        renderProgressArrow(pGuiGraphics, x, y);
+        renderResearchProgress(pGuiGraphics, x, y);
+        renderFillProgress(pGuiGraphics, x, y);
     }
 
-    protected void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
-        if (menu.isProcessing()) {
-            guiGraphics.blit(TEXTURE, x + 72, y + 38, 176, 0, menu.getScaledProgress(), 10);
+    protected void renderResearchProgress(GuiGraphics guiGraphics, int x, int y) {
+        if (menu.isProcessingResearch()) {
+            guiGraphics.blit(TEXTURE, x + 45, y + 30, 176, 0, menu.getScaledResearchProgress(), 4);
+
+            // determiner
+            if (menu.hasDeterminer()) {
+                guiGraphics.blit(TEXTURE, x + 102, y + 28, 176 + menu.getDeterminerOffset(), 4, 25, 8);
+                guiGraphics.blit(TEXTURE, x + 101, y + 27, 176, 12, 1, 10);
+                guiGraphics.blit(TEXTURE, x + 127, y + 27, 176, 12, 1, 10);
+            }
         }
+    }
+
+    protected void renderFillProgress(GuiGraphics guiGraphics, int x, int y) {
+        if (menu.isProcessingFill()) {
+            guiGraphics.blit(TEXTURE, x + 46, y + 60, 176, 34, menu.getScaledFillProgressLeft(), 4);
+            guiGraphics.blit(TEXTURE, x + 89, y + 60, 176, menu.getFillProgressRightHeight(), menu.getScaledFillProgressRight(), 4);
+        }
+        if (menu.hasBase())
+            guiGraphics.blit(TEXTURE, x + 84, y + 56, 176, 22, 6, 12);
     }
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        menu.checkDeterminer();
         renderBackground(pGuiGraphics);
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         renderTooltip(pGuiGraphics, pMouseX, pMouseY);
