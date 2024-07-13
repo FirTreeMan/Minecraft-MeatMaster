@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "meatmaster:guardian_heart_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "meatmaster:guardian_heart"
+  }
+}

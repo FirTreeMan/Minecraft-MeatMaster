@@ -1,0 +1,16 @@
+{
+  "type": "meatmaster:add_meat_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/sniffer"
+    },
+    {
+      "chance": 1.0,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "meatmaster:sniffer_toes",
+  "maxItems": 2,
+  "minItems": 0
+}

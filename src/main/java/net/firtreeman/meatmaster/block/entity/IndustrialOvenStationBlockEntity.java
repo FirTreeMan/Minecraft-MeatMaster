@@ -1,6 +1,7 @@
 package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.datagen.ModRecipeProvider;
 import net.firtreeman.meatmaster.recipe.IndustrialOvenRecipe;
 import net.firtreeman.meatmaster.screen.IndustrialOvenStationMenu;
 import net.firtreeman.meatmaster.util.SubItemStackHandler;
@@ -99,8 +100,8 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
             return fuelInputItemHandler.isItemValid(lowestCountSlot, stack);
         }
     };
-    private final ItemStackHandler blockInputItemHandler = new SubItemStackHandler(itemHandler, BLOCK_INPUT_SLOT);
-    private final ItemStackHandler outputItemHandler = new SubItemStackHandler(itemHandler, OUTPUT_SLOT);
+    private final ItemStackHandler blockInputItemHandler = new SubItemStackHandler(itemHandler, BLOCK_INPUT_SLOT).validateItems((slot, stack) -> ModRecipeProvider.COOKED_BLOCK_VARIANTS.keySet().stream().anyMatch(block -> stack.is(block.asItem())));
+    private final ItemStackHandler outputItemHandler = new SubItemStackHandler(itemHandler, OUTPUT_SLOT).outputOnly();
 
     protected final ContainerData data;
     private int progress = 0;

@@ -24,6 +24,19 @@ public class ModItems {
     public static final RegistryObject<Item> COOKED_CAT_MEAT = ITEMS.register("cooked_cat_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_CAT_MEAT)));
     public static final RegistryObject<Item> SQUID_MEAT = ITEMS.register("squid_meat", () -> new Item(new Item.Properties().food(ModFoods.SQUID_MEAT)));
     public static final RegistryObject<Item> COOKED_SQUID_MEAT = ITEMS.register("cooked_squid_meat", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SQUID_MEAT)));
+    public static final RegistryObject<Item> BAT_WINGS = ITEMS.register("bat_wings", () -> new Item(new Item.Properties().food(ModFoods.BAT_WINGS)));
+    public static final RegistryObject<Item> COOKED_BAT_WINGS = ITEMS.register("cooked_bat_wings", () -> new Item(new Item.Properties().food(ModFoods.COOKED_BAT_WINGS)));
+    public static final RegistryObject<Item> FROG_LEGS = ITEMS.register("frog_legs", () -> new Item(new Item.Properties().food(ModFoods.FROG_LEGS)));
+    public static final RegistryObject<Item> COOKED_FROG_LEGS = ITEMS.register("cooked_frog_legs", () -> new Item(new Item.Properties().food(ModFoods.COOKED_FROG_LEGS)));
+    public static final RegistryObject<Item> SNIFFER_TOES = ITEMS.register("sniffer_toes", () -> new Item(new Item.Properties().food(ModFoods.SNIFFER_TOES)));
+    public static final RegistryObject<Item> COOKED_SNIFFER_TOES = ITEMS.register("cooked_sniffer_toes", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SNIFFER_TOES)));
+    public static final RegistryObject<Item> MOLDY_SNIFFER_TOES = ITEMS.register("moldy_sniffer_toes", () -> new Item(new Item.Properties().food(ModFoods.MOLDY_SNIFFER_TOES)));
+    public static final RegistryObject<Item> PANDA_BALLS = ITEMS.register("panda_balls", () -> new Item(new Item.Properties().food(ModFoods.PANDA_BALLS)));
+    public static final RegistryObject<Item> COOKED_PANDA_BALLS = ITEMS.register("cooked_panda_balls", () -> new Item(new Item.Properties().food(ModFoods.COOKED_PANDA_BALLS)));
+    public static final RegistryObject<Item> GUARDIAN_HEART = ITEMS.register("guardian_heart", () -> new Item(new Item.Properties().food(ModFoods.GUARDIAN_HEART)));
+    public static final RegistryObject<Item> COOKED_GUARDIAN_HEART = ITEMS.register("cooked_guardian_heart", () -> new Item(new Item.Properties().food(ModFoods.COOKED_GUARDIAN_HEART)));
+    public static final RegistryObject<Item> ELDER_GUARDIAN_HEART = ITEMS.register("elder_guardian_heart", () -> new Item(new Item.Properties().food(ModFoods.ELDER_GUARDIAN_HEART)));
+    public static final RegistryObject<Item> COOKED_ELDER_GUARDIAN_HEART = ITEMS.register("cooked_elder_guardian_heart", () -> new Item(new Item.Properties().food(ModFoods.COOKED_ELDER_GUARDIAN_HEART)));
 
     public static final RegistryObject<Item> SAUSAGE = ITEMS.register("sausage", () -> new Item(new Item.Properties().food(ModFoods.SAUSAGE)));
     public static final RegistryObject<Item> COOKED_SAUSAGE = ITEMS.register("cooked_sausage", () -> new Item(new Item.Properties().food(ModFoods.COOKED_SAUSAGE)));

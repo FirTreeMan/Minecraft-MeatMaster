@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "lit=false": {
       "model": "meatmaster:block/meat_refinery_station"
+    },
+    "lit=true": {
+      "model": "meatmaster:block/meat_refinery_station_on"
     }
   }
 }

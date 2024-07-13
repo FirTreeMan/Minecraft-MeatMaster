@@ -58,7 +58,13 @@ public class MeatMasherStationBlockEntity extends BlockEntity implements MenuPro
             outputItemHandler.setStackInSlot(1, itemHandler.getStackInSlot(RESIDUE_OUTPUT_SLOT));
         }
     };
-    private final ItemStackHandler inputItemHandler = new SubItemStackHandler(itemHandler, INPUT_SLOT);
+    private final ItemStackHandler inputItemHandler = new SubItemStackHandler(itemHandler, INPUT_SLOT).validateItems(
+            (slot, stack) ->
+                stack.isEdible() &&
+                stack.getItem().isEdible() &&
+                stack.getFoodProperties(null).isMeat() &&
+                stack.getFoodProperties(null).getNutrition() >= 2
+    );
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(2) {
         @Override
         public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
@@ -189,7 +195,7 @@ public class MeatMasherStationBlockEntity extends BlockEntity implements MenuPro
         ItemStack input = this.itemHandler.getStackInSlot(INPUT_SLOT);
         FoodProperties foodProperties = input.getFoodProperties(null);
 
-        if (!input.isEdible() || !foodProperties.isMeat() || foodProperties.getNutrition() < 2) return false;
+        if (!inputItemHandler.isItemValid(0, input)) return false;
 
         ItemStack outputFood = sausageOutput(input);
 

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_panda_balls": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "meatmaster:panda_balls"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "meatmaster:cooked_panda_balls_from_campfire_cooking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_panda_balls",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "meatmaster:cooked_panda_balls_from_campfire_cooking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

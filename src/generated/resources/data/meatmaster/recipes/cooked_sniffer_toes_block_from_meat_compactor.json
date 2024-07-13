@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:cooked_sniffer_toes"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_sniffer_toes_block"
+  }
+}

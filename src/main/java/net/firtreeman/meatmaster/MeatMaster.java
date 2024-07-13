@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
 import net.firtreeman.meatmaster.block.ModBlocks;
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.block.custom.ShearableMeatBlock;
 import net.firtreeman.meatmaster.entity.ai.goal.FoodTroughTemptGoal;
 import net.firtreeman.meatmaster.entity.projectile.HormoneArrow;
 import net.firtreeman.meatmaster.item.ModCreativeModeTabs;
@@ -16,10 +17,16 @@ import net.firtreeman.meatmaster.screen.*;
 import net.firtreeman.meatmaster.util.HORMONE_TYPES;
 import net.firtreeman.meatmaster.util.HormoneUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
@@ -36,9 +43,13 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -48,6 +59,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -341,6 +353,32 @@ public class MeatMaster {
                 }
                 else breedingHormoneHandler.put(ageableMob, breedingHormoneHandler.get(ageableMob) - 1);
                 System.out.println(ageableMob.getAge());
+            }
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = MOD_ID)
+    public static class MiscListener {
+        @SubscribeEvent
+        public static void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
+            Block block = event.getLevel().getBlockState(event.getPos()).getBlock();
+            if (event.getItemStack().is(Items.SHEARS) && block instanceof ShearableMeatBlock shearableMeatBlock) {
+                if (event.getLevel().isClientSide) return;
+
+                BlockPos pos = event.getPos();
+                RandomSource rand = event.getLevel().getRandom();
+                BlockState newState = shearableMeatBlock.getPostShear().defaultBlockState();
+                Level level = event.getLevel();
+
+                event.getItemStack().hurtAndBreak(1, event.getEntity(), (e) -> e.broadcastBreakEvent(event.getEntity().getUsedItemHand()));
+                level.setBlock(event.getPos(), newState, 0);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(event.getEntity(), newState));
+
+                ItemEntity itemDrop = new ItemEntity(level, pos.getX() + 0.5F, pos.getY() + 1.0F, pos.getZ() + 0.5F, new ItemStack(shearableMeatBlock.getDrop()));
+                itemDrop.setDeltaMovement(itemDrop.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
+                level.addFreshEntity(itemDrop);
+
+                level.playSeededSound(null, pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, SoundEvents.PUMPKIN_CARVE, SoundSource.BLOCKS, 1.0F, 1.0F, 0);
             }
         }
     }

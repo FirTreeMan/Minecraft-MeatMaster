@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    },
+    {
+      "item": "meatmaster:bat_wings"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:bat_wings_block"
+  }
+}

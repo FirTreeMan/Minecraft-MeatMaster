@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 600,
+  "experience": 0.25,
+  "ingredient": {
+    "item": "meatmaster:elder_guardian_heart"
+  },
+  "result": "meatmaster:cooked_elder_guardian_heart"
+}

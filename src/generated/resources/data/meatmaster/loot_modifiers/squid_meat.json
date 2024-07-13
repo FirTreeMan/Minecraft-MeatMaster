@@ -1,5 +1,5 @@
 {
-  "type": "meatmaster:add_item",
+  "type": "meatmaster:add_meat_item",
   "conditions": [
     {
       "condition": "forge:loot_table_id",
@@ -11,5 +11,6 @@
     }
   ],
   "item": "meatmaster:squid_meat",
-  "maxItems": 2
+  "maxItems": 2,
+  "minItems": 0
 }

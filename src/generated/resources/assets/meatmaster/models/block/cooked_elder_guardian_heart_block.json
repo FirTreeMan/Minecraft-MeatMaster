@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "meatmaster:block/cooked_elder_guardian_heart_block"
+  }
+}

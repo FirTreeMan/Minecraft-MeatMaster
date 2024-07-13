@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.25,
+  "ingredient": {
+    "item": "meatmaster:sniffer_toes"
+  },
+  "result": "meatmaster:cooked_sniffer_toes"
+}

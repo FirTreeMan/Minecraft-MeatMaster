@@ -9,7 +9,7 @@ import java.util.function.BiPredicate;
 public class SubItemStackHandler extends ItemStackHandler {
     private final ItemStackHandler parent;
     private final int SLOT;
-    private BiPredicate<Integer, ItemStack> itemValidPredicate;
+    private BiPredicate<Integer, ItemStack> itemValidBiPredicate;
 
     public SubItemStackHandler(ItemStackHandler parent, int slot) {
         super(1);
@@ -17,8 +17,15 @@ public class SubItemStackHandler extends ItemStackHandler {
         this.SLOT = slot;
     }
 
+    public SubItemStackHandler outputOnly() {
+        return this.validateItems((slot, stack) -> false);
+    }
+
     public SubItemStackHandler validateItems(BiPredicate<Integer, ItemStack> itemValidPredicate) {
-        this.itemValidPredicate = itemValidPredicate;
+        if (this.itemValidBiPredicate != null)
+            throw new IllegalArgumentException("Already assigned a BiPredicate for SubItemStackHandler.isItemValid()");
+
+        this.itemValidBiPredicate = itemValidPredicate;
         return this;
     }
 
@@ -34,8 +41,8 @@ public class SubItemStackHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        if (itemValidPredicate == null)
+        if (itemValidBiPredicate == null)
             return super.isItemValid(slot, stack);
-        return itemValidPredicate.test(slot, stack);
+        return itemValidBiPredicate.test(slot, stack);
     }
 }

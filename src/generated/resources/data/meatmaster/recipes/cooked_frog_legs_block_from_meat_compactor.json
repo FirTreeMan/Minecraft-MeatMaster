@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    },
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_frog_legs_block"
+  }
+}

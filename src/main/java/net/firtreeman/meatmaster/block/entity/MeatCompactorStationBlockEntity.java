@@ -1,6 +1,7 @@
 package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.datagen.ModRecipeProvider;
 import net.firtreeman.meatmaster.recipe.MeatCompactorRecipe;
 import net.firtreeman.meatmaster.screen.MeatCompactorStationMenu;
 import net.firtreeman.meatmaster.util.SubItemStackHandler;
@@ -63,6 +64,11 @@ public class MeatCompactorStationBlockEntity extends BlockEntity implements Menu
         public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
             return itemHandler.extractItem(slot, amount, simulate);
         }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return ModRecipeProvider.COMPACTABLES.keySet().stream().anyMatch(stack::is);
+        }
     };
     private final ItemStackHandler inputCapabilityItemHandler = new ItemStackHandler(1) {
         @Override
@@ -75,7 +81,7 @@ public class MeatCompactorStationBlockEntity extends BlockEntity implements Menu
             return inputItemHandler.extractItem(lowestCountSlot, amount, simulate);
         }
     };
-    private final ItemStackHandler outputItemHandler = new SubItemStackHandler(itemHandler, OUTPUT_SLOT);
+    private final ItemStackHandler outputItemHandler = new SubItemStackHandler(itemHandler, OUTPUT_SLOT).outputOnly();
 
     protected final ContainerData data;
     private int progress = 0;

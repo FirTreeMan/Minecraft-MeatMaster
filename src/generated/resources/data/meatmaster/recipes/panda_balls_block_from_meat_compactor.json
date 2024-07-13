@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    },
+    {
+      "item": "meatmaster:panda_balls"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:panda_balls_block"
+  }
+}

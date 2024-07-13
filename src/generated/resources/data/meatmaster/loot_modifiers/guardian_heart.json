@@ -1,0 +1,15 @@
+{
+  "type": "meatmaster:add_meat_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/guardian"
+    },
+    {
+      "chance": 1.0,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "meatmaster:guardian_heart",
+  "minItems": 0
+}

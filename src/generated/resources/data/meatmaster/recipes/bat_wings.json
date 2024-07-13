@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "meatmaster:bat_wings_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "meatmaster:bat_wings"
+  }
+}

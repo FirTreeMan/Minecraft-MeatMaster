@@ -29,6 +29,19 @@
     "meatmaster:cooked_squid_meat",
     "meatmaster:sausage",
     "meatmaster:cooked_sausage",
+    "meatmaster:bat_wings",
+    "meatmaster:cooked_bat_wings",
+    "meatmaster:frog_legs",
+    "meatmaster:cooked_frog_legs",
+    "meatmaster:sniffer_toes",
+    "meatmaster:cooked_sniffer_toes",
+    "meatmaster:moldy_sniffer_toes",
+    "meatmaster:panda_balls",
+    "meatmaster:cooked_panda_balls",
+    "meatmaster:guardian_heart",
+    "meatmaster:cooked_guardian_heart",
+    "meatmaster:elder_guardian_heart",
+    "meatmaster:cooked_elder_guardian_heart",
     "#meatmaster:meat_blocks"
   ]
 }

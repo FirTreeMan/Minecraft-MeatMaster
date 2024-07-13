@@ -25,6 +25,14 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 ModBlocks.HORSE_MEAT_BLOCK.get(),
                 ModBlocks.CAT_MEAT_BLOCK.get(),
                 ModBlocks.SQUID_MEAT_BLOCK.get(),
+                ModBlocks.BAT_WINGS_BLOCK.get(),
+                ModBlocks.FROG_LEGS_BLOCK.get(),
+                ModBlocks.SNIFFER_TOES_BLOCK.get(),
+                ModBlocks.MOLDY_SNIFFER_TOES_BLOCK.get(),
+                ModBlocks.PANDA_BALLS_BLOCK.get(),
+                ModBlocks.GUARDIAN_HEART_BLOCK.get(),
+                ModBlocks.ELDER_GUARDIAN_HEART_BLOCK.get(),
+
                 ModBlocks.BEEF_BLOCK.get(),
                 ModBlocks.CHICKEN_BLOCK.get(),
                 ModBlocks.COD_BLOCK.get(),
@@ -43,6 +51,13 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 ModBlocks.COOKED_HORSE_MEAT_BLOCK.get(),
                 ModBlocks.COOKED_CAT_MEAT_BLOCK.get(),
                 ModBlocks.COOKED_SQUID_MEAT_BLOCK.get(),
+                ModBlocks.COOKED_BAT_WINGS_BLOCK.get(),
+                ModBlocks.COOKED_FROG_LEGS_BLOCK.get(),
+                ModBlocks.COOKED_SNIFFER_TOES_BLOCK.get(),
+                ModBlocks.COOKED_PANDA_BALLS_BLOCK.get(),
+                ModBlocks.COOKED_GUARDIAN_HEART_BLOCK.get(),
+                ModBlocks.COOKED_ELDER_GUARDIAN_HEART_BLOCK.get(),
+
                 ModBlocks.COOKED_BEEF_BLOCK.get(),
                 ModBlocks.COOKED_CHICKEN_BLOCK.get(),
                 ModBlocks.COOKED_COD_BLOCK.get(),
@@ -52,11 +67,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 ModBlocks.COOKED_SALMON_BLOCK.get()
         );
 
-        tag(ModTags.Blocks.MEAT_BLOCKS).addTag(
-                ModTags.Blocks.UNCOOKED_MEAT_BLOCKS
-        );
-        tag(ModTags.Blocks.MEAT_BLOCKS).addTag(
-                ModTags.Blocks.COOKED_MEAT_BLOCKS
-        );
+        tag(ModTags.Blocks.MEAT_BLOCKS).addTag(ModTags.Blocks.UNCOOKED_MEAT_BLOCKS);
+        tag(ModTags.Blocks.MEAT_BLOCKS).addTag(ModTags.Blocks.COOKED_MEAT_BLOCKS);
     }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:elder_guardian_heart_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_elder_guardian_heart_block"
+  }
+}

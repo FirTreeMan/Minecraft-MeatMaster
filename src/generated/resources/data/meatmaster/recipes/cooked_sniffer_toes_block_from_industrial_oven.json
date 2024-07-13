@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:sniffer_toes_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_sniffer_toes_block"
+  }
+}

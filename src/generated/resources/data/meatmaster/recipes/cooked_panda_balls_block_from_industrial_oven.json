@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:panda_balls_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_panda_balls_block"
+  }
+}

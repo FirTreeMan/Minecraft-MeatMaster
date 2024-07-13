@@ -3,6 +3,7 @@ package net.firtreeman.meatmaster.block.custom;
 import net.firtreeman.meatmaster.block.entity.MeatRefineryStationBlockEntity;
 import net.firtreeman.meatmaster.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,11 +12,16 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,9 +30,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class MeatRefineryStationBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    public static final BooleanProperty LIT;
 
     public MeatRefineryStationBlock(Properties pProperties) {
         super(pProperties);
+        this.registerDefaultState(this.getStateDefinition().any().setValue(LIT, false));
     }
 
     @Override
@@ -64,6 +72,10 @@ public class MeatRefineryStationBlock extends BaseEntityBlock {
         }
     }
 
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(LIT);
+    }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
@@ -77,5 +89,9 @@ public class MeatRefineryStationBlock extends BaseEntityBlock {
 
 
         return createTickerHelper(pBlockEntityType, ModBlockEntities.MEAT_REFINERY_SBE.get(), ((pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1)));
+    }
+
+    static {
+        LIT = BlockStateProperties.LIT;
     }
 }

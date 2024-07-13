@@ -51,7 +51,20 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 ModItems.SQUID_MEAT.get(),
                 ModItems.COOKED_SQUID_MEAT.get(),
                 ModItems.SAUSAGE.get(),
-                ModItems.COOKED_SAUSAGE.get()
+                ModItems.COOKED_SAUSAGE.get(),
+                ModItems.BAT_WINGS.get(),
+                ModItems.COOKED_BAT_WINGS.get(),
+                ModItems.FROG_LEGS.get(),
+                ModItems.COOKED_FROG_LEGS.get(),
+                ModItems.SNIFFER_TOES.get(),
+                ModItems.COOKED_SNIFFER_TOES.get(),
+                ModItems.MOLDY_SNIFFER_TOES.get(),
+                ModItems.PANDA_BALLS.get(),
+                ModItems.COOKED_PANDA_BALLS.get(),
+                ModItems.GUARDIAN_HEART.get(),
+                ModItems.COOKED_GUARDIAN_HEART.get(),
+                ModItems.ELDER_GUARDIAN_HEART.get(),
+                ModItems.COOKED_ELDER_GUARDIAN_HEART.get()
         );
 
         tag(ModTags.Items.MEAT_BLOCKS).add(
@@ -66,6 +79,19 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 ModBlocks.COOKED_CAT_MEAT_BLOCK.get().asItem(),
                 ModBlocks.SQUID_MEAT_BLOCK.get().asItem(),
                 ModBlocks.COOKED_SQUID_MEAT_BLOCK.get().asItem(),
+                ModBlocks.BAT_WINGS_BLOCK.get().asItem(),
+                ModBlocks.COOKED_BAT_WINGS_BLOCK.get().asItem(),
+                ModBlocks.FROG_LEGS_BLOCK.get().asItem(),
+                ModBlocks.COOKED_FROG_LEGS_BLOCK.get().asItem(),
+                ModBlocks.SNIFFER_TOES_BLOCK.get().asItem(),
+                ModBlocks.COOKED_SNIFFER_TOES_BLOCK.get().asItem(),
+                ModBlocks.MOLDY_SNIFFER_TOES_BLOCK.get().asItem(),
+                ModBlocks.PANDA_BALLS_BLOCK.get().asItem(),
+                ModBlocks.COOKED_PANDA_BALLS_BLOCK.get().asItem(),
+                ModBlocks.GUARDIAN_HEART_BLOCK.get().asItem(),
+                ModBlocks.COOKED_GUARDIAN_HEART_BLOCK.get().asItem(),
+                ModBlocks.ELDER_GUARDIAN_HEART_BLOCK.get().asItem(),
+                ModBlocks.COOKED_ELDER_GUARDIAN_HEART_BLOCK.get().asItem(),
 
                 ModBlocks.BEEF_BLOCK.get().asItem(),
                 ModBlocks.COOKED_BEEF_BLOCK.get().asItem(),

@@ -62,19 +62,9 @@ public class LathererStationBlockEntity extends BlockEntity implements MenuProvi
             };
         }
     };
-    private final ItemStackHandler spiceInputItemHandler = new SubItemStackHandler(itemHandler, SPICE_INPUT_SLOT) {
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return stack.is(ModTags.Items.SPICES);
-        }
-    };
-    private final ItemStackHandler foodInputItemHandler = new SubItemStackHandler(itemHandler, FOOD_INPUT_SLOT) {
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return stack.isEdible();
-        }
-    };
-    private final ItemStackHandler outputItemHandler = new SubItemStackHandler(itemHandler, OUTPUT_SLOT);
+    private final ItemStackHandler spiceInputItemHandler = new SubItemStackHandler(itemHandler, SPICE_INPUT_SLOT).validateItems((slot, stack) -> stack.is(ModTags.Items.SPICES));
+    private final ItemStackHandler foodInputItemHandler = new SubItemStackHandler(itemHandler, FOOD_INPUT_SLOT).validateItems((slot, stack) -> stack.isEdible());
+    private final ItemStackHandler outputItemHandler = new SubItemStackHandler(itemHandler, OUTPUT_SLOT).outputOnly();
 
     protected final ContainerData data;
     private int progress = 0;

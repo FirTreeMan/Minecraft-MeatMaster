@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    },
+    {
+      "item": "meatmaster:elder_guardian_heart"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:elder_guardian_heart_block"
+  }
+}

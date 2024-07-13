@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    },
+    {
+      "item": "meatmaster:moldy_sniffer_toes"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:moldy_sniffer_toes_block"
+  }
+}

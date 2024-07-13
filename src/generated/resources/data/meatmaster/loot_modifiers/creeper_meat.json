@@ -1,14 +1,15 @@
 {
-  "type": "meatmaster:add_item",
+  "type": "meatmaster:add_meat_item",
   "conditions": [
     {
       "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:entities/creeper"
     },
     {
-      "chance": 0.5,
+      "chance": 1.0,
       "condition": "minecraft:random_chance"
     }
   ],
-  "item": "meatmaster:creeper_meat"
+  "item": "meatmaster:creeper_meat",
+  "minItems": 0
 }

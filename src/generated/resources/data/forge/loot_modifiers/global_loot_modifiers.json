@@ -1,12 +1,19 @@
 {
   "entries": [
-    "meatmaster:endermeat",
     "meatmaster:cat_meat",
     "meatmaster:squid_meat",
-    "meatmaster:horse_meat",
+    "meatmaster:panda_balls",
+    "meatmaster:elder_guardian_heart",
     "meatmaster:cooked_blaze_meat",
+    "meatmaster:bat_wings",
+    "meatmaster:frog_legs",
+    "meatmaster:creeper_meat",
+    "meatmaster:endermeat",
+    "meatmaster:sniffer_toes",
+    "meatmaster:guardian_heart",
+    "meatmaster:horse_meat",
     "meatmaster:dog_liver",
-    "meatmaster:creeper_meat"
+    "meatmaster:moldy_sniffer_toes"
   ],
   "replace": false
 }

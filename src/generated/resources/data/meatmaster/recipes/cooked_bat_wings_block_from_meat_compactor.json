@@ -1,0 +1,35 @@
+{
+  "type": "meatmaster:meat_compactor",
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    },
+    {
+      "item": "meatmaster:cooked_bat_wings"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_bat_wings_block"
+  }
+}

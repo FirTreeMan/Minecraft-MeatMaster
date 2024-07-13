@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "meatmaster:cooked_sniffer_toes"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "item": "meatmaster:cooked_sniffer_toes_block"
+  },
+  "show_notification": true
+}

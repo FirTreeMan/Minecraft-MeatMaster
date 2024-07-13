@@ -30,6 +30,19 @@ public class ModBlocks {
     public static final RegistryObject<Block> COOKED_CAT_MEAT_BLOCK = registerBlock("cooked_cat_meat_block", MeatBlock::new);
     public static final RegistryObject<Block> SQUID_MEAT_BLOCK = registerBlock("squid_meat_block", MeatBlock::new);
     public static final RegistryObject<Block> COOKED_SQUID_MEAT_BLOCK = registerBlock("cooked_squid_meat_block", MeatBlock::new);
+    public static final RegistryObject<Block> BAT_WINGS_BLOCK = registerBlock("bat_wings_block", MeatBlock::new);
+    public static final RegistryObject<Block> COOKED_BAT_WINGS_BLOCK = registerBlock("cooked_bat_wings_block", MeatBlock::new);
+    public static final RegistryObject<Block> FROG_LEGS_BLOCK = registerBlock("frog_legs_block", MeatBlock::new);
+    public static final RegistryObject<Block> COOKED_FROG_LEGS_BLOCK = registerBlock("cooked_frog_legs_block", MeatBlock::new);
+    public static final RegistryObject<Block> SNIFFER_TOES_BLOCK = registerBlock("sniffer_toes_block", MeatBlock::new);
+    public static final RegistryObject<Block> COOKED_SNIFFER_TOES_BLOCK = registerBlock("cooked_sniffer_toes_block", MeatBlock::new);
+    public static final RegistryObject<Block> MOLDY_SNIFFER_TOES_BLOCK = registerBlock("moldy_sniffer_toes_block", () -> new ShearableMeatBlock(Blocks.MOSS_BLOCK.asItem(), SNIFFER_TOES_BLOCK.get()));
+    public static final RegistryObject<Block> PANDA_BALLS_BLOCK = registerBlock("panda_balls_block", MeatBlock::new);
+    public static final RegistryObject<Block> COOKED_PANDA_BALLS_BLOCK = registerBlock("cooked_panda_balls_block", MeatBlock::new);
+    public static final RegistryObject<Block> GUARDIAN_HEART_BLOCK = registerBlock("guardian_heart_block", MeatBlock::new);
+    public static final RegistryObject<Block> COOKED_GUARDIAN_HEART_BLOCK = registerBlock("cooked_guardian_heart_block", MeatBlock::new);
+    public static final RegistryObject<Block> ELDER_GUARDIAN_HEART_BLOCK = registerBlock("elder_guardian_heart_block", MeatBlock::new);
+    public static final RegistryObject<Block> COOKED_ELDER_GUARDIAN_HEART_BLOCK = registerBlock("cooked_elder_guardian_heart_block", MeatBlock::new);
 
     public static final RegistryObject<Block> BEEF_BLOCK = registerBlock("beef_block", MeatBlock::new);
     public static final RegistryObject<Block> COOKED_BEEF_BLOCK = registerBlock("cooked_beef_block", MeatBlock::new);

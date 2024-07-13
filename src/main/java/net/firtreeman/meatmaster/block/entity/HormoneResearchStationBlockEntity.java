@@ -97,36 +97,16 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
             };
         }
     };
-    private final ItemStackHandler meatInputItemHandler = new SubItemStackHandler(itemHandler, MEAT_INPUT_SLOT) {
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return stack.is(ModTags.Items.MEAT_BLOCKS);
-        }
-    };
+    private final ItemStackHandler meatInputItemHandler = new SubItemStackHandler(itemHandler, MEAT_INPUT_SLOT).validateItems((slot, stack) -> stack.is(ModTags.Items.MEAT_BLOCKS));
     private final ItemStackHandler determinerInputItemHandler = new SubItemStackHandler(itemHandler, DETERMINER_INPUT_SLOT) {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return DETERMINERS.containsKey(stack.getItem());
         }
     };
-    private final ItemStackHandler hormoneBaseItemHandler = new SubItemStackHandler(itemHandler, HORMONE_BASE_SLOT) {
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return stack.getItem() instanceof HormoneBaseItem;
-        }
-    };
-    private final ItemStackHandler syringeInputItemHandler = new SubItemStackHandler(itemHandler, SYRINGE_INPUT_SLOT) {
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return stack.is(ModItems.SYRINGE_DART.get()) && HormoneUtils.getHormone(stack) == HORMONE_TYPES.NONE;
-        }
-    };
-    private final ItemStackHandler hormoneOutputItemHandler = new SubItemStackHandler(itemHandler, HORMONE_OUTPUT_SLOT) {
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return false;
-        }
-    };
+    private final ItemStackHandler hormoneBaseItemHandler = new SubItemStackHandler(itemHandler, HORMONE_BASE_SLOT).validateItems((slot, stack) -> stack.getItem() instanceof HormoneBaseItem);
+    private final ItemStackHandler syringeInputItemHandler = new SubItemStackHandler(itemHandler, SYRINGE_INPUT_SLOT).validateItems((slot, stack) -> stack.is(ModItems.SYRINGE_DART.get()) && HormoneUtils.getHormone(stack) == HORMONE_TYPES.NONE);
+    private final ItemStackHandler hormoneOutputItemHandler = new SubItemStackHandler(itemHandler, HORMONE_OUTPUT_SLOT).outputOnly();
 
     protected final ContainerData data;
     private int research_progress = 0;

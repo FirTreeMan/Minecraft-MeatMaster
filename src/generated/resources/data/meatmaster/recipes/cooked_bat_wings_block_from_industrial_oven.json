@@ -1,0 +1,11 @@
+{
+  "type": "meatmaster:industrial_oven",
+  "ingredients": [
+    {
+      "item": "meatmaster:bat_wings_block"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:cooked_bat_wings_block"
+  }
+}
