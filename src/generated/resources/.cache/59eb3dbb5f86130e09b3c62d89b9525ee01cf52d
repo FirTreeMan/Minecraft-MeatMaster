@@ -1,9 +1,0 @@
-// 1.20.1	2024-06-10T20:25:52.4907114	Loot Tables
-dd015fa03eaebf2125781b55d0a7146b615929fe data/meatmaster/loot_tables/blocks/cooked_creeper_meat_block.json
-83c31617849d0d74bf6aa317f7196d441c5ba84a data/meatmaster/loot_tables/blocks/creeper_meat_block.json
-d2aba0816352f5911bdbd9e88a5fd34a7cc77043 data/meatmaster/loot_tables/blocks/food_trough_station.json
-a9588721dc45f459e1fddc01c0c2885422963fca data/meatmaster/loot_tables/blocks/industrial_oven_station.json
-565229f105945da760685903ba9cf2bfa0896b78 data/meatmaster/loot_tables/blocks/latherer_station.json
-4948bd3b08bcbc0b1008a7c5c48a9144ba0bae99 data/meatmaster/loot_tables/blocks/meat_compactor_station.json
-a8fe549c61eaee4f82c688a7c653fcca48cc31d3 data/meatmaster/loot_tables/blocks/meat_masher_station.json
-c69892fd67cfa3f155a296f024c10757241dc0c2 data/meatmaster/loot_tables/blocks/meat_refinery_station.json

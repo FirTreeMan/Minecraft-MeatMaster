@@ -14,6 +14,7 @@ public class ModTags {
         public static final TagKey<Item> MASHABLE_MEATS = tag("mashable_meats");
         public static final TagKey<Item> EXTRACTABLE_MEATS = tag("extractable_meats");
         public static final TagKey<Item> MEATS = tag("meats");
+        public static final TagKey<Item> MEAT_ITEMS = tag("meat_items");
         public static final TagKey<Item> MEAT_BLOCKS = tag("meat_blocks");
         public static final TagKey<Item> SPICES = tag("spices");
         public static final TagKey<Item> VALID_KEBAB_INGREDIENTS = tag("valid_kebab_ingredients");

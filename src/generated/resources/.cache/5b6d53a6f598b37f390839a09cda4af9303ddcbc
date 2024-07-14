@@ -1,9 +1,0 @@
-// 1.20.1	2024-05-19T00:00:33.9404739	Global Loot Modifiers : meatmaster
-ade95a7f12e1edd34b945d5b4d36f7bafade1495 data/forge/loot_modifiers/global_loot_modifiers.json
-494edcee56b58235fd4185818d79ff4a3c5b23de data/meatmaster/loot_modifiers/cat_meat.json
-1fcf08f71a47b378ec2bdc9b2c11ad912ba973a8 data/meatmaster/loot_modifiers/cooked_blaze_meat.json
-fba40b29c52dff8ad62a44fbbe3ced1645910d24 data/meatmaster/loot_modifiers/creeper_meat.json
-99407c574dade71d922f7f192ee7ecd159b19ea6 data/meatmaster/loot_modifiers/dog_liver.json
-4892b341a019a1d0747ea1db1c9ef3226720b46b data/meatmaster/loot_modifiers/endermeat.json
-acfcfcd081763a48619ad2c8b540677b85232da0 data/meatmaster/loot_modifiers/horse_meat.json
-61136d77d07e9ee6a7ef3f0061ab39d66c1cdecd data/meatmaster/loot_modifiers/squid_meat.json

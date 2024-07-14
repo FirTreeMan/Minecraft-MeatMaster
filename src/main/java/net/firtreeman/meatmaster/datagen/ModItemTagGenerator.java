@@ -22,7 +22,7 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        tag(ModTags.Items.MEATS).add(
+        tag(ModTags.Items.MEAT_ITEMS).add(
                 Items.BEEF,
                 Items.COOKED_BEEF,
                 Items.PORKCHOP,
@@ -112,6 +112,7 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 ModBlocks.TROPICAL_FISH_BLOCK.get().asItem()
         );
 
+        tag(ModTags.Items.MEATS).addTag(ModTags.Items.MEAT_ITEMS);
         tag(ModTags.Items.MEATS).addTag(ModTags.Items.MEAT_BLOCKS);
 
         tag(ModTags.Items.EXTRA_REFINABLE_MEATS).addTag(ModTags.Items.MEATS);

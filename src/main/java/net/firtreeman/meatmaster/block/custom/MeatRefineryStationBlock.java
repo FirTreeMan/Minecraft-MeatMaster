@@ -72,6 +72,7 @@ public class MeatRefineryStationBlock extends BaseEntityBlock {
         }
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(LIT);
     }

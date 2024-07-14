@@ -1,6 +1,8 @@
 package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.block.custom.IndustrialOvenStationBlock;
+import net.firtreeman.meatmaster.block.custom.MeatRefineryStationBlock;
 import net.firtreeman.meatmaster.datagen.ModRecipeProvider;
 import net.firtreeman.meatmaster.recipe.IndustrialOvenRecipe;
 import net.firtreeman.meatmaster.screen.IndustrialOvenStationMenu;
@@ -71,11 +73,13 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
     private final ItemStackHandler fuelInputItemHandler = new ItemStackHandler(3) {
         @Override
         public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            super.insertItem(slot, stack, simulate);
             return itemHandler.insertItem(slot, stack, simulate);
         }
 
         @Override
         public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            super.extractItem(slot, amount, simulate);
             return itemHandler.extractItem(slot, amount, simulate);
         }
 
@@ -107,7 +111,7 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
     private int progress = 0;
     private int max_progress = 100;
     private int[] litTime = new int[3];
-    private final int[] max_litTime = new int[3];
+    private int[] max_litTime = new int[3];
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IItemHandler> fuelInputLazyItemHandler = LazyOptional.empty();
@@ -254,17 +258,21 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
         progress = pTag.getInt("industrial_oven_station.progress");
         max_progress = pTag.getInt("industrial_oven_station.max_progress");
         litTime = pTag.getIntArray("industrial_oven_station.litTime");
-//        max_litTime = pTag.getIntArray("industrial_oven_station.max_litTime");
-        for (int i = 0; i < FUEL_INPUT_SLOT_MAX; i++)
-            max_litTime[i] = getBurnDuration(fuelInputItemHandler.getStackInSlot(i));
+        max_litTime = pTag.getIntArray("industrial_oven_station.max_litTime");
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        tickFuel();
-        if (hasRecipe() && hasFuel()) {
+        if (tickFuel()) {
+            if (!pState.getValue(IndustrialOvenStationBlock.LIT))
+                setState(pLevel, pPos, pState, true);
+        }
+        else if (pState.getValue(IndustrialOvenStationBlock.LIT))
+            setState(pLevel, pPos, pState, false);
+
+        if (hasRecipe()) {
             tryBurnFuel();
             increaseProgress();
-            setChanged(pLevel, pPos, pState);
+            setState(pLevel, pPos, pState, true);
 
             if (progressFinished()) {
                 makeItem();
@@ -276,6 +284,12 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
         calcLowestCountSlot();
     }
 
+    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean flag) {
+        pState = pState.setValue(IndustrialOvenStationBlock.LIT, flag);
+        setChanged(pLevel, pPos, pState);
+        pLevel.setBlock(pPos, pState, 3);
+    }
+
     private boolean hasRecipe() {
         Optional<IndustrialOvenRecipe> recipe = getCurrentRecipe();
 
@@ -283,7 +297,7 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
 
         ItemStack result = recipe.get().getResultItem(null);
 
-        return canAddStackToOutput(result);
+        return hasFuel() && canAddStackToOutput(result);
     }
 
     private Optional<IndustrialOvenRecipe> getCurrentRecipe() {
@@ -321,13 +335,20 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(), result.getCount() + this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount()));
     }
 
-    private void tickFuel() {
+    private boolean tickFuel() {
+        boolean isBurning = false;
         for (int i = 0; i < FUEL_INPUT_SLOT_MAX; i++)
-            if (litTime[i] > 0) litTime[i]--;
+            if (litTime[i] > 0) {
+                litTime[i]--;
+                isBurning = true;
+            }
+        return isBurning;
     }
 
     private boolean hasFuel(int slot) {
-        return litTime[slot] > 0 || getBurnDuration(fuelInputItemHandler.getStackInSlot(slot)) > 0;
+        ItemStack stack = fuelInputItemHandler.getStackInSlot(slot);
+
+        return litTime[slot] > 0 || getBurnDuration(stack) > 0;
     }
 
     private boolean hasFuel() {
@@ -338,7 +359,7 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
 
     private void tryBurnFuel() {
         for (int i = 0; i < FUEL_INPUT_SLOT_MAX; i++) {
-            if (litTime[i] <= 0) {
+            if (litTime[i] <= 0 && !fuelInputItemHandler.getStackInSlot(i).isEmpty()) {
                 max_litTime[i] = getBurnDuration(fuelInputItemHandler.getStackInSlot(i)) / 3;
                 litTime[i] = max_litTime[i];
                 fuelInputItemHandler.extractItem(i, 1, false);

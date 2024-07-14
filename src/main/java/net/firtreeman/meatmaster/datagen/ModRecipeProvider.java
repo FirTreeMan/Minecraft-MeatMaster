@@ -162,8 +162,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         new MeatRefineryRecipeBuilder(ModTags.Items.EXTRA_REFINABLE_MEATS, ModItems.MEAT_RESIDUE.get(), 1)
                 .unlockedBy(getHasName(Items.PORKCHOP), has(ModTags.Items.EXTRA_REFINABLE_MEATS))
                 .save(pWriter);
-        new IndustrialOvenRecipeBuilder(ModTags.Items.MEATS, ModItems.BITTER_CRUMBS.get())
-                .unlockedBy(getHasName(Items.PORKCHOP), has(ModTags.Items.MEATS))
+        new IndustrialOvenRecipeBuilder(ModTags.Items.MEAT_ITEMS, ModItems.BITTER_CRUMBS.get())
+                .unlockedBy(getHasName(Items.PORKCHOP), has(ModTags.Items.MEAT_ITEMS))
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SYRINGE_DART.get())

@@ -2,7 +2,7 @@
   "type": "meatmaster:industrial_oven",
   "ingredients": [
     {
-      "tag": "meatmaster:meats"
+      "tag": "meatmaster:meat_items"
     }
   ],
   "result": {

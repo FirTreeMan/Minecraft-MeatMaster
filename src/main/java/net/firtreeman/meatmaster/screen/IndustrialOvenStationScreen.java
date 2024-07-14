@@ -40,9 +40,9 @@ public class IndustrialOvenStationScreen extends AbstractContainerScreen<Industr
         if (menu.isProcessing() || menu.isBurning()) {
             int[] scaledLit = menu.getScaledLit();
 
-            guiGraphics.blit(TEXTURE, x + 90, y + 35, 176, 14, menu.getScaledProgress(), 17);
+            guiGraphics.blit(TEXTURE, x + 89, y + 34, 176, 14, menu.getScaledProgress(), 17);
             for (int i = 0; i < scaledLit.length; i++)
-                guiGraphics.blit(TEXTURE, x + 49, y + 17 + i * 19, 176, 0, scaledLit[i], 14);
+                guiGraphics.blit(TEXTURE, x + 50, y + 17 + i * 19, 176, 0, scaledLit[i], 14);
         }
     }
 
