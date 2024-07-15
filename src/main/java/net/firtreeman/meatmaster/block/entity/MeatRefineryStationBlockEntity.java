@@ -171,8 +171,8 @@ public class MeatRefineryStationBlockEntity extends BlockEntity implements MenuP
         }
     }
 
-    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean flag) {
-        pState = pState.setValue(MeatRefineryStationBlock.LIT, flag);
+    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean isLit) {
+        pState = pState.setValue(MeatRefineryStationBlock.LIT, isLit);
         setChanged(pLevel, pPos, pState);
         pLevel.setBlock(pPos, pState, 3);
     }

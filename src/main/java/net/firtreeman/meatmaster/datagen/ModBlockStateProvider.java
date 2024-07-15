@@ -23,7 +23,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         litBlockWithItem(ModBlocks.MEAT_REFINERY_STATION, "meat_refinery_station");
         simpleBlockWithItem(ModBlocks.MEAT_COMPACTOR_STATION.get(), new ModelFile.UncheckedModelFile(modLoc("block/meat_compactor_station")));
-        simpleBlockWithItem(ModBlocks.LATHERER_STATION.get(), new ModelFile.UncheckedModelFile(modLoc("block/latherer_station")));
+        litBlockWithItem(ModBlocks.LATHERER_STATION, "latherer_station");
         litHorizBlockWithItem(ModBlocks.INDUSTRIAL_OVEN_STATION, "industrial_oven_station");
         simpleBlockWithItem(ModBlocks.MEAT_MASHER_STATION.get(), new ModelFile.UncheckedModelFile(modLoc("block/meat_masher_station")));
         simpleBlockWithItem(ModBlocks.FOOD_TROUGH_STATION.get(), new ModelFile.UncheckedModelFile(modLoc("block/food_trough_station")));

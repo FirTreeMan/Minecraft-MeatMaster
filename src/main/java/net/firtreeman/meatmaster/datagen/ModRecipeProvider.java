@@ -9,16 +9,14 @@ import net.firtreeman.meatmaster.item.ModItems;
 import net.firtreeman.meatmaster.util.ModTags;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.List;
 import java.util.Map;
@@ -164,6 +162,79 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(pWriter);
         new IndustrialOvenRecipeBuilder(ModTags.Items.MEAT_ITEMS, ModItems.BITTER_CRUMBS.get())
                 .unlockedBy(getHasName(Items.PORKCHOP), has(ModTags.Items.MEAT_ITEMS))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MEAT_REFINERY_STATION.get())
+                .pattern("IPI")
+                .pattern("C C")
+                .pattern("CCC")
+                .define('I', Items.IRON_INGOT)
+                .define('P', Items.PISTON)
+                .define('C', Items.COBBLESTONE)
+                .unlockedBy(getHasName(Items.PISTON), has(Items.PISTON))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MEAT_COMPACTOR_STATION.get())
+                .pattern("OPO")
+                .pattern("P P")
+                .pattern("OPO")
+                .define('O', Items.OBSIDIAN)
+                .define('P', Items.PISTON)
+                .unlockedBy(getHasName(Items.PISTON), has(Items.PISTON))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.LATHERER_STATION.get())
+                .pattern("WIW")
+                .pattern(" B ")
+                .pattern("WIW")
+                .define('W', ItemTags.PLANKS)
+                .define('I', Items.IRON_INGOT)
+                .define('B', Items.BUCKET)
+                .unlockedBy(getHasName(Items.PISTON), has(Items.PISTON))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.INDUSTRIAL_OVEN_STATION.get())
+                .pattern("INI")
+                .pattern("OQO")
+                .pattern("ONO")
+                .define('I', Items.IRON_INGOT)
+                .define('N', Items.NETHER_BRICK)
+                .define('O', Items.OBSIDIAN)
+                .define('Q', Items.QUARTZ)
+                .unlockedBy(getHasName(Items.QUARTZ), has(Items.QUARTZ))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MEAT_MASHER_STATION.get())
+                .pattern("CCC")
+                .pattern("P P")
+                .pattern("CIC")
+                .define('C', Items.COBBLESTONE)
+                .define('I', Items.IRON_BLOCK)
+                .define('P', Items.PISTON)
+                .unlockedBy(getHasName(Items.PISTON), has(Items.PISTON))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FOOD_TROUGH_STATION.get())
+                .pattern("G G")
+                .pattern("WBW")
+                .pattern("FWF")
+                .define('G', Items.GOLD_INGOT)
+                .define('W', ItemTags.PLANKS)
+                .define('B', Items.BUCKET)
+                .define('F', ItemTags.FENCES)
+                .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.HORMONE_RESEARCH_STATION.get())
+                .pattern("GNG")
+                .pattern("ISI")
+                .pattern("IDI")
+                .define('G', Items.GOLD_BLOCK)
+                .define('N', Items.NETHERITE_INGOT)
+                .define('I', Items.IRON_BLOCK)
+                .define('S', Items.NETHER_STAR)
+                .define('D', Items.DIAMOND_BLOCK)
+                .unlockedBy(getHasName(Items.NETHER_STAR), has(Items.NETHER_STAR))
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SYRINGE_DART.get())

@@ -109,7 +109,7 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
 
     protected final ContainerData data;
     private int progress = 0;
-    private int max_progress = 100;
+    private int max_progress = 200;
     private int[] litTime = new int[3];
     private int[] max_litTime = new int[3];
 
@@ -284,8 +284,8 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
         calcLowestCountSlot();
     }
 
-    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean flag) {
-        pState = pState.setValue(IndustrialOvenStationBlock.LIT, flag);
+    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean isLit) {
+        pState = pState.setValue(IndustrialOvenStationBlock.LIT, isLit);
         setChanged(pLevel, pPos, pState);
         pLevel.setBlock(pPos, pState, 3);
     }
@@ -360,7 +360,7 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
     private void tryBurnFuel() {
         for (int i = 0; i < FUEL_INPUT_SLOT_MAX; i++) {
             if (litTime[i] <= 0 && !fuelInputItemHandler.getStackInSlot(i).isEmpty()) {
-                max_litTime[i] = getBurnDuration(fuelInputItemHandler.getStackInSlot(i)) / 3;
+                max_litTime[i] = (int) (getBurnDuration(fuelInputItemHandler.getStackInSlot(i)) / 4);
                 litTime[i] = max_litTime[i];
                 fuelInputItemHandler.extractItem(i, 1, false);
             }

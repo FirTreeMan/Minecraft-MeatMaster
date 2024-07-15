@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "lit=false": {
       "model": "meatmaster:block/latherer_station"
+    },
+    "lit=true": {
+      "model": "meatmaster:block/latherer_station_on"
     }
   }
 }

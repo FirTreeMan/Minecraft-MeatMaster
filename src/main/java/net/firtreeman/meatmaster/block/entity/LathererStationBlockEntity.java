@@ -1,6 +1,8 @@
 package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.block.custom.LathererStationBlock;
+import net.firtreeman.meatmaster.block.custom.MeatRefineryStationBlock;
 import net.firtreeman.meatmaster.item.custom.SpiceItem;
 import net.firtreeman.meatmaster.screen.LathererStationMenu;
 import net.firtreeman.meatmaster.util.ModTags;
@@ -191,7 +193,7 @@ public class LathererStationBlockEntity extends BlockEntity implements MenuProvi
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (hasRecipe()) {
             increaseProgress();
-            setChanged(pLevel, pPos, pState);
+            setState(pLevel, pPos, pState, true);
 
             if (progressFinished()) {
                 makeItem();
@@ -199,7 +201,15 @@ public class LathererStationBlockEntity extends BlockEntity implements MenuProvi
             }
         } else {
             resetProgress();
+            if (pState.getValue(LathererStationBlock.LIT))
+                setState(pLevel, pPos, pState, false);
         }
+    }
+
+    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean isLit) {
+        pState = pState.setValue(LathererStationBlock.LIT, isLit);
+        setChanged(pLevel, pPos, pState);
+        pLevel.setBlock(pPos, pState, 3);
     }
 
     private boolean hasRecipe() {
