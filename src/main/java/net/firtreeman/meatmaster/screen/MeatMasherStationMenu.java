@@ -32,7 +32,7 @@ public class MeatMasherStationMenu extends AbstractContainerMenu {
         addPlayerHotbar(inventory);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 49, 34));
+            this.addSlot(new SlotItemHandler(iItemHandler, 0, 50, 35));
             this.addSlot(new SlotItemHandler(iItemHandler, 1, 110, 20));
             this.addSlot(new SlotItemHandler(iItemHandler, 2, 110, 49));
         });

@@ -1,6 +1,7 @@
 package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.block.custom.IndustrialOvenStationBlock;
 import net.firtreeman.meatmaster.item.ModItems;
 import net.firtreeman.meatmaster.item.custom.HormoneArrowItem;
 import net.firtreeman.meatmaster.item.custom.HormoneBaseItem;
@@ -241,10 +242,13 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
+        boolean flag = false;
+
         checkHormone();
         if (hasResearchRecipe()) {
             increaseResearchProgress();
-            setChanged(pLevel, pPos, pState);
+            setState(pLevel, pPos, pState, true);
+            flag = true;
 
             if (researchProgressFinished()) {
                 makeResearchItem();
@@ -253,7 +257,8 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
         }
         if (hasFillRecipe()) {
             increaseFillProgress();
-            setChanged(pLevel, pPos, pState);
+            setState(pLevel, pPos, pState, true);
+            flag = true;
 
             if (fillProgressFinished()) {
                 makeFillItem();
@@ -262,6 +267,15 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
         } else {
             resetFillProgress();
         }
+
+        if (!flag && pState.getValue(IndustrialOvenStationBlock.LIT))
+            setState(pLevel, pPos, pState, false);
+    }
+
+    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean isLit) {
+        pState = pState.setValue(IndustrialOvenStationBlock.LIT, isLit);
+        setChanged(pLevel, pPos, pState);
+        pLevel.setBlock(pPos, pState, 3);
     }
 
     private boolean hasMeat() {

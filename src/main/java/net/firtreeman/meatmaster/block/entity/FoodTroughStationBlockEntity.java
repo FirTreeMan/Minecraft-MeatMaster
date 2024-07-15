@@ -142,7 +142,6 @@ public class FoodTroughStationBlockEntity extends BlockEntity implements MenuPro
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (canTransfer() && pState.getValue(FoodTroughStationBlock.LIT)) {
-            System.out.println("z");
             tryTransfer(pLevel, pPos);
             setChanged(pLevel, pPos, pState);
         } else {
@@ -160,6 +159,12 @@ public class FoodTroughStationBlockEntity extends BlockEntity implements MenuPro
         return cooldownTime <= 0;
     }
 
+    private boolean stacksMatch(ItemStack stackA, ItemStack stackB) {
+        if (stackA.getItem() != stackB.getItem()) return false;
+
+        return stackA.hasTag() ? stackA.getTag().equals(stackB.getTag()) : !stackB.hasTag();
+    }
+
     public boolean tryTransfer(Level pLevel, BlockPos pPos) {
 
         ArrayList<FoodTroughStationBlockEntity> nearbyFoodTroughs = new ArrayList<>();
@@ -167,27 +172,25 @@ public class FoodTroughStationBlockEntity extends BlockEntity implements MenuPro
 
         for (Direction direction: SPREAD_DIRECTIONS) {
             BlockPos blockpos = pPos.relative(direction);
-            BlockState blockstate = pLevel.getBlockState(blockpos);
             BlockEntity blockEntity = pLevel.getBlockEntity(blockpos);
 
             if (blockEntity instanceof FoodTroughStationBlockEntity foundFoodTrough) {
-                System.out.println("a");
-                if ((foundFoodTrough.isEmpty() || foundFoodTrough.getItem() == this.getItem()) && foundFoodTrough.getCount() < this.getCount()) {
+                if ((foundFoodTrough.isEmpty() || stacksMatch(foundFoodTrough.getStack(), this.getStack()) && foundFoodTrough.getCount() < this.getCount())) {
                     totalCount += foundFoodTrough.getCount();
                     nearbyFoodTroughs.add(foundFoodTrough);
                 }
             }
         }
-        System.out.println(totalCount);
 
         if (nearbyFoodTroughs.isEmpty()) return false;
 
-        int meanCount = totalCount / (nearbyFoodTroughs.size() + 1);
         for (FoodTroughStationBlockEntity foundFoodTrough: nearbyFoodTroughs) {
             if (foundFoodTrough.isEmpty())
                 foundFoodTrough.itemHandler.setStackInSlot(INPUT_SLOT, new ItemStack(this.getItem(), 0));
 
-            int difference = meanCount - foundFoodTrough.getCount();
+            int difference = (this.getCount() - foundFoodTrough.getCount()) / 2;
+            if (difference <= 0) continue;
+
             this.getStack().shrink(difference);
             foundFoodTrough.getStack().grow(difference);
         }

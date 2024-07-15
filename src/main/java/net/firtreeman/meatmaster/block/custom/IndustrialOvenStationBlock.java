@@ -40,7 +40,7 @@ public class IndustrialOvenStationBlock extends BaseEntityBlock {
 
     public IndustrialOvenStationBlock(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue(HORIZONTAL_FACING, Direction.NORTH)).setValue(LIT, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(LIT, false));
     }
 
     @Override

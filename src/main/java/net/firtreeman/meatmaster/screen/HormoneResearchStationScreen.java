@@ -41,20 +41,20 @@ public class HormoneResearchStationScreen extends AbstractContainerScreen<Hormon
 
             // determiner
             if (menu.hasDeterminer()) {
-                guiGraphics.blit(TEXTURE, x + 102, y + 28, 176 + menu.getDeterminerOffset(), 4, 25, 8);
-                guiGraphics.blit(TEXTURE, x + 101, y + 27, 176, 12, 1, 10);
-                guiGraphics.blit(TEXTURE, x + 127, y + 27, 176, 12, 1, 10);
+                guiGraphics.blit(TEXTURE, x + 102, y + 27, 176 + menu.getDeterminerOffset(), 4, 25, 8);
+                guiGraphics.blit(TEXTURE, x + 101, y + 26, 176, 12, 1, 10);
+                guiGraphics.blit(TEXTURE, x + 127, y + 26, 176, 12, 1, 10);
             }
         }
     }
 
     protected void renderFillProgress(GuiGraphics guiGraphics, int x, int y) {
         if (menu.isProcessingFill()) {
-            guiGraphics.blit(TEXTURE, x + 46, y + 60, 176, 34, menu.getScaledFillProgressLeft(), 4);
-            guiGraphics.blit(TEXTURE, x + 89, y + 60, 176, menu.getFillProgressRightHeight(), menu.getScaledFillProgressRight(), 4);
+            guiGraphics.blit(TEXTURE, x + 46, y + 59, 176, 34, menu.getScaledFillProgressLeft(), 4);
+            guiGraphics.blit(TEXTURE, x + 89, y + 59, 176, menu.getFillProgressRightHeight(), menu.getScaledFillProgressRight(), 4);
         }
         if (menu.hasBase())
-            guiGraphics.blit(TEXTURE, x + 84, y + 56, 176, 22, 6, 12);
+            guiGraphics.blit(TEXTURE, x + 84, y + 55, 176, 22, 6, 12);
     }
 
     @Override

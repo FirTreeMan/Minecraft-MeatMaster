@@ -1,6 +1,7 @@
 package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.block.custom.MeatRefineryStationBlock;
 import net.firtreeman.meatmaster.datagen.ModRecipeProvider;
 import net.firtreeman.meatmaster.recipe.MeatCompactorRecipe;
 import net.firtreeman.meatmaster.screen.MeatCompactorStationMenu;
@@ -206,7 +207,7 @@ public class MeatCompactorStationBlockEntity extends BlockEntity implements Menu
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (hasRecipe()) {
             increaseProgress();
-            setChanged(pLevel, pPos, pState);
+            setState(pLevel, pPos, pState, true);
 
             if (progressFinished()) {
                 makeItem();
@@ -214,8 +215,16 @@ public class MeatCompactorStationBlockEntity extends BlockEntity implements Menu
             }
         } else {
             resetProgress();
+            if (pState.getValue(MeatRefineryStationBlock.LIT))
+                setState(pLevel, pPos, pState, false);
         }
         calcLowestCountSlot();
+    }
+
+    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean isLit) {
+        pState = pState.setValue(MeatRefineryStationBlock.LIT, isLit);
+        setChanged(pLevel, pPos, pState);
+        pLevel.setBlock(pPos, pState, 3);
     }
 
     private boolean hasRecipe() {

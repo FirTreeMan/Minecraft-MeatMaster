@@ -1,6 +1,7 @@
 package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
+import net.firtreeman.meatmaster.block.custom.MeatRefineryStationBlock;
 import net.firtreeman.meatmaster.item.ModFoods;
 import net.firtreeman.meatmaster.item.ModItems;
 import net.firtreeman.meatmaster.screen.MeatMasherStationMenu;
@@ -180,7 +181,7 @@ public class MeatMasherStationBlockEntity extends BlockEntity implements MenuPro
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
         if (hasRecipe()) {
             increaseProgress();
-            setChanged(pLevel, pPos, pState);
+            setState(pLevel, pPos, pState, true);
 
             if (progressFinished()) {
                 makeItem();
@@ -188,12 +189,19 @@ public class MeatMasherStationBlockEntity extends BlockEntity implements MenuPro
             }
         } else {
             resetProgress();
+            if (pState.getValue(MeatRefineryStationBlock.LIT))
+                setState(pLevel, pPos, pState, false);
         }
+    }
+
+    private void setState(Level pLevel, BlockPos pPos, BlockState pState, boolean isLit) {
+        pState = pState.setValue(MeatRefineryStationBlock.LIT, isLit);
+        setChanged(pLevel, pPos, pState);
+        pLevel.setBlock(pPos, pState, 3);
     }
 
     private boolean hasRecipe() {
         ItemStack input = this.itemHandler.getStackInSlot(INPUT_SLOT);
-        FoodProperties foodProperties = input.getFoodProperties(null);
 
         if (!inputItemHandler.isItemValid(0, input)) return false;
 

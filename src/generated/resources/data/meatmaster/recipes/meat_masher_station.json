@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "P P",
+    "CIC"
+  ],
+  "result": {
+    "item": "meatmaster:meat_masher_station"
+  },
+  "show_notification": true
+}

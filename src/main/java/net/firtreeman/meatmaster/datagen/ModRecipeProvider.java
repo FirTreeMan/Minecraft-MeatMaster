@@ -176,10 +176,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MEAT_COMPACTOR_STATION.get())
                 .pattern("OPO")
-                .pattern("P P")
-                .pattern("OPO")
+                .pattern("PDP")
+                .pattern("CPC")
                 .define('O', Items.OBSIDIAN)
+                .define('D', Items.DIAMOND)
                 .define('P', Items.PISTON)
+                .define('C', Items.COBBLESTONE)
                 .unlockedBy(getHasName(Items.PISTON), has(Items.PISTON))
                 .save(pWriter);
 
@@ -215,14 +217,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FOOD_TROUGH_STATION.get())
-                .pattern("G G")
+                .pattern("R R")
                 .pattern("WBW")
                 .pattern("FWF")
-                .define('G', Items.GOLD_INGOT)
+                .define('R', Items.REDSTONE)
                 .define('W', ItemTags.PLANKS)
                 .define('B', Items.BUCKET)
                 .define('F', ItemTags.FENCES)
-                .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                .unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.HORMONE_RESEARCH_STATION.get())

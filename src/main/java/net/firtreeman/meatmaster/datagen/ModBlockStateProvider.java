@@ -22,15 +22,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 makeBlockWithItem(block);
 
         litBlockWithItem(ModBlocks.MEAT_REFINERY_STATION, "meat_refinery_station");
-        simpleBlockWithItem(ModBlocks.MEAT_COMPACTOR_STATION.get(), new ModelFile.UncheckedModelFile(modLoc("block/meat_compactor_station")));
+        litBlockWithItem(ModBlocks.MEAT_COMPACTOR_STATION, "meat_compactor_station");
         litBlockWithItem(ModBlocks.LATHERER_STATION, "latherer_station");
         litHorizBlockWithItem(ModBlocks.INDUSTRIAL_OVEN_STATION, "industrial_oven_station");
-        simpleBlockWithItem(ModBlocks.MEAT_MASHER_STATION.get(), new ModelFile.UncheckedModelFile(modLoc("block/meat_masher_station")));
-        simpleBlockWithItem(ModBlocks.FOOD_TROUGH_STATION.get(), new ModelFile.UncheckedModelFile(modLoc("block/food_trough_station")));
+        litBlockWithItem(ModBlocks.MEAT_MASHER_STATION, "meat_masher_station");
+        blockWithItem(ModBlocks.FOOD_TROUGH_STATION, "food_trough_station");
+        litHorizBlockWithItem(ModBlocks.HORMONE_RESEARCH_STATION, "hormone_research_station");
     }
 
     private void makeBlockWithItem(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
+    }
+
+    private void blockWithItem(RegistryObject<Block> blockRegistryObject, String blockName) {
+        simpleBlockWithItem(blockRegistryObject.get(), new ModelFile.UncheckedModelFile(modLoc("block/" + blockName)));
     }
 
     private void blockEntityItem(RegistryObject<Block> blockRegistryObject, String blockName) {

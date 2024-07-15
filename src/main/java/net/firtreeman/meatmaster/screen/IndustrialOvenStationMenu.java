@@ -34,8 +34,8 @@ public class IndustrialOvenStationMenu extends AbstractContainerMenu {
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 31, 16));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 31, 34));
-            this.addSlot(new SlotItemHandler(iItemHandler, 2, 31, 52));
+            this.addSlot(new SlotItemHandler(iItemHandler, 1, 31, 35));
+            this.addSlot(new SlotItemHandler(iItemHandler, 2, 31, 54));
             this.addSlot(new SlotItemHandler(iItemHandler, 3, 66, 35));
             this.addSlot(new SlotItemHandler(iItemHandler, 4, 126, 35));
         });

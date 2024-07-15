@@ -5,6 +5,7 @@ import net.firtreeman.meatmaster.block.ModBlocks;
 import net.firtreeman.meatmaster.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -69,5 +70,17 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         tag(ModTags.Blocks.MEAT_BLOCKS).addTag(ModTags.Blocks.UNCOOKED_MEAT_BLOCKS);
         tag(ModTags.Blocks.MEAT_BLOCKS).addTag(ModTags.Blocks.COOKED_MEAT_BLOCKS);
+
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+                ModBlocks.MEAT_REFINERY_STATION.get(),
+                ModBlocks.MEAT_COMPACTOR_STATION.get(),
+                ModBlocks.INDUSTRIAL_OVEN_STATION.get(),
+                ModBlocks.MEAT_MASHER_STATION.get(),
+                ModBlocks.HORMONE_RESEARCH_STATION.get()
+        );
+        tag(BlockTags.MINEABLE_WITH_AXE).add(
+                ModBlocks.LATHERER_STATION.get(),
+                ModBlocks.FOOD_TROUGH_STATION.get()
+        );
     }
 }

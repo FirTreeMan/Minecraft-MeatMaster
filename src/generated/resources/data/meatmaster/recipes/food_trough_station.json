@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "F": {
+      "tag": "minecraft:fences"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "R R",
+    "WBW",
+    "FWF"
+  ],
+  "result": {
+    "item": "meatmaster:food_trough_station"
+  },
+  "show_notification": true
+}

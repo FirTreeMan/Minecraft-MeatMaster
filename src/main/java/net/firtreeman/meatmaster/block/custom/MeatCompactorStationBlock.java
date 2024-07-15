@@ -16,6 +16,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,9 +27,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class MeatCompactorStationBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    public static final BooleanProperty LIT;
 
     public MeatCompactorStationBlock(Properties pProperties) {
         super(pProperties);
+        this.registerDefaultState(this.getStateDefinition().any().setValue(LIT, false));
     }
 
     @Override
@@ -64,6 +69,11 @@ public class MeatCompactorStationBlock extends BaseEntityBlock {
         }
     }
 
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(LIT);
+    }
+
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
@@ -77,5 +87,9 @@ public class MeatCompactorStationBlock extends BaseEntityBlock {
 
 
         return createTickerHelper(pBlockEntityType, ModBlockEntities.MEAT_COMPACTOR_SBE.get(), ((pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1)));
+    }
+
+    static {
+        LIT = BlockStateProperties.LIT;
     }
 }
