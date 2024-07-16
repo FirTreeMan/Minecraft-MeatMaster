@@ -1,0 +1,15 @@
+{
+  "type": "meatmaster:hormone_research",
+  "hormone_type": 3,
+  "ingredients": [
+    {
+      "tag": "meatmaster:meat_blocks"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:hormone_base"
+  }
+}

@@ -14,6 +14,8 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<MeatCompactorRecipe>> MEAT_COMPACTOR_SERIALIZER = SERIALIZERS.register("meat_compactor", () -> MeatCompactorRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<IndustrialOvenRecipe>> INDUSTRIAL_OVEN_SERIALIZER = SERIALIZERS.register("industrial_oven", () -> IndustrialOvenRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<MeatMasherRecipe>> MEAT_MASHER_SERIALIZER = SERIALIZERS.register("meat_masher", () -> MeatMasherRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<HormoneResearchRecipe>> HORMONE_RESEARCH_SERIALIZER = SERIALIZERS.register("hormone_research", () -> HormoneResearchRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<HormoneFillRecipe>> HORMONE_FILL_SERIALIZER = SERIALIZERS.register("hormone_fill", () -> HormoneFillRecipe.Serializer.INSTANCE);
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

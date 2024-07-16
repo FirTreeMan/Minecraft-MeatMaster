@@ -5,6 +5,9 @@ import net.firtreeman.meatmaster.block.custom.IndustrialOvenStationBlock;
 import net.firtreeman.meatmaster.item.ModItems;
 import net.firtreeman.meatmaster.item.custom.HormoneArrowItem;
 import net.firtreeman.meatmaster.item.custom.HormoneBaseItem;
+import net.firtreeman.meatmaster.recipe.HormoneFillRecipe;
+import net.firtreeman.meatmaster.recipe.HormoneResearchRecipe;
+import net.firtreeman.meatmaster.recipe.MeatRefineryRecipe;
 import net.firtreeman.meatmaster.screen.HormoneResearchStationMenu;
 import net.firtreeman.meatmaster.util.HORMONE_TYPES;
 import net.firtreeman.meatmaster.util.HormoneUtils;
@@ -37,6 +40,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -294,26 +298,44 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
     }
 
     private boolean hasResearchRecipe() {
-        if (this.hormone == HORMONE_TYPES.NONE) return false;
-        if (!hasBase() || HormoneUtils.getHormone(this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT)) != HORMONE_TYPES.NONE) return false;
+        Optional<HormoneResearchRecipe> recipe = getCurrentResearchRecipe();
 
-        ItemStack hormoneBase = HORMONE_BASES.get(this.hormone).copy();
+        if (recipe.isEmpty()) return false;
+
+        ItemStack result = recipe.get().getResultItem(null);
 
         return hasMeat();
     }
 
+     private Optional<HormoneResearchRecipe> getCurrentResearchRecipe() {
+        SimpleContainer inventory = new SimpleContainer(SLOT_COUNT);
+
+        for (int i = 0; i < SLOT_COUNT; i++)
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+
+        return this.level.getRecipeManager().getRecipeFor(HormoneResearchRecipe.Type.INSTANCE, inventory, level);
+    }
+
     private boolean hasFillRecipe() {
-        if (HormoneUtils.getHormone(this.itemHandler.getStackInSlot(HORMONE_BASE_SLOT)) != HORMONE_TYPES.NONE) {
-            ItemStack hormoneArrow = HORMONE_ARROWS.get(this.hormone).copy();
+        Optional<HormoneFillRecipe> recipe = getCurrentFillRecipe();
 
-            return hasSyringes() && canAddStackToFillOutput(hormoneArrow);
-        }
+        if (recipe.isEmpty()) return false;
 
-        return false;
+        ItemStack result = recipe.get().getResultItem(null);
+
+        return canAddStackToFillOutput(result);
+    }
+
+    private Optional<HormoneFillRecipe> getCurrentFillRecipe() {
+        SimpleContainer inventory = new SimpleContainer(SLOT_COUNT);
+
+        for (int i = 0; i < SLOT_COUNT; i++)
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
+
+        return this.level.getRecipeManager().getRecipeFor(HormoneFillRecipe.Type.INSTANCE, inventory, level);
     }
 
     private boolean canAddStackToFillOutput(ItemStack result) {
-
         ItemStack output = this.itemHandler.getStackInSlot(HORMONE_OUTPUT_SLOT);
 
         return (output.isEmpty() || (output.is(result.getItem()) && HormoneUtils.getHormone(output) == HormoneUtils.getHormone(result)))
@@ -339,16 +361,21 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
     }
 
     private void makeResearchItem() {
-        HORMONE_TYPES hormoneType = DETERMINERS.getOrDefault(this.itemHandler.getStackInSlot(DETERMINER_INPUT_SLOT).getItem(), HORMONE_TYPES.NONE);
+        Optional<HormoneResearchRecipe> recipe = getCurrentResearchRecipe();
 
-        ItemStack result = HORMONE_BASES.get(hormoneType).copy();
+        if (recipe.isEmpty()) return;
+
+        ItemStack result = recipe.get().getResultItem(null);
 
         this.itemHandler.setStackInSlot(HORMONE_BASE_SLOT, result);
     }
 
     private void makeFillItem() {
-        ItemStack result = HORMONE_ARROWS.get(this.hormone).copy();
-        System.out.println(HormoneUtils.getHormone(result));
+        Optional<HormoneFillRecipe> recipe = getCurrentFillRecipe();
+
+        if (recipe.isEmpty()) return;
+
+        ItemStack result = recipe.get().getResultItem(null);
 
         this.itemHandler.extractItem(SYRINGE_INPUT_SLOT, 1, false);
         this.itemHandler.setStackInSlot(HORMONE_OUTPUT_SLOT, HormoneUtils.itemStackOf(result.getItem(), result.getCount() + this.itemHandler.getStackInSlot(HORMONE_OUTPUT_SLOT).getCount(), HormoneUtils.getHormone(result)));

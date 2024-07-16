@@ -1,0 +1,15 @@
+{
+  "type": "meatmaster:hormone_research",
+  "hormone_type": 1,
+  "ingredients": [
+    {
+      "tag": "meatmaster:meat_blocks"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:hormone_base"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "meatmaster:hormone_fill",
+  "hormone_type": 1,
+  "ingredients": [
+    {
+      "item": "meatmaster:hormone_base"
+    },
+    {
+      "item": "meatmaster:syringe_dart"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:syringe_dart"
+  }
+}

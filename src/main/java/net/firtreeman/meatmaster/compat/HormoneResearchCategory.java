@@ -1,0 +1,57 @@
+package net.firtreeman.meatmaster.compat;
+
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.firtreeman.meatmaster.MeatMaster;
+import net.firtreeman.meatmaster.block.ModBlocks;
+import net.firtreeman.meatmaster.recipe.HormoneResearchRecipe;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
+public class HormoneResearchCategory implements IRecipeCategory<HormoneResearchRecipe> {
+    public static final ResourceLocation UID = new ResourceLocation(MeatMaster.MOD_ID, "hormone_research");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(MeatMaster.MOD_ID, "textures/gui/hormone_research_station.png");
+    public static final RecipeType<HormoneResearchRecipe> HORMONE_RESEARCH_RECIPE_TYPE = new RecipeType<>(UID, HormoneResearchRecipe.class);
+
+    private final IDrawable background;
+    private final IDrawable icon;
+
+    public HormoneResearchCategory(IGuiHelper helper) {
+        this.background = helper.createDrawable(TEXTURE, 4, 4, 168, 77);
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.HORMONE_RESEARCH_STATION.get()));
+    }
+
+    @Override
+    public RecipeType<HormoneResearchRecipe> getRecipeType() {
+        return HORMONE_RESEARCH_RECIPE_TYPE;
+    }
+
+    @Override
+    public Component getTitle() {
+        return Component.translatable("block.meatmaster.hormone_research_station");
+    }
+
+    @Override
+    public IDrawable getBackground() {
+        return this.background;
+    }
+
+    @Override
+    public IDrawable getIcon() {
+        return this.icon;
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, HormoneResearchRecipe recipe, IFocusGroup iFocusGroup) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 24, 20).addIngredients(recipe.getIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.CATALYST, 126, 20).addIngredients(recipe.getIngredients().get(1));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 75, 20).addItemStack(recipe.getResultItem(null));
+    }
+}

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cooked_panda_balls": {
+    "has_hormone_base": {
       "conditions": {
         "items": [
           {
             "items": [
-              "meatmaster:cooked_panda_balls"
+              "meatmaster:hormone_base"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "meatmaster:sausage"
+        "recipe": "meatmaster:syringe_dart"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_cooked_panda_balls",
+      "has_hormone_base",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "meatmaster:sausage"
+      "meatmaster:syringe_dart"
     ]
   },
   "sends_telemetry_event": false

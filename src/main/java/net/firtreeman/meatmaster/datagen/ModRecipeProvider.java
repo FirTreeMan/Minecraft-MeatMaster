@@ -2,10 +2,8 @@ package net.firtreeman.meatmaster.datagen;
 
 import net.firtreeman.meatmaster.MeatMaster;
 import net.firtreeman.meatmaster.block.ModBlocks;
-import net.firtreeman.meatmaster.datagen.recipes.IndustrialOvenRecipeBuilder;
-import net.firtreeman.meatmaster.datagen.recipes.MeatCompactorRecipeBuilder;
-import net.firtreeman.meatmaster.datagen.recipes.MeatMasherRecipeBuilder;
-import net.firtreeman.meatmaster.datagen.recipes.MeatRefineryRecipeBuilder;
+import net.firtreeman.meatmaster.block.entity.HormoneResearchStationBlockEntity;
+import net.firtreeman.meatmaster.datagen.recipes.*;
 import net.firtreeman.meatmaster.item.ModItems;
 import net.firtreeman.meatmaster.util.ModTags;
 import net.minecraft.data.PackOutput;
@@ -161,6 +159,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, item, 9)
                     .requires(block)
                     .unlockedBy(getHasName(block), has(block))
+                    .save(pWriter);
+        });
+
+        HormoneResearchStationBlockEntity.DETERMINERS.forEach((determiner, hormoneType) -> {
+            new HormoneResearchRecipeBuilder(ModTags.Items.MEAT_BLOCKS, determiner, hormoneType)
+                    .unlockedBy(getHasName(determiner), has(determiner))
+                    .save(pWriter);
+        });
+
+        HormoneResearchStationBlockEntity.HORMONE_BASES.forEach((hormoneType, hormoneBase) -> {
+            new HormoneFillRecipeBuilder(hormoneBase.getItem(), hormoneType)
+                    .unlockedBy(getHasName(hormoneBase.getItem()), has(hormoneBase.getItem()))
                     .save(pWriter);
         });
 
