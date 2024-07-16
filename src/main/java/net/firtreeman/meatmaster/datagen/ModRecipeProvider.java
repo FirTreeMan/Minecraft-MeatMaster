@@ -4,6 +4,7 @@ import net.firtreeman.meatmaster.MeatMaster;
 import net.firtreeman.meatmaster.block.ModBlocks;
 import net.firtreeman.meatmaster.datagen.recipes.IndustrialOvenRecipeBuilder;
 import net.firtreeman.meatmaster.datagen.recipes.MeatCompactorRecipeBuilder;
+import net.firtreeman.meatmaster.datagen.recipes.MeatMasherRecipeBuilder;
 import net.firtreeman.meatmaster.datagen.recipes.MeatRefineryRecipeBuilder;
 import net.firtreeman.meatmaster.item.ModItems;
 import net.firtreeman.meatmaster.util.ModTags;
@@ -125,6 +126,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                     .unlockedBy(getHasName(uncooked), has(uncooked)).save(pWriter, MeatMaster.MOD_ID + ":" + getItemName(cooked) + "_from_smoking");
             SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(uncooked), RecipeCategory.FOOD, cooked, 0.25F, 600)
                     .unlockedBy(getHasName(uncooked), has(uncooked)).save(pWriter, MeatMaster.MOD_ID + ":" + getItemName(cooked) + "_from_campfire_cooking");
+
+            if (uncooked.getFoodProperties().getNutrition() >= 2)
+                new MeatMasherRecipeBuilder(uncooked, ModItems.SAUSAGE.get(), ModItems.MEAT_RESIDUE.get())
+                    .unlockedBy(getHasName(uncooked), has(uncooked))
+                    .save(pWriter);
+            if (cooked.getFoodProperties().getNutrition() >= 2)
+                new MeatMasherRecipeBuilder(cooked, ModItems.SAUSAGE.get(), ModItems.MEAT_RESIDUE.get())
+                    .unlockedBy(getHasName(cooked), has(cooked))
+                    .save(pWriter);
         });
         COOKED_BLOCK_VARIANTS.forEach((uncooked, cooked) -> {
             new IndustrialOvenRecipeBuilder(uncooked.asItem(), cooked.asItem())

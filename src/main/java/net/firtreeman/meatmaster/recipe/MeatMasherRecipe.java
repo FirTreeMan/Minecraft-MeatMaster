@@ -3,6 +3,7 @@ package net.firtreeman.meatmaster.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.firtreeman.meatmaster.MeatMaster;
+import net.firtreeman.meatmaster.block.entity.MeatMasherStationBlockEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,24 +15,34 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-public class IndustrialOvenRecipe implements Recipe<SimpleContainer> {
+import java.util.Random;
+
+public class MeatMasherRecipe implements Recipe<SimpleContainer> {
     private final NonNullList<Ingredient> inputItems;
     private final ItemStack output;
+    private final ItemStack failOutput;
     private final ResourceLocation id;
 
-    public IndustrialOvenRecipe(NonNullList<Ingredient> inputItems, ItemStack output, ResourceLocation id) {
+    public MeatMasherRecipe(NonNullList<Ingredient> inputItems, ItemStack output, ItemStack failOutput, ResourceLocation id) {
         this.inputItems = inputItems;
         this.output = output;
+        this.failOutput = failOutput;
         this.id = id;
+    }
+
+    public ItemStack getOutput() {
+        return output.copy();
+    }
+
+    public ItemStack getFailOutput() {
+        return failOutput.copy();
     }
 
     @Override
     public boolean matches(SimpleContainer pContainer, Level pLevel) {
         if (pLevel.isClientSide()) return false;
 
-        for (int i = 0; i < inputItems.size(); i++)
-            if (!inputItems.get(i).test(pContainer.getItem(i))) return false;
-        return true;
+        return inputItems.get(0).test(pContainer.getItem(0));
     }
 
     @Override
@@ -51,7 +62,7 @@ public class IndustrialOvenRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
-        return output.copy();
+        return Math.random() > MeatMasherStationBlockEntity.MALFUNCTION_CHANCE ? output.copy() : failOutput.copy();
     }
 
     @Override
@@ -69,18 +80,19 @@ public class IndustrialOvenRecipe implements Recipe<SimpleContainer> {
         return Type.INSTANCE;
     }
 
-    public static class Type implements RecipeType<IndustrialOvenRecipe> {
+    public static class Type implements RecipeType<MeatMasherRecipe> {
         public static final Type INSTANCE = new Type();
-        public static final String ID = "industrial_oven";
+        public static final String ID = "meat_masher";
     }
 
-    public static class Serializer implements RecipeSerializer<IndustrialOvenRecipe> {
+    public static class Serializer implements RecipeSerializer<MeatMasherRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(MeatMaster.MOD_ID, "industrial_oven");
+        public static final ResourceLocation ID = new ResourceLocation(MeatMaster.MOD_ID, "meat_masher");
 
         @Override
-        public IndustrialOvenRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
+        public MeatMasherRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "result"));
+            ItemStack failOutput = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "fail_result"));
 
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
@@ -89,11 +101,11 @@ public class IndustrialOvenRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new IndustrialOvenRecipe(inputs, output, pRecipeId);
+            return new MeatMasherRecipe(inputs, output, failOutput, pRecipeId);
         }
 
         @Override
-        public @Nullable IndustrialOvenRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+        public @Nullable MeatMasherRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(pBuffer.readInt(), Ingredient.EMPTY);
 
             for (int i = 0; i < inputs.size(); i++) {
@@ -101,18 +113,20 @@ public class IndustrialOvenRecipe implements Recipe<SimpleContainer> {
             }
 
             ItemStack output = pBuffer.readItem();
+            ItemStack failOutput = pBuffer.readItem();
 
-            return new IndustrialOvenRecipe(inputs, output, pRecipeId);
+            return new MeatMasherRecipe(inputs, output, failOutput, pRecipeId);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, IndustrialOvenRecipe pRecipe) {
+        public void toNetwork(FriendlyByteBuf pBuffer, MeatMasherRecipe pRecipe) {
             pBuffer.writeInt(pRecipe.inputItems.size());
 
             for (Ingredient ingredient: pRecipe.getIngredients())
                 ingredient.toNetwork(pBuffer);
 
-            pBuffer.writeItemStack(pRecipe.getResultItem(null), false);
+            pBuffer.writeItemStack(pRecipe.getOutput(), false);
+            pBuffer.writeItemStack(pRecipe.getFailOutput(), false);
         }
     }
 }

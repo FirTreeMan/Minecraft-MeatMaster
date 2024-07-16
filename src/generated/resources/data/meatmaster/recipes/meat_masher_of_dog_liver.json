@@ -1,0 +1,14 @@
+{
+  "type": "meatmaster:meat_masher",
+  "fail_result": {
+    "item": "meatmaster:meat_residue"
+  },
+  "ingredients": [
+    {
+      "item": "meatmaster:dog_liver"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:sausage"
+  }
+}

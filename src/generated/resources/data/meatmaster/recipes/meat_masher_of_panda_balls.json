@@ -1,0 +1,14 @@
+{
+  "type": "meatmaster:meat_masher",
+  "fail_result": {
+    "item": "meatmaster:meat_residue"
+  },
+  "ingredients": [
+    {
+      "item": "meatmaster:panda_balls"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:sausage"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "meatmaster:meat_masher",
+  "fail_result": {
+    "count": 3,
+    "item": "meatmaster:meat_residue"
+  },
+  "ingredients": [
+    {
+      "item": "meatmaster:guardian_heart"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "meatmaster:sausage"
+  }
+}

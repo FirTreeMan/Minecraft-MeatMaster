@@ -4,6 +4,8 @@ import net.firtreeman.meatmaster.block.ModBlockEntities;
 import net.firtreeman.meatmaster.block.custom.MeatRefineryStationBlock;
 import net.firtreeman.meatmaster.item.ModFoods;
 import net.firtreeman.meatmaster.item.ModItems;
+import net.firtreeman.meatmaster.recipe.MeatMasherRecipe;
+import net.firtreeman.meatmaster.recipe.MeatRefineryRecipe;
 import net.firtreeman.meatmaster.screen.MeatMasherStationMenu;
 import net.firtreeman.meatmaster.util.SubItemStackHandler;
 import net.minecraft.core.BlockPos;
@@ -30,14 +32,15 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class MeatMasherStationBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_COUNT = 3;
     private static final int INPUT_SLOT = 0;
     private static final int SAUSAGE_OUTPUT_SLOT = 1;
     private static final int RESIDUE_OUTPUT_SLOT = 2;
 
-    private static final int SAUSAGE_NUTRITION = ModFoods.COOKED_SAUSAGE.getNutrition();
-    private static final double MALFUNCTION_CHANCE = 0.1;
+    public static final double MALFUNCTION_CHANCE = 0.1;
 
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(SLOT_COUNT) {
@@ -201,30 +204,40 @@ public class MeatMasherStationBlockEntity extends BlockEntity implements MenuPro
     }
 
     private boolean hasRecipe() {
-        ItemStack input = this.itemHandler.getStackInSlot(INPUT_SLOT);
+        Optional<MeatMasherRecipe> recipe = getCurrentRecipe();
 
-        if (!inputItemHandler.isItemValid(0, input)) return false;
+        if (recipe.isEmpty()) return false;
 
-        ItemStack outputFood = sausageOutput(input);
+        int resultCount = recipe.get().getResultItem(null).getCount();
 
-        return canAddStackToOutput(outputFood);
+        return canAddStackToOutput(resultCount, recipe.get().getOutput(), recipe.get().getFailOutput());
     }
 
-    private ItemStack sausageOutput(ItemStack input) {
-        FoodProperties foodProperties = input.getFoodProperties(null);
+//    private ItemStack sausageOutput(ItemStack input) {
+//        FoodProperties foodProperties = input.getFoodProperties(null);
+//
+//        assert input.isEdible() && foodProperties.isMeat() && foodProperties.getNutrition() >= 2;
+//
+//        int nutrition = foodProperties.getNutrition();
+//        int sausageOutput = nutrition / SAUSAGE_NUTRITION;
+//
+//        ItemStack sausageResult = new ItemStack(ModItems.SAUSAGE.get(), sausageOutput);
+//
+//        return sausageResult;
+//    }
 
-        assert input.isEdible() && foodProperties.isMeat() && foodProperties.getNutrition() >= 2;
+    private Optional<MeatMasherRecipe> getCurrentRecipe() {
+        SimpleContainer inventory = new SimpleContainer(SLOT_COUNT);
 
-        int nutrition = foodProperties.getNutrition();
-        int sausageOutput = nutrition / SAUSAGE_NUTRITION;
+        for (int i = 0; i < SLOT_COUNT; i++)
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
 
-        ItemStack sausageResult = new ItemStack(ModItems.SAUSAGE.get(), sausageOutput);
-
-        return sausageResult;
+        return this.level.getRecipeManager().getRecipeFor(MeatMasherRecipe.Type.INSTANCE, inventory, level);
     }
 
-    private boolean canAddStackToOutput(ItemStack sausageResult) {
-        return canAddStackToOutput(sausageResult, SAUSAGE_OUTPUT_SLOT) && canAddStackToOutput(new ItemStack(ModItems.MEAT_RESIDUE.get(), sausageResult.getCount()), RESIDUE_OUTPUT_SLOT);
+    private boolean canAddStackToOutput(int itemCount, ItemStack output, ItemStack failOutput) {
+        return canAddStackToOutput(new ItemStack(output.getItem(), itemCount), SAUSAGE_OUTPUT_SLOT) &&
+                canAddStackToOutput(new ItemStack(failOutput.getItem(), itemCount), RESIDUE_OUTPUT_SLOT);
     }
 
     private boolean canAddStackToOutput(ItemStack result, int slot) {
@@ -243,12 +256,19 @@ public class MeatMasherStationBlockEntity extends BlockEntity implements MenuPro
     }
 
     private void makeItem() {
-        ItemStack sausageResult = sausageOutput(this.itemHandler.getStackInSlot(INPUT_SLOT));
+//        ItemStack sausageResult = sausageOutput(this.itemHandler.getStackInSlot(INPUT_SLOT));
+
+        Optional<MeatMasherRecipe> recipe = getCurrentRecipe();
+        if (recipe.isEmpty()) return;
+
+        ItemStack result = recipe.get().getResultItem(null);
+        int slot = result.getItem() == recipe.get().getOutput().getItem() ? SAUSAGE_OUTPUT_SLOT : RESIDUE_OUTPUT_SLOT;
 
         this.itemHandler.extractItem(INPUT_SLOT, 1, false);
-        if (this.getLevel().getRandom().nextDouble() > MALFUNCTION_CHANCE)
-            this.itemHandler.setStackInSlot(SAUSAGE_OUTPUT_SLOT, new ItemStack(sausageResult.getItem(), sausageResult.getCount() + this.itemHandler.getStackInSlot(SAUSAGE_OUTPUT_SLOT).getCount()));
-        else this.itemHandler.setStackInSlot(RESIDUE_OUTPUT_SLOT, new ItemStack(ModItems.MEAT_RESIDUE.get(), sausageResult.getCount() + this.itemHandler.getStackInSlot(RESIDUE_OUTPUT_SLOT).getCount()));
+        this.itemHandler.setStackInSlot(slot, new ItemStack(result.getItem(), result.getCount() + this.itemHandler.getStackInSlot(slot).getCount()));
+//        if (this.getLevel().getRandom().nextDouble() > MALFUNCTION_CHANCE)
+//            this.itemHandler.setStackInSlot(SAUSAGE_OUTPUT_SLOT, new ItemStack(sausageResult.getItem(), sausageResult.getCount() + this.itemHandler.getStackInSlot(SAUSAGE_OUTPUT_SLOT).getCount()));
+//        else this.itemHandler.setStackInSlot(RESIDUE_OUTPUT_SLOT, new ItemStack(ModItems.MEAT_RESIDUE.get(), sausageResult.getCount() + this.itemHandler.getStackInSlot(RESIDUE_OUTPUT_SLOT).getCount()));
     }
 
     private void resetProgress() {

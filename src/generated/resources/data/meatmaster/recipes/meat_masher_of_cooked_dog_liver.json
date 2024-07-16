@@ -1,0 +1,16 @@
+{
+  "type": "meatmaster:meat_masher",
+  "fail_result": {
+    "count": 3,
+    "item": "meatmaster:meat_residue"
+  },
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_dog_liver"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "meatmaster:sausage"
+  }
+}

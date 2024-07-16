@@ -35,6 +35,11 @@ public class MeatCompactorRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return this.inputItems;
+    }
+
+    @Override
     public ItemStack assemble(SimpleContainer pContainer, RegistryAccess pRegistryAccess) {
         return null;
     }

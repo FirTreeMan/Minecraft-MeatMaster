@@ -7,6 +7,7 @@ import net.firtreeman.meatmaster.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -115,10 +116,15 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         tag(ModTags.Items.MEATS).addTag(ModTags.Items.MEAT_ITEMS);
         tag(ModTags.Items.MEATS).addTag(ModTags.Items.MEAT_BLOCKS);
 
-        tag(ModTags.Items.EXTRA_REFINABLE_MEATS).addTag(ModTags.Items.MEATS);
+        tag(ModTags.Items.EXTRA_REFINABLE_MEATS).addTag(ModTags.Items.MEAT_ITEMS);
         ModRecipeProvider.REFINABLES.forEach((ingredient, spice) -> tag(ModTags.Items.EXTRA_REFINABLE_MEATS).remove(ingredient));
 
-
+        tag(ModTags.Items.MASHABLE_MEATS).addTag(ModTags.Items.MEAT_ITEMS);
+        ModRecipeProvider.COOKED_VARIANTS.forEach((uncooked, cooked) -> {
+            for (Item food: new Item[]{uncooked, cooked})
+                if (food.getFoodProperties().getNutrition() < 2)
+                    tag(ModTags.Items.MASHABLE_MEATS).remove(food);
+        });
 
         tag(ModTags.Items.SPICES).add(
                 ModItems.TABLE_SALT.get(),

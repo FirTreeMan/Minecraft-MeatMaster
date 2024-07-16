@@ -17,14 +17,14 @@ import net.minecraft.world.item.ItemStack;
 
 public class MeatRefineryCategory implements IRecipeCategory<MeatRefineryRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(MeatMaster.MOD_ID, "meat_refinery");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(MeatMaster.MOD_ID, "textures/gui/meat_refinery_station_gui.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(MeatMaster.MOD_ID, "textures/gui/meat_refinery_station.png");
     public static final RecipeType<MeatRefineryRecipe> MEAT_REFINERY_RECIPE_TYPE = new RecipeType<>(UID, MeatRefineryRecipe.class);
 
     private final IDrawable background;
     private final IDrawable icon;
 
     public MeatRefineryCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 85);
+        this.background = helper.createDrawable(TEXTURE, 4, 4, 168, 77);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.MEAT_REFINERY_STATION.get()));
     }
 
@@ -50,7 +50,7 @@ public class MeatRefineryCategory implements IRecipeCategory<MeatRefineryRecipe>
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, MeatRefineryRecipe recipe, IFocusGroup iFocusGroup) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 48, 35).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 116, 35).addItemStack(recipe.getResultItem(null));
+        builder.addSlot(RecipeIngredientRole.INPUT, 44, 31).addIngredients(recipe.getIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 112, 31).addItemStack(recipe.getResultItem(null));
     }
 }

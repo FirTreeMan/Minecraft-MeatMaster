@@ -1,0 +1,14 @@
+{
+  "type": "meatmaster:meat_masher",
+  "fail_result": {
+    "item": "meatmaster:meat_residue"
+  },
+  "ingredients": [
+    {
+      "item": "meatmaster:cooked_frog_legs"
+    }
+  ],
+  "result": {
+    "item": "meatmaster:sausage"
+  }
+}
