@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_emerald": {
+    "has_end_rod": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:emerald"
+              "minecraft:end_rod"
             ]
           }
         ]
@@ -15,22 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "meatmaster:hormone_base"
+        "recipe": "meatmaster:alt_kebab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_emerald",
+      "has_end_rod",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "meatmaster:hormone_base"
+      "meatmaster:alt_kebab"
     ]
   },
   "sends_telemetry_event": false
-}: false
 }

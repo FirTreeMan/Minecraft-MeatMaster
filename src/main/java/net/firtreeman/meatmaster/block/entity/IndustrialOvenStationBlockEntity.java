@@ -360,7 +360,8 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
     private void tryBurnFuel() {
         for (int i = 0; i < FUEL_INPUT_SLOT_MAX; i++) {
             if (litTime[i] <= 0 && !fuelInputItemHandler.getStackInSlot(i).isEmpty()) {
-                max_litTime[i] = (int) (getBurnDuration(fuelInputItemHandler.getStackInSlot(i)) / 4);
+                // fuel for 8 items smelted in furnace == fuel for 9 items (1 block) smelted in industrial oven
+                max_litTime[i] = (int) (getBurnDuration(fuelInputItemHandler.getStackInSlot(i)) * 3.0F/8.0F);
                 litTime[i] = max_litTime[i];
                 fuelInputItemHandler.extractItem(i, 1, false);
             }

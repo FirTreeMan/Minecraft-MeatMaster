@@ -2,12 +2,11 @@ package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
 import net.firtreeman.meatmaster.block.custom.IndustrialOvenStationBlock;
+import net.firtreeman.meatmaster.config.ServerConfig;
 import net.firtreeman.meatmaster.item.ModItems;
-import net.firtreeman.meatmaster.item.custom.HormoneArrowItem;
 import net.firtreeman.meatmaster.item.custom.HormoneBaseItem;
 import net.firtreeman.meatmaster.recipe.HormoneFillRecipe;
 import net.firtreeman.meatmaster.recipe.HormoneResearchRecipe;
-import net.firtreeman.meatmaster.recipe.MeatRefineryRecipe;
 import net.firtreeman.meatmaster.screen.HormoneResearchStationMenu;
 import net.firtreeman.meatmaster.util.HORMONE_TYPES;
 import net.firtreeman.meatmaster.util.HormoneUtils;
@@ -103,19 +102,14 @@ public class HormoneResearchStationBlockEntity extends BlockEntity implements Me
         }
     };
     private final ItemStackHandler meatInputItemHandler = new SubItemStackHandler(itemHandler, MEAT_INPUT_SLOT).validateItems((slot, stack) -> stack.is(ModTags.Items.MEAT_BLOCKS));
-    private final ItemStackHandler determinerInputItemHandler = new SubItemStackHandler(itemHandler, DETERMINER_INPUT_SLOT) {
-        @Override
-        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return DETERMINERS.containsKey(stack.getItem());
-        }
-    };
+    private final ItemStackHandler determinerInputItemHandler = new SubItemStackHandler(itemHandler, DETERMINER_INPUT_SLOT).validateItems((slot, stack) -> DETERMINERS.containsKey(stack.getItem()));
     private final ItemStackHandler hormoneBaseItemHandler = new SubItemStackHandler(itemHandler, HORMONE_BASE_SLOT).validateItems((slot, stack) -> stack.getItem() instanceof HormoneBaseItem);
     private final ItemStackHandler syringeInputItemHandler = new SubItemStackHandler(itemHandler, SYRINGE_INPUT_SLOT).validateItems((slot, stack) -> stack.is(ModItems.SYRINGE_DART.get()) && HormoneUtils.getHormone(stack) == HORMONE_TYPES.NONE);
     private final ItemStackHandler hormoneOutputItemHandler = new SubItemStackHandler(itemHandler, HORMONE_OUTPUT_SLOT).outputOnly();
 
     protected final ContainerData data;
     private int research_progress = 0;
-    private int max_research_progress = 6912;
+    private int max_research_progress = ServerConfig.HORMONE_RESEARCH_BLOCKS.get();
     private int fill_progress = 0;
     private int max_fill_progress = 60;
     private HORMONE_TYPES hormone = HORMONE_TYPES.NONE;

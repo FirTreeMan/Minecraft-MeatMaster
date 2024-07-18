@@ -29,6 +29,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static net.firtreeman.meatmaster.util.TagUtils.TAG_SPICE;
+
 public class LathererStationBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_COUNT = 3;
     private static final int SPICE_INPUT_SLOT = 0;
@@ -108,16 +110,16 @@ public class LathererStationBlockEntity extends BlockEntity implements MenuProvi
     }
 
     public static boolean itemStackIsSpiced(ItemStack itemStack) {
-        return itemStack.isEdible() && itemStack.getTag() != null && !itemStack.getTag().getString("Spice").isEmpty();
+        return itemStack.isEdible() && itemStack.getTag() != null && !itemStack.getTag().getString(TAG_SPICE).isEmpty();
     }
 
     public static ItemStack makeSpicedItemStack(ItemStack itemStack, SpiceItem spiceItem) {
-        itemStack.getOrCreateTag().putString("Spice", String.valueOf(spiceItem.getSpiceType()));
+        itemStack.getOrCreateTag().putString(TAG_SPICE, String.valueOf(spiceItem.getSpiceType()));
         return itemStack;
     }
 
     public static String getItemStackSpice(ItemStack itemStack) {
-        return itemStack.getTag() == null ? "" : itemStack.getTag().getString("Spice");
+        return itemStack.getTag() == null ? "" : itemStack.getTag().getString(TAG_SPICE);
     }
 
     @Override

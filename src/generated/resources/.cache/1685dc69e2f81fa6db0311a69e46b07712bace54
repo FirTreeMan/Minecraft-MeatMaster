@@ -1,0 +1,8 @@
+// 1.20.1	2024-07-18T17:40:55.1872875	Tags for minecraft:item mod id meatmaster
+549bca3c991916bd6475509ddab8ee0fa5adb0cc data/meatmaster/tags/items/extra_refinable_meats.json
+2f1395931a39506bd053c5bdb98af118e0b35b0e data/meatmaster/tags/items/mashable_meats.json
+74bed3116d1698a7994f05389efc593bf56ccc3a data/meatmaster/tags/items/meats.json
+2a03f7b3f85f954c7ab82913bf1a123ab8930956 data/meatmaster/tags/items/meat_blocks.json
+746db89ff3d76f187fd296b134ffb01a0ab2fdf6 data/meatmaster/tags/items/meat_items.json
+e29a0212330737e00d41fea1559e9d168c8d9d81 data/meatmaster/tags/items/spices.json
+2895339222553c6c1d1d7967ceccd6db6fb711f0 data/meatmaster/tags/items/valid_kebab_ingredients.json

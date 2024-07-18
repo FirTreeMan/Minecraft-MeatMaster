@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import net.firtreeman.meatmaster.block.ModBlocks;
 import net.firtreeman.meatmaster.block.ModBlockEntities;
 import net.firtreeman.meatmaster.block.custom.ShearableMeatBlock;
+import net.firtreeman.meatmaster.config.ServerConfig;
 import net.firtreeman.meatmaster.entity.ai.goal.FoodTroughTemptGoal;
 import net.firtreeman.meatmaster.entity.projectile.HormoneArrow;
 import net.firtreeman.meatmaster.item.ModCreativeModeTabs;
@@ -59,7 +60,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -69,6 +72,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import static net.firtreeman.meatmaster.util.TagUtils.*;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(MeatMaster.MOD_ID)
@@ -92,6 +97,8 @@ public class MeatMaster {
         ModMenuTypes.register(modEventBus);
 
         ModRecipes.register(modEventBus);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, MOD_ID + "-server.toml");
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -146,8 +153,8 @@ public class MeatMaster {
                 if (layer != 1) return 0xFFFFFF;
 
                 CompoundTag tag = stack.getTag();
-                if (tag != null && tag.contains("HormoneType")) {
-                    return switch (HORMONE_TYPES.values()[tag.getInt("HormoneType")]) {
+                if (tag != null && tag.contains(TAG_HORMONE_TYPE)) {
+                    return switch (HORMONE_TYPES.values()[tag.getInt(TAG_HORMONE_TYPE)]) {
                         case NONE -> 0xf6feff;
                         case GROWTH -> 0x01f1ff;
                         case BREEDING -> 0x00ff26;
@@ -164,26 +171,21 @@ public class MeatMaster {
 
     @Mod.EventBusSubscriber(modid = MOD_ID)
     public static class SpiceListener {
-//        @SubscribeEvent
-//        public void onewtwtewt(PlayerEvent.ItemPickupEvent event) {
-//            System.out.println(event.getStack().getTag());
-//        }
-
         @SubscribeEvent
         public static void onUsedItem(LivingEntityUseItemEvent.Finish event) {
             ItemStack itemStack = event.getItem();
             if (itemStack.isEdible() && itemStack.getTag() != null) {
                 if (event.getEntity() instanceof Player player) {
                     CompoundTag tag = itemStack.getTag();
-                    if (!tag.getString("Spice").isEmpty()) {
-                        String spiceNames = tag.getString("Spice");
+                    if (!tag.getString(TAG_SPICE).isEmpty()) {
+                        String spiceNames = tag.getString(TAG_SPICE);
                         SPICE_TYPES[] spiceNamesArr = Arrays.stream(spiceNames.split("\\|")).map(SPICE_TYPES::valueOf).toArray(SPICE_TYPES[]::new);
-                        for (SPICE_TYPES spiceType : spiceNamesArr) {
+                        for (SPICE_TYPES spiceType: spiceNamesArr) {
                             switch (spiceType) {
                                 case SALTY -> player.getFoodData().eat(0, 1.0F);
                                 case EXPLOSIVE ->
                                         player.level().explode(null, player.getX(), player.getY() + 1.0, player.getZ(), 4.0F, Level.ExplosionInteraction.TNT);
-                                case TELEPORTING -> LongTeleportItem.longTeleport(null, player.level(), player, 50);
+                                case TELEPORTING -> LongTeleportItem.longTeleport(null, player.level(), player, ServerConfig.LONG_TELEPORT_SPICE_DIST.get());
                                 case POISONED -> player.addEffect(new MobEffectInstance(MobEffects.POISON, 400, 1));
                                 case FLAMMABLE -> player.setSecondsOnFire(20);
                                 case BITTER -> player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 400, 0));
@@ -192,12 +194,15 @@ public class MeatMaster {
                             }
                         }
                     }
-                    player.getFoodData().eat(tag.getInt("totalNutrition"), tag.getFloat("totalSaturation"));
-                    if (!tag.getCompound("allEffects").isEmpty()) {
-                        CompoundTag effects = tag.getCompound("allEffects");
-                        for (String key : effects.getAllKeys()) {
+
+                    if (!tag.contains(TAG_KEBAB_DATA)) return;
+                    CompoundTag kebabTag = tag.getCompound(TAG_KEBAB_DATA);
+                    player.getFoodData().eat(kebabTag.getInt(TAG_NUTRITION), kebabTag.getFloat(TAG_SATURATION));
+                    if (!kebabTag.getCompound(TAG_ALL_EFFECTS).isEmpty()) {
+                        CompoundTag effects = kebabTag.getCompound(TAG_ALL_EFFECTS);
+                        for (String key: effects.getAllKeys()) {
                             CompoundTag effectTag = effects.getCompound(key);
-                            if (effectTag.getFloat("probability") > player.level().getRandom().nextFloat())
+                            if (effectTag.getFloat(TAG_EFFECT_PROBABILITY) > player.level().getRandom().nextFloat())
                                 player.addEffect(MobEffectInstance.load(effectTag));
                         }
                     }
@@ -212,11 +217,14 @@ public class MeatMaster {
 
             if (!output.is(ModItems.KEBAB.get())) return;
 
-            CompoundTag tag = output.getOrCreateTag();
-            tag.putInt("totalNutrition", 0);
-            tag.putFloat("totalSaturation", 0F);
-            tag.put("allEffects", new CompoundTag());
-            tag.putString("Spice", "");
+            CompoundTag baseTag = output.getOrCreateTag();
+            CompoundTag tag = new CompoundTag();
+            baseTag.put(TAG_KEBAB_DATA, tag);
+
+            tag.putInt(TAG_NUTRITION, 0);
+            tag.putFloat(TAG_SATURATION, 0F);
+            tag.put(TAG_ALL_EFFECTS, new CompoundTag());
+            tag.putString(TAG_SPICE, "");
 
             for (int i = 0; i < inputs.getContainerSize(); i++) {
                 ItemStack input = inputs.getItem(i);
@@ -224,23 +232,23 @@ public class MeatMaster {
                     FoodProperties foodProperties = input.getFoodProperties(null);
                     assert foodProperties != null;
 
-                    tag.putInt("totalNutrition", tag.getInt("totalNutrition") + foodProperties.getNutrition());
-                    tag.putFloat("totalSaturation", tag.getFloat("totalSaturation") + foodProperties.getSaturationModifier());
+                    tag.putInt(TAG_NUTRITION, tag.getInt(TAG_NUTRITION) + foodProperties.getNutrition());
+                    tag.putFloat(TAG_SATURATION, tag.getFloat(TAG_SATURATION) + foodProperties.getSaturationModifier());
                     if (!foodProperties.getEffects().isEmpty()) {
                         for (Pair<MobEffectInstance, Float> pair: foodProperties.getEffects()) {
                             CompoundTag effectTag = new CompoundTag();
-                            effectTag.putFloat("probability", pair.getSecond());
+                            effectTag.putFloat(TAG_EFFECT_PROBABILITY, pair.getSecond());
                             pair.getFirst().save(effectTag);
 
-                            CompoundTag effectCompound = tag.getCompound("allEffects");
+                            CompoundTag effectCompound = tag.getCompound(TAG_ALL_EFFECTS);
                             effectCompound.put(String.valueOf(pair.getFirst().hashCode()), effectTag);
                         }
                     }
-                    if (input.getTag() != null && !input.getTag().getString("Spice").isEmpty()) {
-                        String spiceName = input.getTag().getString("Spice");
-                        if (tag.getString("Spice").isEmpty())
-                            tag.putString("Spice", spiceName);
-                        else tag.putString("Spice", tag.getString("Spice") + "|" + spiceName);
+                    if (input.getTag() != null && !input.getTag().getString(TAG_SPICE).isEmpty()) {
+                        String spiceType = input.getTag().getString(TAG_SPICE);
+                        if (tag.getString(TAG_SPICE).isEmpty())
+                            tag.putString(TAG_SPICE, spiceType);
+                        else tag.putString(TAG_SPICE, tag.getString(TAG_SPICE) + "|" + spiceType);
                     }
                 }
             }
@@ -254,6 +262,7 @@ public class MeatMaster {
             TemptGoal temptGoal = null;
             int temptGoalPriority = 0;
             if (event.getEntity() instanceof Animal animal) {
+                // break out if any WrappedGoal is already FoodTroughTemptGoal
                 for (WrappedGoal wrappedGoal: animal.goalSelector.getAvailableGoals()) {
                     if (wrappedGoal.getGoal() instanceof FoodTroughTemptGoal) return;
                     if (wrappedGoal.getGoal() instanceof TemptGoal) {
@@ -292,7 +301,6 @@ public class MeatMaster {
                     case BREEDING -> {
                         if (entity instanceof Animal animal && !animal.isBaby()) {
                             hormoneApplied = true;
-                            System.out.println("HHHHHHHHJ");
                         }
                     }
                     case YIELD -> {
