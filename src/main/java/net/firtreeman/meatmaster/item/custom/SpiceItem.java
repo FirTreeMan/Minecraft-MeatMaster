@@ -1,31 +1,17 @@
 package net.firtreeman.meatmaster.item.custom;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.firtreeman.meatmaster.util.SPICE_TYPES;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 public class SpiceItem extends Item {
-    public static enum SPICE_NAMES {
-        SALTY,
-        EXPLOSIVE,
-        TELEPORTING,
-        POISONED,
-        FLAMMABLE,
-        BITTER,
-        FILLING,
-    };
+    private final SPICE_TYPES spiceType;
 
-    private final SPICE_NAMES spiceName;
-
-    public SpiceItem(Properties pProperties, SPICE_NAMES spiceName) {
+    public SpiceItem(Properties pProperties, SPICE_TYPES spiceType) {
         super(pProperties);
-        this.spiceName = spiceName;
+        this.spiceType = spiceType;
     }
 
-    public SPICE_NAMES getSpiceName() {
-        return spiceName;
+    public SPICE_TYPES getSpiceType() {
+        return spiceType;
     }
 }

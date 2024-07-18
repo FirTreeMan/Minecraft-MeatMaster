@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 
 public class LongTeleportItem extends Item {
-    private static final double tp_range = 5_000.0;
+    private static final double tp_range = 1000.0;
 
     public LongTeleportItem(Properties pProperties) {
         super(pProperties);

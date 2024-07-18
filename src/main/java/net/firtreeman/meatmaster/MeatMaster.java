@@ -10,24 +10,21 @@ import net.firtreeman.meatmaster.entity.projectile.HormoneArrow;
 import net.firtreeman.meatmaster.item.ModCreativeModeTabs;
 import net.firtreeman.meatmaster.item.ModItems;
 import net.firtreeman.meatmaster.item.custom.LongTeleportItem;
-import net.firtreeman.meatmaster.item.custom.SpiceItem;
 import net.firtreeman.meatmaster.loot.ModLootModifiers;
 import net.firtreeman.meatmaster.recipe.ModRecipes;
 import net.firtreeman.meatmaster.screen.*;
 import net.firtreeman.meatmaster.util.HORMONE_TYPES;
-import net.firtreeman.meatmaster.util.HormoneUtils;
+import net.firtreeman.meatmaster.util.SPICE_TYPES;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
@@ -38,8 +35,6 @@ import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -57,7 +52,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -183,9 +177,9 @@ public class MeatMaster {
                     CompoundTag tag = itemStack.getTag();
                     if (!tag.getString("Spice").isEmpty()) {
                         String spiceNames = tag.getString("Spice");
-                        SpiceItem.SPICE_NAMES[] spiceNamesArr = Arrays.stream(spiceNames.split("\\|")).map(SpiceItem.SPICE_NAMES::valueOf).toArray(SpiceItem.SPICE_NAMES[]::new);
-                        for (SpiceItem.SPICE_NAMES spiceName : spiceNamesArr) {
-                            switch (spiceName) {
+                        SPICE_TYPES[] spiceNamesArr = Arrays.stream(spiceNames.split("\\|")).map(SPICE_TYPES::valueOf).toArray(SPICE_TYPES[]::new);
+                        for (SPICE_TYPES spiceType : spiceNamesArr) {
+                            switch (spiceType) {
                                 case SALTY -> player.getFoodData().eat(0, 1.0F);
                                 case EXPLOSIVE ->
                                         player.level().explode(null, player.getX(), player.getY() + 1.0, player.getZ(), 4.0F, Level.ExplosionInteraction.TNT);
@@ -194,7 +188,7 @@ public class MeatMaster {
                                 case FLAMMABLE -> player.setSecondsOnFire(20);
                                 case BITTER -> player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 400, 0));
                                 case FILLING -> player.getFoodData().eat(1, 0F);
-                                default -> throw new IllegalStateException("spiceName must be defined");
+                                default -> throw new IllegalStateException("spiceType must be defined");
                             }
                         }
                     }

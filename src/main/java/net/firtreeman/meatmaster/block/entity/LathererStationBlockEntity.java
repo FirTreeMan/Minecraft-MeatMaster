@@ -2,7 +2,6 @@ package net.firtreeman.meatmaster.block.entity;
 
 import net.firtreeman.meatmaster.block.ModBlockEntities;
 import net.firtreeman.meatmaster.block.custom.LathererStationBlock;
-import net.firtreeman.meatmaster.block.custom.MeatRefineryStationBlock;
 import net.firtreeman.meatmaster.item.custom.SpiceItem;
 import net.firtreeman.meatmaster.screen.LathererStationMenu;
 import net.firtreeman.meatmaster.util.ModTags;
@@ -113,7 +112,7 @@ public class LathererStationBlockEntity extends BlockEntity implements MenuProvi
     }
 
     public static ItemStack makeSpicedItemStack(ItemStack itemStack, SpiceItem spiceItem) {
-        itemStack.getOrCreateTag().putString("Spice", String.valueOf(spiceItem.getSpiceName()));
+        itemStack.getOrCreateTag().putString("Spice", String.valueOf(spiceItem.getSpiceType()));
         return itemStack;
     }
 
@@ -229,7 +228,7 @@ public class LathererStationBlockEntity extends BlockEntity implements MenuProvi
         // can add item?
         return outputItemStack.isEmpty() || (outputItemStack.is(result.getItem()) &&
                 // matching spice?
-                (getItemStackSpice(result).equals(String.valueOf(spiceItem.getSpiceName())))) &&
+                (getItemStackSpice(result).equals(String.valueOf(spiceItem.getSpiceType())))) &&
             // can add amount?
             outputItemStack.getCount() + result.getCount() <= outputItemStack.getMaxStackSize();
     }

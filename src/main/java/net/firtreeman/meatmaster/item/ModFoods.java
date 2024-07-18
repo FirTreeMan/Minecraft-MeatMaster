@@ -15,7 +15,7 @@ public class ModFoods {
     public static final FoodProperties ENDERMEAT = makeMeat(10, 10.0F).effect(makeMobEffect(MobEffects.SLOW_FALLING, 400, 0), 1.0F).meat().build();
     public static final FoodProperties HORSE_MEAT = makeMeat(3, 1.5F).build();
     public static final FoodProperties COOKED_HORSE_MEAT = makeMeat(7, 11.2F).build();
-    public static final FoodProperties COOKED_BLAZE_MEAT = makeMeat(8, 14.0F).build();
+    public static final FoodProperties COOKED_BLAZE_MEAT = makeMeat(8, 4.0F).build();
     public static final FoodProperties CAT_MEAT = makeMeat(4, 5.5F).fast().build();
     public static final FoodProperties COOKED_CAT_MEAT = makeMeat(7, 7.5F).fast().build();
     public static final FoodProperties SQUID_MEAT = makeMeat(2, 1.5F).fast().build();
