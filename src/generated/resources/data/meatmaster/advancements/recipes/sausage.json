@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cooked_creeper_meat": {
+    "has_cooked_elder_guardian_heart": {
       "conditions": {
         "items": [
           {
             "items": [
-              "meatmaster:cooked_creeper_meat"
+              "meatmaster:cooked_elder_guardian_heart"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_cooked_creeper_meat",
+      "has_cooked_elder_guardian_heart",
       "has_the_recipe"
     ]
   ],

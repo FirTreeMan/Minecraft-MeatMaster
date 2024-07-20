@@ -8,6 +8,7 @@ import net.firtreeman.meatmaster.block.custom.ShearableMeatBlock;
 import net.firtreeman.meatmaster.config.CommonConfig;
 import net.firtreeman.meatmaster.config.ServerConfig;
 import net.firtreeman.meatmaster.core.dispenser.SnifferEggDispenseBehavior;
+import net.firtreeman.meatmaster.core.dispenser.TurtleEggDispenseBehavior;
 import net.firtreeman.meatmaster.entity.ai.goal.FoodTroughTemptGoal;
 import net.firtreeman.meatmaster.entity.projectile.HormoneArrow;
 import net.firtreeman.meatmaster.item.ModCreativeModeTabs;
@@ -120,6 +121,8 @@ public class MeatMaster {
 
         if (CommonConfig.DISPENSABLE_SNIFFER_EGG.get())
             DispenserBlock.registerBehavior(Items.SNIFFER_EGG, new SnifferEggDispenseBehavior());
+        if (CommonConfig.DISPENSABLE_TURTLE_EGG.get())
+            DispenserBlock.registerBehavior(Items.TURTLE_EGG, new TurtleEggDispenseBehavior());
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
