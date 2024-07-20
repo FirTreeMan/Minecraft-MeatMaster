@@ -60,8 +60,8 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
         }, ModItems.SNIFFER_TOES.get(), 2));
         add("moldy_sniffer_toes", new AddMeatDropItemModifier(new LootItemCondition[]{
                 new LootTableIdCondition.Builder(new ResourceLocation("entities/sniffer")).build(),
-                LootItemRandomChanceCondition.randomChance(0.2F).build(),
-        }, ModItems.MOLDY_SNIFFER_TOES.get()));
+                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.2F, 0.03F).build(),
+        }, ModItems.MOLDY_SNIFFER_TOES.get(), false));
         add("panda_balls", new AddMeatDropItemModifier(new LootItemCondition[]{
                 new LootTableIdCondition.Builder(new ResourceLocation("entities/panda")).build(),
                 LootItemRandomChanceCondition.randomChance(1.0F).build(),

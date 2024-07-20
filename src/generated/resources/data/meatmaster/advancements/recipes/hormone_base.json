@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_emerald": {
+    "has_iron_ingot": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:emerald"
+              "minecraft:iron_ingot"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_emerald",
+      "has_iron_ingot",
       "has_the_recipe"
     ]
   ],
@@ -32,5 +32,4 @@
     ]
   },
   "sends_telemetry_event": false
-}: false
 }

@@ -15,6 +15,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
+import static net.firtreeman.meatmaster.util.ModItemUtils.COOKED_VARIANTS;
+import static net.firtreeman.meatmaster.util.ModItemUtils.REFINABLES;
+
 public class ModItemTagGenerator extends ItemTagsProvider {
 
     public ModItemTagGenerator(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagLookup<Block>> pBlockTags, @Nullable ExistingFileHelper existingFileHelper) {
@@ -117,10 +120,10 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         tag(ModTags.Items.MEATS).addTag(ModTags.Items.MEAT_BLOCKS);
 
         tag(ModTags.Items.EXTRA_REFINABLE_MEATS).addTag(ModTags.Items.MEAT_ITEMS);
-        ModRecipeProvider.REFINABLES.forEach((ingredient, spice) -> tag(ModTags.Items.EXTRA_REFINABLE_MEATS).remove(ingredient));
+        REFINABLES.forEach((ingredient, spice) -> tag(ModTags.Items.EXTRA_REFINABLE_MEATS).remove(ingredient));
 
         tag(ModTags.Items.MASHABLE_MEATS).addTag(ModTags.Items.MEAT_ITEMS);
-        ModRecipeProvider.COOKED_VARIANTS.forEach((uncooked, cooked) -> {
+        COOKED_VARIANTS.forEach((uncooked, cooked) -> {
             for (Item food: new Item[]{uncooked, cooked})
                 if (food.getFoodProperties().getNutrition() < 2)
                     tag(ModTags.Items.MASHABLE_MEATS).remove(food);

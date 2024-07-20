@@ -7,9 +7,11 @@
     },
     {
       "chance": 0.2,
-      "condition": "minecraft:random_chance"
+      "condition": "minecraft:random_chance_with_looting",
+      "looting_multiplier": 0.03
     }
   ],
   "item": "meatmaster:moldy_sniffer_toes",
-  "minItems": 0
+  "minItems": 0,
+  "rare": false
 }

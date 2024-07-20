@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cooked_rabbit_block": {
+    "has_rabbit_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "meatmaster:cooked_rabbit_block"
+              "meatmaster:rabbit_block"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_cooked_rabbit_block",
+      "has_rabbit_block",
       "has_the_recipe"
     ]
   ],

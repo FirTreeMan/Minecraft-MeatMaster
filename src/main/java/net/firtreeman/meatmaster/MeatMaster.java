@@ -5,7 +5,9 @@ import com.mojang.logging.LogUtils;
 import net.firtreeman.meatmaster.block.ModBlocks;
 import net.firtreeman.meatmaster.block.ModBlockEntities;
 import net.firtreeman.meatmaster.block.custom.ShearableMeatBlock;
+import net.firtreeman.meatmaster.config.CommonConfig;
 import net.firtreeman.meatmaster.config.ServerConfig;
+import net.firtreeman.meatmaster.core.dispenser.SnifferEggDispenseBehavior;
 import net.firtreeman.meatmaster.entity.ai.goal.FoodTroughTemptGoal;
 import net.firtreeman.meatmaster.entity.projectile.HormoneArrow;
 import net.firtreeman.meatmaster.item.ModCreativeModeTabs;
@@ -38,10 +40,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -66,6 +65,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 import java.util.Arrays;
@@ -99,6 +99,7 @@ public class MeatMaster {
         ModRecipes.register(modEventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, MOD_ID + "-server.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, MOD_ID + "-common.toml");
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -113,18 +114,19 @@ public class MeatMaster {
     private void commonSetup(final FMLCommonSetupEvent event) {
         DispenserBlock.registerBehavior(ModItems.SYRINGE_DART.get(), new AbstractProjectileDispenseBehavior() {
             protected Projectile getProjectile(Level level, Position pos, ItemStack stack) {
-                return HormoneArrow.dispenser(level, pos, stack);
+                return HormoneArrow.getDispenserBehavior(level, pos, stack);
             }
         });
+
+        if (CommonConfig.DISPENSABLE_SNIFFER_EGG.get())
+            DispenserBlock.registerBehavior(Items.SNIFFER_EGG, new SnifferEggDispenseBehavior());
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.CREEPER_MEAT);
-            event.accept(ModItems.DOG_LIVER);
-            event.accept(ModItems.HORSE_MEAT);
-            event.accept(ModItems.CAT_MEAT);
-            event.accept(ModItems.SQUID_MEAT);
+        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            for (RegistryObject<Item> item: ModItems.ITEMS.getEntries())
+                if (item.get().isEdible())
+                    event.accept(item);
         }
     }
 
@@ -170,42 +172,49 @@ public class MeatMaster {
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID)
-    public static class SpiceListener {
+    public static class FoodListener {
         @SubscribeEvent
         public static void onUsedItem(LivingEntityUseItemEvent.Finish event) {
             ItemStack itemStack = event.getItem();
             if (itemStack.isEdible() && itemStack.getTag() != null) {
                 if (event.getEntity() instanceof Player player) {
                     CompoundTag tag = itemStack.getTag();
-                    if (!tag.getString(TAG_SPICE).isEmpty()) {
-                        String spiceNames = tag.getString(TAG_SPICE);
-                        SPICE_TYPES[] spiceNamesArr = Arrays.stream(spiceNames.split("\\|")).map(SPICE_TYPES::valueOf).toArray(SPICE_TYPES[]::new);
-                        for (SPICE_TYPES spiceType: spiceNamesArr) {
-                            switch (spiceType) {
-                                case SALTY -> player.getFoodData().eat(0, 1.0F);
-                                case EXPLOSIVE ->
-                                        player.level().explode(null, player.getX(), player.getY() + 1.0, player.getZ(), 4.0F, Level.ExplosionInteraction.TNT);
-                                case TELEPORTING -> LongTeleportItem.longTeleport(null, player.level(), player, ServerConfig.LONG_TELEPORT_SPICE_DIST.get());
-                                case POISONED -> player.addEffect(new MobEffectInstance(MobEffects.POISON, 400, 1));
-                                case FLAMMABLE -> player.setSecondsOnFire(20);
-                                case BITTER -> player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 400, 0));
-                                case FILLING -> player.getFoodData().eat(1, 0F);
-                                default -> throw new IllegalStateException("spiceType must be defined");
-                            }
-                        }
-                    }
+                    applySpice(tag, player);
+                    applyKebab(tag, player);
+                }
+            }
+        }
 
-                    if (!tag.contains(TAG_KEBAB_DATA)) return;
-                    CompoundTag kebabTag = tag.getCompound(TAG_KEBAB_DATA);
-                    player.getFoodData().eat(kebabTag.getInt(TAG_NUTRITION), kebabTag.getFloat(TAG_SATURATION));
-                    if (!kebabTag.getCompound(TAG_ALL_EFFECTS).isEmpty()) {
-                        CompoundTag effects = kebabTag.getCompound(TAG_ALL_EFFECTS);
-                        for (String key: effects.getAllKeys()) {
-                            CompoundTag effectTag = effects.getCompound(key);
-                            if (effectTag.getFloat(TAG_EFFECT_PROBABILITY) > player.level().getRandom().nextFloat())
-                                player.addEffect(MobEffectInstance.load(effectTag));
-                        }
-                    }
+        public static void applySpice(CompoundTag tag, Player player) {
+            if (tag.getString(TAG_SPICE).isEmpty()) return;
+
+            String spiceNames = tag.getString(TAG_SPICE);
+            SPICE_TYPES[] spiceNamesArr = Arrays.stream(spiceNames.split("\\|")).map(SPICE_TYPES::valueOf).toArray(SPICE_TYPES[]::new);
+            for (SPICE_TYPES spiceType: spiceNamesArr) {
+                switch (spiceType) {
+                    case SALTY -> player.getFoodData().eat(0, 1.0F);
+                    case EXPLOSIVE -> player.level().explode(null, player.getX(), player.getY() + 1.0, player.getZ(), 4.0F, Level.ExplosionInteraction.TNT);
+                    case TELEPORTING -> LongTeleportItem.longTeleport(null, player.level(), player, ServerConfig.LONG_TELEPORT_SPICE_DIST.get());
+                    case POISONED -> player.addEffect(new MobEffectInstance(MobEffects.POISON, 400, 1));
+                    case FLAMMABLE -> player.setSecondsOnFire(20);
+                    case BITTER -> player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 400, 0));
+                    case FILLING -> player.getFoodData().eat(1, 0F);
+                    default -> throw new IllegalStateException("spiceType must be defined");
+                }
+            }
+        }
+
+        public static void applyKebab(CompoundTag tag, Player player) {
+            if (!tag.contains(TAG_KEBAB_DATA)) return;
+
+            CompoundTag kebabTag = tag.getCompound(TAG_KEBAB_DATA);
+            player.getFoodData().eat(kebabTag.getInt(TAG_NUTRITION), kebabTag.getFloat(TAG_SATURATION));
+            if (!kebabTag.getCompound(TAG_ALL_EFFECTS).isEmpty()) {
+                CompoundTag effects = kebabTag.getCompound(TAG_ALL_EFFECTS);
+                for (String key: effects.getAllKeys()) {
+                    CompoundTag effectTag = effects.getCompound(key);
+                    if (effectTag.getFloat(TAG_EFFECT_PROBABILITY) > player.level().getRandom().nextFloat())
+                        player.addEffect(MobEffectInstance.load(effectTag));
                 }
             }
         }
@@ -246,9 +255,9 @@ public class MeatMaster {
                     }
                     if (input.getTag() != null && !input.getTag().getString(TAG_SPICE).isEmpty()) {
                         String spiceType = input.getTag().getString(TAG_SPICE);
-                        if (tag.getString(TAG_SPICE).isEmpty())
-                            tag.putString(TAG_SPICE, spiceType);
-                        else tag.putString(TAG_SPICE, tag.getString(TAG_SPICE) + "|" + spiceType);
+                        if (baseTag.getString(TAG_SPICE).isEmpty())
+                            baseTag.putString(TAG_SPICE, spiceType);
+                        else baseTag.putString(TAG_SPICE, baseTag.getString(TAG_SPICE) + "|" + spiceType);
                     }
                 }
             }
@@ -341,6 +350,9 @@ public class MeatMaster {
             }
         }
 
+        // this is a bit of a brute-force solution and may not be compatible with some mods
+        // waits for breeding to finish and breeding time to be set before editing it
+        // however the other option is a coremod (mixin)
         @SubscribeEvent
         public static void onTick(TickEvent.ServerTickEvent event) {
             if (breedingHormoneHandler.isEmpty()) return;
@@ -351,7 +363,7 @@ public class MeatMaster {
 
                 int timeLeft = breedingHormoneHandler.get(ageableMob);
                 if (timeLeft <= 0) {
-                    // sets age to what it would be on this tick if age was halved without any delay
+                    // sets age to what it would be on this tick if age was halved at time of breeding
                     ageableMob.setAge(Math.max(ageableMob.getAge() / 2 - BREEDING_HORMONE_DELAY / 2, 0));
                     i.remove();
                 }

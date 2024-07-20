@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_porkchop": {
+    "has_cooked_panda_balls_block": {
       "conditions": {
         "items": [
           {
-            "tag": "meatmaster:meat_items"
+            "items": [
+              "meatmaster:cooked_panda_balls_block"
+            ]
           }
         ]
       },
@@ -13,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "meatmaster:bitter_crumbs"
+        "recipe": "meatmaster:cooked_panda_balls_from_cooked_panda_balls_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_porkchop",
+      "has_cooked_panda_balls_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "meatmaster:bitter_crumbs"
+      "meatmaster:cooked_panda_balls_from_cooked_panda_balls_block"
     ]
   },
   "sends_telemetry_event": false

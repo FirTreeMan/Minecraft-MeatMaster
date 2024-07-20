@@ -35,6 +35,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+import static net.firtreeman.meatmaster.util.ModItemUtils.COOKED_BLOCK_VARIANTS;
+
 public class IndustrialOvenStationBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_COUNT = 5;
     private static final int FUEL_INPUT_SLOT_MAX = 3;
@@ -104,7 +106,7 @@ public class IndustrialOvenStationBlockEntity extends BlockEntity implements Men
             return fuelInputItemHandler.isItemValid(lowestCountSlot, stack);
         }
     };
-    private final ItemStackHandler blockInputItemHandler = new SubItemStackHandler(itemHandler, BLOCK_INPUT_SLOT).validateItems((slot, stack) -> ModRecipeProvider.COOKED_BLOCK_VARIANTS.keySet().stream().anyMatch(block -> stack.is(block.asItem())));
+    private final ItemStackHandler blockInputItemHandler = new SubItemStackHandler(itemHandler, BLOCK_INPUT_SLOT).validateItems((slot, stack) -> COOKED_BLOCK_VARIANTS.keySet().stream().anyMatch(block -> stack.is(block.asItem())));
     private final ItemStackHandler outputItemHandler = new SubItemStackHandler(itemHandler, OUTPUT_SLOT).outputOnly();
 
     protected final ContainerData data;

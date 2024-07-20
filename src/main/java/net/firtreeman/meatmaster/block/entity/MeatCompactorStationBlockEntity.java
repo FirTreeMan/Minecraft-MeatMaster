@@ -31,6 +31,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+import static net.firtreeman.meatmaster.util.ModItemUtils.COMPACTABLES;
+
 public class MeatCompactorStationBlockEntity extends BlockEntity implements MenuProvider {
     public static final int SLOT_COUNT = 10;
     private static final int INPUT_SLOT_MAX = 9;
@@ -68,7 +70,7 @@ public class MeatCompactorStationBlockEntity extends BlockEntity implements Menu
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return ModRecipeProvider.COMPACTABLES.keySet().stream().anyMatch(stack::is);
+            return COMPACTABLES.keySet().stream().anyMatch(stack::is);
         }
     };
     private final ItemStackHandler inputCapabilityItemHandler = new ItemStackHandler(1) {

@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_porkchop": {
+    "has_salmon_block": {
       "conditions": {
         "items": [
           {
-            "tag": "meatmaster:meat_items"
+            "items": [
+              "meatmaster:salmon_block"
+            ]
           }
         ]
       },
@@ -13,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "meatmaster:bitter_crumbs"
+        "recipe": "meatmaster:salmon_from_salmon_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_porkchop",
+      "has_salmon_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "meatmaster:bitter_crumbs"
+      "meatmaster:salmon_from_salmon_block"
     ]
   },
   "sends_telemetry_event": false

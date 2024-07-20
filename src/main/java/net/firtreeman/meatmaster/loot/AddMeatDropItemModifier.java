@@ -5,26 +5,12 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.firtreeman.meatmaster.datagen.ModRecipeProvider;
-import net.minecraft.advancements.critereon.EntityFlagsPredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctions;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.common.loot.LootTableIdCondition;
@@ -33,30 +19,43 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
+import static net.firtreeman.meatmaster.util.ModItemUtils.COOKED_VARIANTS;
+
 public class AddMeatDropItemModifier extends LootModifier {
     public static final Supplier<Codec<AddMeatDropItemModifier>> CODEC = Suppliers.memoize(() ->
             RecordCodecBuilder.create(inst -> codecStart(inst)
                     .and(ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(m -> m.item))
                     .and(Codec.INT.optionalFieldOf("minItems", 1).forGetter(m -> m.itemMin))
                     .and(Codec.INT.optionalFieldOf("maxItems", 1).forGetter(m -> m.itemMax))
+                    .and(Codec.BOOL.optionalFieldOf("rare", true).forGetter(m -> m.rare))
                     .apply(inst, AddMeatDropItemModifier::new)));
     private final Item item;
     private final int itemMin;
     private final int itemMax;
+    private final boolean rare;
 
     public AddMeatDropItemModifier(LootItemCondition[] conditionsIn, Item item) {
-        this(conditionsIn, item, 0, 1);
+        this(conditionsIn, item, 0, 1, true);
     }
 
     public AddMeatDropItemModifier(LootItemCondition[] conditionsIn, Item item, int itemMax) {
-        this(conditionsIn, item, 0, itemMax);
+        this(conditionsIn, item, 0, itemMax, true);
     }
 
     public AddMeatDropItemModifier(LootItemCondition[] conditionsIn, Item item, int itemMin, int itemMax) {
+        this(conditionsIn, item, itemMin, itemMax, true);
+    }
+
+    public AddMeatDropItemModifier(LootItemCondition[] conditionsIn, Item item, boolean rare) {
+        this(conditionsIn, item, 0, 1, rare);
+    }
+
+    public AddMeatDropItemModifier(LootItemCondition[] conditionsIn, Item item, int itemMin, int itemMax, boolean rare) {
         super(conditionsIn);
         this.item = item;
         this.itemMax = itemMax;
         this.itemMin = itemMin;
+        this.rare = rare;
     }
 
     public static LootItemCondition setResourceLocation(String resourceLocation) {
@@ -69,9 +68,12 @@ public class AddMeatDropItemModifier extends LootModifier {
             if (!condition.test(context)) return generatedLoot;
 
         boolean onFire = context.getParam(LootContextParams.THIS_ENTITY).isOnFire();
+        ItemStack stack = new ItemStack(onFire ? COOKED_VARIANTS.getOrDefault(item, item) : item);
 
-        ItemStack stack = new ItemStack(onFire ? ModRecipeProvider.COOKED_VARIANTS.getOrDefault(item, item) : item);
-        int amt = context.getRandom().nextIntBetweenInclusive(0, itemMax + context.getLootingModifier());
+        // instead of dropping more items with Looting, rare drops have an increased chance to drop
+        // so the amount dropped should be unchanged with Looting if the drop is rare
+        // rare drop chance w/ Looting should already be set with LootItemRandomChanceWithLootingCondition
+        int amt = this.rare ? context.getRandom().nextIntBetweenInclusive(0, itemMax + context.getLootingModifier()) : 1;
         stack.setCount(amt);
 
         generatedLoot.add(new ItemStack(item, amt));

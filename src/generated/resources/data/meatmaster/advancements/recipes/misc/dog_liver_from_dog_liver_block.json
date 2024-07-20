@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_porkchop": {
+    "has_dog_liver_block": {
       "conditions": {
         "items": [
           {
-            "tag": "meatmaster:meat_items"
+            "items": [
+              "meatmaster:dog_liver_block"
+            ]
           }
         ]
       },
@@ -13,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "meatmaster:bitter_crumbs"
+        "recipe": "meatmaster:dog_liver_from_dog_liver_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_porkchop",
+      "has_dog_liver_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "meatmaster:bitter_crumbs"
+      "meatmaster:dog_liver_from_dog_liver_block"
     ]
   },
   "sends_telemetry_event": false

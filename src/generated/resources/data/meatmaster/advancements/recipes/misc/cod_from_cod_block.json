@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_porkchop": {
+    "has_cod_block": {
       "conditions": {
         "items": [
           {
-            "tag": "meatmaster:meat_items"
+            "items": [
+              "meatmaster:cod_block"
+            ]
           }
         ]
       },
@@ -13,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "meatmaster:bitter_crumbs"
+        "recipe": "meatmaster:cod_from_cod_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_porkchop",
+      "has_cod_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "meatmaster:bitter_crumbs"
+      "meatmaster:cod_from_cod_block"
     ]
   },
   "sends_telemetry_event": false

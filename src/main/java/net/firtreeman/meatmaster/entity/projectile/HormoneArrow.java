@@ -6,7 +6,6 @@ import net.minecraft.core.Position;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +29,7 @@ public class HormoneArrow extends Arrow {
         this.hormoneType = hormoneType;
     }
 
-    public static Arrow dispenser(Level level, Position pos, ItemStack stack) {
+    public static Arrow getDispenserBehavior(Level level, Position pos, ItemStack stack) {
         Arrow arrow = new HormoneArrow(level, pos.x(), pos.y(), pos.z(), HormoneUtils.getHormone(stack));
         arrow.setEffectsFromItem(stack);
         arrow.setBaseDamage(0D);
