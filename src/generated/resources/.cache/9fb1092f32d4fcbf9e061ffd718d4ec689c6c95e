@@ -1,4 +1,4 @@
-// 1.20.1	2024-07-20T15:28:39.0266626	Recipes
+// 1.20.1	2024-07-22T09:41:12.9479442	Recipes
 df0329aef4a7f98f4ff86ef49c4c1df05f4fa09a data/meatmaster/advancements/recipes/bat_wings_block.json
 75a89a8900db0cbdd501d5aecd0fab0f6e226ed2 data/meatmaster/advancements/recipes/beef_block.json
 d427ed92ebbcfe723c8e334e047c6e93d9eb1f09 data/meatmaster/advancements/recipes/bitter_crumbs.json
@@ -67,7 +67,7 @@ c260c991ab7cb2251a59b2451abbbf11fc30acf2 data/meatmaster/advancements/recipes/fo
 a9223a052f638b1de3eadfeb3023505d2a8c5451 data/meatmaster/advancements/recipes/frog_legs_block.json
 db6244f9edd22455fda0a19c53940c24e5dbff64 data/meatmaster/advancements/recipes/guardian_heart_block.json
 cd7a8b1fabb5c0bc8cc8e66cbeab3d0f2caa332a data/meatmaster/advancements/recipes/gunpowder_clumps.json
-6f49817be173306ae539b3f61287b358d14fa8c1 data/meatmaster/advancements/recipes/hormone_base.json
+c60092441299eec7836339cf4c5feab4caf56e0b data/meatmaster/advancements/recipes/hormone_base.json
 702e7bcfd5fa0eb533a0af48f6d0b7e23f00e93b data/meatmaster/advancements/recipes/horse_meat_block.json
 896b52a9feb176463487f9ac0c582c3efed28689 data/meatmaster/advancements/recipes/liver_bits.json
 d508287807a48ba5b49623e7bb34cd26842c5851 data/meatmaster/advancements/recipes/meat_residue.json
@@ -169,7 +169,7 @@ e1e88185193329cee222d25296cfe485e8da5e96 data/meatmaster/advancements/recipes/mi
 15117aa4b4d499a599149eb369c1f79a64825664 data/meatmaster/advancements/recipes/rabbit_block.json
 99b23f77e723efe441ee1e478248d49d989bb2ab data/meatmaster/advancements/recipes/rotten_flesh_block.json
 264b59d1c4e0cfd643a95f5c147048791f44a8e6 data/meatmaster/advancements/recipes/salmon_block.json
-0c99decd615d3b55fa29772e5205f5ce15e6b1dd data/meatmaster/advancements/recipes/sausage.json
+21798ccbb116230b0c4b5ae3067894de6218045b data/meatmaster/advancements/recipes/sausage.json
 22d3aa97ba1c069ccf7a52fc9e14e7b44a0f880b data/meatmaster/advancements/recipes/sniffer_toes_block.json
 a9fd99defe3268416ad0e2b0759108a634b42f51 data/meatmaster/advancements/recipes/squid_meat_block.json
 9a320b4b0e13716899314ba535e454676217e7ec data/meatmaster/advancements/recipes/syringe_dart.json

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cooked_elder_guardian_heart": {
+    "has_cooked_bat_wings": {
       "conditions": {
         "items": [
           {
             "items": [
-              "meatmaster:cooked_elder_guardian_heart"
+              "meatmaster:cooked_bat_wings"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_cooked_elder_guardian_heart",
+      "has_cooked_bat_wings",
       "has_the_recipe"
     ]
   ],

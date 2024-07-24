@@ -27,6 +27,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -37,11 +38,13 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.sniffer.Sniffer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -285,6 +288,8 @@ public class MeatMaster {
                 if (temptGoal != null) {
                     animal.goalSelector.addGoal(temptGoalPriority, new FoodTroughTemptGoal(animal, temptGoal.speedModifier, temptGoal.items, temptGoal.canScare));
                 }
+                else if (animal instanceof Sniffer)
+                    animal.goalSelector.addGoal(3, new FoodTroughTemptGoal(animal, 1.0, Ingredient.of(ItemTags.SNIFFER_FOOD), false));
             }
         }
     }
