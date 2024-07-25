@@ -38,12 +38,13 @@ public class MeatCompactorStationScreen extends AbstractContainerScreen<MeatComp
 
     protected void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if (menu.isProcessing()) {
-            int widgetScaledProgress = menu.getWidgetScaledProgress();
+            int scaledProgress = menu.getScaledProgress();
             int auxiliaryScaledProgress = menu.getAuxiliaryScaledProgress();
+            int widgetScaledProgress = menu.getWidgetScaledProgress();
 
-            guiGraphics.blit(TEXTURE, x + 82, y + 35, 176, 0, menu.getScaledProgress(), 16);
-            guiGraphics.blit(TEXTURE, x + 82, y + 21, 176, 16, auxiliaryScaledProgress, 8);
-            guiGraphics.blit(TEXTURE, x + 82, y + 58, 176, 24, auxiliaryScaledProgress, 8);
+            guiGraphics.blit(TEXTURE, x + 82, y + 34, 176, 0, scaledProgress, 16);
+            guiGraphics.blit(TEXTURE, x + 82, y + 20, 176, 16, auxiliaryScaledProgress, 8);
+            guiGraphics.blit(TEXTURE, x + 82, y + 57, 176, 24, auxiliaryScaledProgress, 8);
 
             for (int i: leftOrnamentYOffsets) {
                 guiGraphics.blit(TEXTURE, x + 6 + widgetScaledProgress, y + i, 176, 47, 2, 16);
