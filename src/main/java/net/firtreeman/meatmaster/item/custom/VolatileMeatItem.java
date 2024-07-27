@@ -27,6 +27,6 @@ public class VolatileMeatItem extends Item {
             ((Player) pLivingEntity).getInventory().removeItem(pStack);
             pLevel.explode(null, pLivingEntity.getX(), pLivingEntity.getY() + 2.0, pLivingEntity.getZ(), 4.0F, Level.ExplosionInteraction.TNT);
         }
-        return ItemStack.EMPTY;
+        return super.finishUsingItem(pStack, pLevel, pLivingEntity);
     }
 }

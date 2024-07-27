@@ -19,6 +19,7 @@ import net.firtreeman.meatmaster.recipe.ModRecipes;
 import net.firtreeman.meatmaster.screen.*;
 import net.firtreeman.meatmaster.util.HORMONE_TYPES;
 import net.firtreeman.meatmaster.util.SPICE_TYPES;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
@@ -412,7 +413,7 @@ public class MeatMaster {
                 double chance = event.getItemStack().getTag().getDouble("JEIToolTipPercentage");
                 if (chance == 0.0) return;
 
-                event.getToolTip().add(Component.literal(String.format("%.0f%%", chance * 100)));
+                event.getToolTip().add(Component.literal(String.format("%.0f%%", chance * 100)).withStyle(ChatFormatting.YELLOW));
             }
         }
     }
