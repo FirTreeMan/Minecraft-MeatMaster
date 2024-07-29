@@ -1,10 +1,10 @@
 {
   "remove": [
-    "minecraft:gunpowder",
-    "minecraft:coal",
     "meatmaster:cooked_blaze_meat",
     "meatmaster:endermeat",
     "meatmaster:dog_liver",
+    "minecraft:coal",
+    "minecraft:gunpowder",
     "meatmaster:creeper_meat",
     "minecraft:charcoal"
   ],

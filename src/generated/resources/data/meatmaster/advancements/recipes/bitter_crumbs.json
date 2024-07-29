@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bitter_crumbs": {
+    "hasMeatItem": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "meatmaster:bitter_crumbs"
-            ]
+            "tag": "meatmaster:meat_items"
           }
         ]
       },
@@ -22,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_bitter_crumbs",
+      "hasMeatItem",
       "has_the_recipe"
     ]
   ],

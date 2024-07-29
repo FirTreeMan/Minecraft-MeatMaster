@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cooked_bat_wings": {
+    "hasMashableMeat": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "meatmaster:cooked_bat_wings"
-            ]
+            "tag": "meatmaster:mashable_meats"
           }
         ]
       },
@@ -22,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_cooked_bat_wings",
+      "hasMashableMeat",
       "has_the_recipe"
     ]
   ],

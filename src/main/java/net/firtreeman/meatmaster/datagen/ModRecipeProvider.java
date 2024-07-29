@@ -9,6 +9,7 @@ import net.firtreeman.meatmaster.util.ModTags;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraftforge.common.Tags;
@@ -35,14 +36,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(uncooked), RecipeCategory.FOOD, cooked, 0.25F, 600)
                     .unlockedBy(getHasName(uncooked), has(uncooked)).save(pWriter, MeatMaster.MOD_ID + ":" + getItemName(cooked) + "_from_campfire_cooking");
 
-            if (uncooked.getFoodProperties().getNutrition() >= 2)
-                new MeatMasherRecipeBuilder(uncooked, ModItems.SAUSAGE.get(), ModItems.MEAT_RESIDUE.get())
-                    .unlockedBy(getHasName(uncooked), has(uncooked))
-                    .save(pWriter);
-            if (cooked.getFoodProperties().getNutrition() >= 2)
-                new MeatMasherRecipeBuilder(cooked, ModItems.SAUSAGE.get(), ModItems.MEAT_RESIDUE.get())
-                    .unlockedBy(getHasName(cooked), has(cooked))
-                    .save(pWriter);
+            for (Item foodItem: new Item[]{uncooked, cooked})
+                if (foodItem.getFoodProperties().getNutrition() >= 2)
+                    new MeatMasherRecipeBuilder(foodItem, ModItems.SAUSAGE.get(), ModItems.MEAT_RESIDUE.get())
+                        .unlockedBy("hasMashableMeat", has(ModTags.Items.MASHABLE_MEATS))
+                        .save(pWriter);
         });
         COOKED_BLOCK_VARIANTS.forEach((uncooked, cooked) -> {
             new IndustrialOvenRecipeBuilder(uncooked.asItem(), cooked.asItem())
@@ -85,13 +83,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         });
 
         new MeatRefineryRecipeBuilder(Tags.Items.STONE, ModItems.TABLE_SALT.get(), 1)
-                .unlockedBy(getHasName(Items.COBBLESTONE), has(Tags.Items.STONE))
+                .unlockedBy(getHasName(Items.STONE), has(Tags.Items.STONE))
+                .save(pWriter);
+        new MeatRefineryRecipeBuilder(Tags.Items.COBBLESTONE, ModItems.TABLE_SALT.get(), 1)
+                .unlockedBy(getHasName(Items.COBBLESTONE), has(Tags.Items.COBBLESTONE))
                 .save(pWriter);
         new MeatRefineryRecipeBuilder(ModTags.Items.EXTRA_REFINABLE_MEATS, ModItems.MEAT_RESIDUE.get(), 1)
-                .unlockedBy(getHasName(Items.PORKCHOP), has(ModTags.Items.EXTRA_REFINABLE_MEATS))
+                .unlockedBy("hasExtraRefinableMeat", has(ModTags.Items.EXTRA_REFINABLE_MEATS))
                 .save(pWriter);
         new IndustrialOvenRecipeBuilder(ModTags.Items.MEAT_ITEMS, ModItems.BITTER_CRUMBS.get())
-                .unlockedBy(getHasName(Items.PORKCHOP), has(ModTags.Items.MEAT_ITEMS))
+                .unlockedBy("hasMeatItem", has(ModTags.Items.MEAT_ITEMS))
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.MEAT_REFINERY_STATION.get())

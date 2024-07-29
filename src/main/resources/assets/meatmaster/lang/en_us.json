@@ -30,6 +30,7 @@
 
   "item.meatmaster.table_salt": "Rock Salt",
   "item.meatmaster.gunpowder_clumps": "Gunpowder Clumps",
+  "item.meatmaster.ender_spice": "Ender Spice",
   "item.meatmaster.liver_bits": "Liver Bits",
   "item.meatmaster.blaze_pepper": "Blaze Pepper",
   "item.meatmaster.bitter_crumbs": "Bitter Crumbs",
@@ -43,6 +44,8 @@
   "item.meatmaster.hormone_base.growth": "Growth Hormone Base",
   "item.meatmaster.hormone_base.breeding": "Breeding Hormone Base",
   "item.meatmaster.hormone_base.yield": "Yield Hormone Base",
+
+  "item.meatmaster.kebab": "Kebab",
 
   "block.meatmaster.creeper_meat_block": "Block of Creeper Meat",
   "block.meatmaster.cooked_creeper_meat_block": "Block of Cooked Creeper Meat",

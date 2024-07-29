@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_porkchop": {
+    "hasExtraRefinableMeat": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_porkchop",
+      "hasExtraRefinableMeat",
       "has_the_recipe"
     ]
   ],
