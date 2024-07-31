@@ -12,7 +12,7 @@ public class ModFoods {
     public static final FoodProperties COOKED_CREEPER_MEAT = makeMeat(6, 8.0F).build();
     public static final FoodProperties DOG_LIVER = makeMeat(3, 3.0F).effect(makeMobEffect(MobEffects.POISON, 400, 1), 1.0F).build();
     public static final FoodProperties COOKED_DOG_LIVER = makeMeat(6, 11.0F).effect(makeMobEffect(MobEffects.POISON, 300, 0), 0.75F).build();
-    public static final FoodProperties ENDERMEAT = makeMeat(10, 10.0F).effect(makeMobEffect(MobEffects.SLOW_FALLING, 400, 0), 1.0F).meat().build();
+    public static final FoodProperties ENDERMEAT = makeMeat(10, 10.0F).effect(makeMobEffect(MobEffects.SLOW_FALLING, 400, 0), 1.0F).build();
     public static final FoodProperties HORSE_MEAT = makeMeat(3, 1.5F).build();
     public static final FoodProperties COOKED_HORSE_MEAT = makeMeat(7, 11.2F).build();
     public static final FoodProperties COOKED_BLAZE_MEAT = makeMeat(8, 4.0F).build();
